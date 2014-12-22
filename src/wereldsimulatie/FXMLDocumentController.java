@@ -13,8 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 /**
- *
- * @author nl08940
+ * Controller die met data uit het model de view aanstuurt.
+ * @author Lars Ko Tarkan
  */
 public class FXMLDocumentController implements Initializable {
     
@@ -23,7 +23,7 @@ public class FXMLDocumentController implements Initializable {
     
     /**
      * 
-     * @param event 
+     * @param event Buttonclick
      */
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -33,8 +33,8 @@ public class FXMLDocumentController implements Initializable {
     
     /**
      * 
-     * @param url
-     * @param rb 
+     * @param url standaard javafx
+     * @param rb  standaard javafx
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -42,12 +42,12 @@ public class FXMLDocumentController implements Initializable {
     } 
     
     /**
-     * dit is de eventhandler voor een GUI control
-     * veranderd de tijd tussen timerevents om simulatie sneller of langzamer 
+     * Dit is de eventhandler voor een GUI control. 
+     * Veranderd de tijd tussen timerevents om simulatie sneller of langzamer 
      * te laten draaien.
-     * @param snelheid 
+     * @param snelheid stel tijd tussen timertikken in in ns
      */
-    public void veranderSnelheid(double snelheid) {
+    public void veranderSnelheid(long snelheid) {
         
     }
     

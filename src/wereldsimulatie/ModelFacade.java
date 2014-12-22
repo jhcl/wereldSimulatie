@@ -8,13 +8,13 @@ package wereldsimulatie;
 import java.util.ArrayList;
 
 /**
- *
- * @author nl08940
+ * Interactie van het model met de buitenwereld
+ * @author Lars Ko Tarkan
  */
 public class ModelFacade {
     
     /**
-     * roept de methode aan om model een simulatiestap te laten zetten
+     * Roept de methode aan om model een simulatiestap te laten zetten
      * als return van die stap true is dan setchaged en notifyobservers
      * aanroepen
      */
@@ -25,8 +25,8 @@ public class ModelFacade {
    
     
     /**
-     * maak instantie van wereld
-     * @return 
+     * Maak instantie van wereld met twee (2) eilanden.
+     * @return wereld
      */
     public Wereld maakWereld() {
         return null;
@@ -34,7 +34,7 @@ public class ModelFacade {
     
     /**
      * 
-     * @return ArrayList lengte 2, eerste element breedte, 2e element lengte
+     * @return ArrayList lengte 2, eerste element breedte(x), 2e element lengte (y)
      */
     public ArrayList<Double> getWereldSize() {
         return null;

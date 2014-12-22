@@ -8,15 +8,16 @@ package wereldsimulatie;
 import java.util.ArrayList;
 
 /**
- *
- * @author nl08940
+ * @author Lars Ko Tarkan
+ * Geheel van eilanden en zee. Dit is een op zichzelf staand geheel. De randen
+ * van een wereld bestaan altijd uit water
  */
 public class Wereld {
     
     /**
-     * maak eiland met vaste positie/oppervlak en creeer objecten volgens
-     * verhouding
-     * carnivoor, omnivoor, herbivoor, obstakel, plant = 10,40,30,15,5
+     * Maak eiland met vaste positie/oppervlak en creeer objecten volgens
+     * verhouding:<br>
+     * 10 % obstakel, 40% carnivoor, 30% planten,10% herbivoor, 10% omnivoor
      * @return Eiland object
      */
     public Eiland maakEiland() {
@@ -32,7 +33,7 @@ public class Wereld {
     }
     
     /**
-     * roep voor alle eilanden de simulatiestap aan
+     * Roep voor alle eilanden de simulatiestap aan
      */
     public void stapDoorSimulatie() {
         

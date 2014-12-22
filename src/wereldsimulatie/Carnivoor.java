@@ -6,20 +6,16 @@
 package wereldsimulatie;
 
 /**
- *
- * @author nl08940
+ * Vleeseter, extends Beest
+ * @author Lars Ko Tarkan
  */
-public class Carnivoor {
+public class Carnivoor extends Beest<Beest> {
     
     /**
-     * abstracte methode die als argument een eetbaar object verwacht.
-     * Voor herbivoren zijn dat plantobjecten en voor carnivoren beestobjecten, 
-     * omnivoren eten beide.
-     * Als een beest gegeten wordt is het dood, als een plant gegeten wordt 
-     * groeit het weer aan. Na 10x gegeten te zijn blijft een plant 100 
-     * simulatiestappen ondergronds.
-     * @param b 
+     * @see wereldsimulatie.Beest#eet
+     * @param b Beest dat gegeten wordt
     */
+    @Override
     public void eet(Beest b) {
         
     }

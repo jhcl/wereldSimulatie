@@ -5,14 +5,28 @@
  */
 package wereldsimulatie;
 
+import java.util.ArrayList;
+
 /**
- *
- * @author nl08940
+ * Eetbare vegetatie dat op land groeit
+ * @author Lars Ko Tarkan
  */
 public class Plant {
+    private ArrayList<Integer> positie;
+    
+    /**
+     * Constructor voor plant. <br>
+     * Maximale grootte is 150.
+     * Energie is 20% van grootte.
+     * @param positie List van 2 integers &lt;x,y&gt;-coordinaat
+     */
+    public Plant(ArrayList<Integer> positie) {
+        this.positie = positie;
+    }
     
     /**
      * als plant niet dood is groeit het per method call 1 energie unit.
+     * 
      */
     public void groei() {
         
