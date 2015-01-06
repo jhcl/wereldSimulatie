@@ -13,6 +13,17 @@ import java.util.ArrayList;
  * @author Lars Ko Tarkan
  */
 public class Eiland {
+    ArrayList<Beest> beesten;
+    ArrayList<Obstakel> obstakels;
+    ArrayList<Plant> planten;
+    ArrayList<Integer> oppervlak;
+    
+    public Eiland(ArrayList<Integer> opp) {
+        oppervlak = opp;
+        for (int i =0; i < 10; i++) {
+            beesten.add(new Carnivoor());
+        }
+    }
     
     /**
      * getter voor lijst van alle obstakelobjecten van dit eiland
@@ -27,7 +38,7 @@ public class Eiland {
      * @return ArrayLis&lt;Beest&gt;
      */
     public ArrayList<Beest> getBeesten() {
-        return null;
+        return beesten;
     }  
     
     /**

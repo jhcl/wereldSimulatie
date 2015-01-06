@@ -6,13 +6,16 @@
 package wereldsimulatie;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * @author Lars Ko Tarkan
  * Geheel van eilanden en zee. Dit is een op zichzelf staand geheel. De randen
  * van een wereld bestaan altijd uit water
  */
-public class Wereld {
+public class Wereld extends Observable implements ModelFacade  {
+    
+    ArrayList eilanden = new ArrayList<>();
     
     /**
      * Maak eiland met vaste positie/oppervlak en creeer objecten volgens
@@ -21,7 +24,15 @@ public class Wereld {
      * @return Eiland object
      */
     public Eiland maakEiland() {
-        return null;
+        ArrayList<Integer> opp = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 100; j++) {
+                opp.add(j);
+                opp.add(i);
+            }
+        }
+        Eiland e1 = new Eiland(opp);
+        return e1;
     }
     
     /**
@@ -29,7 +40,7 @@ public class Wereld {
      * @return ArrayList van Eiland objecten
      */
     public ArrayList<Eiland> getEilanden() {
-        return null;
+        return eilanden;
     }
     
     /**
@@ -37,6 +48,26 @@ public class Wereld {
      */
     public void stapDoorSimulatie() {
         
+    }
+    
+    /**
+     * Roept de methode aan om model een simulatiestap te laten zetten
+     * als return van die stap true is dan setchaged en notifyobservers
+     * aanroepen
+     */    
+    @Override
+    public void step() {
+        
+    }
+    
+    
+    /**
+     * 
+     * @return ArrayList lengte 2, eerste element breedte(x), 2e element lengte (y)
+     */
+    @Override
+    public ArrayList<Double> getWereldSize() {
+        return null;
     }
     
 }

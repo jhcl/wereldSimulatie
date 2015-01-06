@@ -6,10 +6,12 @@
 package wereldsimulatie;
 
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * @author Lars Ko Tarkan
@@ -21,13 +23,28 @@ import javafx.stage.Stage;
  * als de gelegenheid zich voordoet eten of paren.
  */
 public class WereldSimulatie extends Application {
+    final Wereld model = new Wereld();
+    private FXMLDocumentController fdc = new FXMLDocumentController(model);
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+                FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("FXMLDocument.fxml"));
+        loader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> klasse) {
+                fdc = new FXMLDocumentController(model);
+                return fdc;
+            }
+        });
         
+        Parent root = loader.load();
+        model.addObserver(fdc);
         Scene scene = new Scene(root);
-        
+//        System.out.println(scene.getHeight());
+//        System.out.println(scene2.getHeight());
+//        System.out.println(stage);
+        scene.getStylesheets().add(getClass().getResource("wereld.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

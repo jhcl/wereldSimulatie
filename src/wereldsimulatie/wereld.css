@@ -1,0 +1,20 @@
+.root {
+
+}
+
+.polygon {
+    
+	-fx-font-size: 12px;
+
+	-fx-font-weight: bold;
+
+	-fx-text-fill: #333333;
+
+	-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+
+}
+
+.grid,.g {
+	-fx-background-image: url("images/dolphin_in_deep_blue_sea-normal.jpg"); 
+	-fx-background-size: 100% 100%;
+}

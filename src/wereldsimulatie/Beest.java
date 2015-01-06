@@ -5,12 +5,14 @@
  */
 package wereldsimulatie;
 
+import java.util.Observable;
+
 /**
  * abstracte klasse. Diverse soorten Beest worden hiervan afgeleidt
  * @author Lars Ko Tarkan 
  * @param <T> Generics, te specificeren in child class
  */
-abstract public class Beest<T> {
+abstract public class Beest<T> extends Observable {
     
     /**
      * 
