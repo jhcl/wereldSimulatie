@@ -24,7 +24,7 @@ abstract public class Beest<T> extends Observable {
     
     
     /**
-     * 
+     * TEST 2
      * nieuwe regel
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
      * Stamina = 100 * strength<br>
