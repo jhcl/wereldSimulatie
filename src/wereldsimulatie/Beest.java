@@ -24,7 +24,7 @@ abstract public class Beest<T> extends Observable {
     
     
     /**
-     * 
+     * Test
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
      * Stamina = 100 * strength<br>
      * Aantal poten: Carnivoor: 5, Herbivoor: 3, Omnivoor: 4 <br>
