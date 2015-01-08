@@ -40,6 +40,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     Random rand = new Random();
     
     private final ModelFacade model;
+    int schaalX, schaalY;
     @FXML
     private GridPane grid_totaal;
     
@@ -54,28 +55,24 @@ public class FXMLDocumentController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        for (int i = 5; i< 20; i++) {
-            for (int j = 5; j < 50 ; j++) {
-                grid.getChildren().add(new Rectangle(50+(2*i),50+(2*j),2,2));
+        schaalX = (int)grid.getPrefWidth() / model.getWereldSize().get(0);
+        schaalY = (int)grid.getPrefHeight() / model.getWereldSize().get(1);
+        for (Eiland e : model.getEilanden()) {
+            for (int i = 0; i < e.getEilandOppervlak().size() - 1; i +=2) {
+                grid.getChildren().add(new Rectangle(schaalX * e.getEilandOppervlak().get(i),schaalY * e.getEilandOppervlak().get(i+1),schaalX,schaalY));
             }
         }
         for (Node r : grid.getChildren()) {
             if (r instanceof Rectangle) {
-                ((Rectangle)r).setFill(Color.RED);
+                ((Rectangle)r).setFill(Color.BROWN);
             }
-        }        
- //       polygon = new Polygon();
- //       polygon.getPoints().addAll(new Double[]{0.0, 0.0, 10.0, 10.0 ,20.0, 10.0, 30.0, 10.0, 40.0, 20.0 ,50.0, 0.0, 50.0, 20.0, 30.0, 50.0 ,0.0, 20.0});
- //       grid.getChildren().add(polygon);
+        }    
         grid.getStyleClass().add("grid");
         slider.setMax(Math.PI);
         slider2.setMax(10);
         slider2.setMin(1);
         timer.start();
-        List<Double> d = new ArrayList<>();
-        Rectangle rect1 = new Rectangle(100,400,10,10);
-        grid.getChildren().add(rect1);
-        System.out.println(grid.getWidth()+ " / " + grid.getHeight());    } 
+    } 
     
     /**
      * Dit is de eventhandler voor een GUI control. 
@@ -87,6 +84,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     @FXML
     public void veranderSnelheid(javafx.scene.input.MouseEvent event) {
         if (event.getSource() == slider) {
+            model.step();
+
         }        
         
     }
@@ -95,7 +94,7 @@ public class FXMLDocumentController implements Initializable, Observer {
      * start timer om simulatie te starten
      */
     public void startSimulatie() {
-        
+        timer.start();
     }
     
     @FXML
@@ -109,7 +108,7 @@ public class FXMLDocumentController implements Initializable, Observer {
      * stop timer om simulatie te pauzeren
      */
     public void pauzeerSimulatie() {
-        
+        timer.stop();
     }
     
     /**
@@ -117,7 +116,7 @@ public class FXMLDocumentController implements Initializable, Observer {
      * ook aanroept.
      */
     public void stapDoorSimulatie() {
-        
+        model.step();
     }
     
     /**
@@ -137,25 +136,26 @@ public class FXMLDocumentController implements Initializable, Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o==this.model) {
-//            polygon.setTranslateX((polygon.getTranslateX()+grid.getWidth()-51)%(grid.getWidth()-50));
-//            polygon.setTranslateY((polygon.getTranslateY()+grid.getHeight()-51)%(grid.getHeight()-50));
             List<Polygon> ptemp = new ArrayList<Polygon>();
+            grid.getChildren().removeAll(p);
             p.clear();
             if (arg instanceof ArrayList<?>) {
-            for (Beest pt : (ArrayList<Beest>)arg) {
-                pt.addObserver(this);
-//                System.out.println(pt.countObservers());
-//                pt.getPoints().addAll(new Double[]{0.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
-  //              grid.add(pt,0,0);
-  //              p.add(pt);                
-            }
+                for (Beest pt : (ArrayList<Beest>)arg) {
+                    Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
+                    pol.translateXProperty().set((Integer)pt.getPositie().get(0)*schaalX);
+                    pol.translateYProperty().set((Integer)pt.getPositie().get(1)*schaalY);
+ //                   pt.addObserver((Observer) pol);
+                    p.add(pol);
+                    grid.getChildren().add(pol);
+                }
+                
             }
 //                Polygon pa = new Polygon();
            
-            for (Polygon pl : p) {
-                pl.translateXProperty().setValue((pl.translateXProperty().getValue()-(2*rand.nextDouble())+1.3)%(grid.getWidth()-10.0));
-                pl.translateYProperty().setValue((pl.translateYProperty().getValue()-(2*rand.nextDouble())+1.5)%(grid.getHeight()-10.0));
-            }
+//            for (Polygon pl : p) {
+//                pl.translateXProperty().setValue((pl.translateXProperty().getValue()-(2*rand.nextDouble())+1.3)%(grid.getWidth()-10.0));
+//                pl.translateYProperty().setValue((pl.translateYProperty().getValue()-(2*rand.nextDouble())+1.5)%(grid.getHeight()-10.0));
+//            }
         }
     }
     
@@ -167,8 +167,9 @@ public class FXMLDocumentController implements Initializable, Observer {
         @Override
         public void handle(long now) {
             lag = now - prevUpdate;
-            if (lag >= 1000000) {
+            if (lag >= 50000000) {
                 prevUpdate = now;
+                model.step();
             }
         }
         @Override

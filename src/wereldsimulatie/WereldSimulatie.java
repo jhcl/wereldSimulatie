@@ -24,7 +24,7 @@ import javafx.util.Callback;
  */
 public class WereldSimulatie extends Application {
     final Wereld model = new Wereld();
-    private FXMLDocumentController fdc = new FXMLDocumentController(model);
+    private FXMLDocumentController fdc;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -41,9 +41,6 @@ public class WereldSimulatie extends Application {
         Parent root = loader.load();
         model.addObserver(fdc);
         Scene scene = new Scene(root);
-//        System.out.println(scene.getHeight());
-//        System.out.println(scene2.getHeight());
-//        System.out.println(stage);
         scene.getStylesheets().add(getClass().getResource("wereld.css").toExternalForm());
         stage.setScene(scene);
         stage.show();

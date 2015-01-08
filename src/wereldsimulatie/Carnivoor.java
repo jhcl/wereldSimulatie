@@ -5,11 +5,21 @@
  */
 package wereldsimulatie;
 
+import java.util.ArrayList;
+
 /**
  * Vleeseter, extends Beest
  * @author Lars Ko Tarkan
  */
 public class Carnivoor extends Beest<Beest> {
+    
+   
+     public Carnivoor(ArrayList<Integer> pos) {
+        this.positie = pos;
+        strength = 50;
+        energie = 5000;
+        stamina = 5000;        
+    }
     
     /**
      * @see wereldsimulatie.Beest#eet
@@ -19,5 +29,6 @@ public class Carnivoor extends Beest<Beest> {
     public void eet(Beest b) {
         
     }
+
     
 }

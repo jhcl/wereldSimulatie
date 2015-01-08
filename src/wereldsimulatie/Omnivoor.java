@@ -5,11 +5,21 @@
  */
 package wereldsimulatie;
 
+import java.util.ArrayList;
+
 /**
  * Alleseter, extends Beest
  * @author Lars Ko Tarkan
  */
 public class Omnivoor extends Beest {
+ 
+    
+     public Omnivoor(ArrayList<Integer> pos) {
+        this.positie = pos;
+        strength = 40;
+        energie = 4000;
+        stamina = 4000;        
+    }    
     
     /**
      * @see wereldsimulatie.Beest#eet
@@ -20,5 +30,5 @@ public class Omnivoor extends Beest {
     public void eet(Object o) {
         
     }    
-    
+
 }

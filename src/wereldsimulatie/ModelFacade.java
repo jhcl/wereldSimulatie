@@ -6,6 +6,7 @@
 package wereldsimulatie;
 
 import java.util.ArrayList;
+import javafx.beans.Observable;
 
 /**
  * Interactie van het model met de buitenwereld
@@ -26,6 +27,8 @@ interface ModelFacade {
      * 
      * @return ArrayList lengte 2, eerste element breedte(x), 2e element lengte (y)
      */
-    public ArrayList<Double> getWereldSize();
+    public ArrayList<Integer> getWereldSize();
+    
+    public ArrayList<Eiland> getEilanden();
 
 }

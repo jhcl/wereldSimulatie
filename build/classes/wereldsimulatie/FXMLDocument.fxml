@@ -18,10 +18,10 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Pane  fx:id="grid" prefHeight="400.0" prefWidth="600.0" GridPane.rowIndex="2">
+      <Pane  fx:id="grid" prefHeight="400.0" prefWidth="600.0" GridPane.rowIndex="2" GridPane.columnSpan="2">
 
       </Pane>
-      <Slider fx:id="slider" onMouseReleased="#veranderSnelheid" prefHeight="14.0" prefWidth="92.0" GridPane.columnSpan="500" GridPane.rowIndex="1" />
+      <Slider fx:id="slider" onMouseReleased="#veranderSnelheid"  GridPane.rowIndex="1" />
       <Slider fx:id="slider2" onMouseReleased="#zoom" prefHeight="14.0" prefWidth="92.0" />
 <!--      <Button mnemonicParsing="false" onMouseClicked="#buttonHandler" text="Button" GridPane.columnIndex="1" /> -->
    </children>

@@ -5,7 +5,9 @@
  */
 package wereldsimulatie;
 
+import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Random;
 
 /**
  * abstracte klasse. Diverse soorten Beest worden hiervan afgeleidt
@@ -13,6 +15,13 @@ import java.util.Observable;
  * @param <T> Generics, te specificeren in child class
  */
 abstract public class Beest<T> extends Observable {
+    
+    ArrayList<Integer> positie = new ArrayList<>();
+    ArrayList<Integer> richting = new ArrayList<>();
+    int strength;
+    int energie;
+    int stamina;    
+    
     
     /**
      * 
@@ -30,7 +39,11 @@ abstract public class Beest<T> extends Observable {
      * Bij 0 (nul) energie is een beest dood en verdwijnt het object<br>
      */
     public Beest() {
-        
+        Random rnd = new Random();
+        int xRichting = rnd.nextInt(3) - 1;
+        int yRichting = rnd.nextInt(3) - 1;
+        richting.add(xRichting);
+        richting.add(yRichting);
     }
     
     /**
@@ -74,8 +87,9 @@ abstract public class Beest<T> extends Observable {
      * Een beweeg() in een simulatiestap kost evenveel energie als het gewicht
      * van het beest.<br>
      */
-    public void beweeg() {
-        
+    public void beweeg(int x, int y) {
+        positie.set(0, x);
+        positie.set(1, y); 
     }
     
     /**
@@ -101,4 +115,21 @@ abstract public class Beest<T> extends Observable {
         return null;
     }
     
+    public ArrayList<Integer> getPositie() {
+        return positie;
+    }
+    
+    public boolean wilZwemmen() {
+        if (energie < 0.4*stamina) { return true;}
+        return false;
+    }   
+    
+    public ArrayList<Integer> getRichting() {
+        return richting;
+    }
+    
+    public void setRichting(int x, int y) {
+        richting.set(0,x);
+        richting.set(1,y);
+    }
 }

@@ -6,6 +6,7 @@
 package wereldsimulatie;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -20,9 +21,20 @@ public class Eiland {
     
     public Eiland(ArrayList<Integer> opp) {
         oppervlak = opp;
-        for (int i =0; i < 10; i++) {
-            beesten.add(new Carnivoor());
+        Random rnd = new Random();
+        beesten = new ArrayList<>();
+        for (int i =0; i < 100; i++) {
+            int willekeurigX = rnd.nextInt(oppervlak.size());
+            if (willekeurigX % 2 != 0) { 
+                if (willekeurigX != 0) {willekeurigX--; }
+                else {willekeurigX++;}
+            }
+            ArrayList<Integer> pos = new ArrayList<>();
+            pos.add(oppervlak.get(willekeurigX));
+            pos.add(oppervlak.get(willekeurigX+1));
+            beesten.add(new Carnivoor(pos));
         }
+
     }
     
     /**
@@ -31,6 +43,10 @@ public class Eiland {
      */
     public ArrayList<Obstakel> getObstakels() {
         return null;
+    }
+    
+    public ArrayList<Integer> getEilandOppervlak() {
+        return oppervlak;
     }
     
     /**
@@ -76,6 +92,37 @@ public class Eiland {
      * @see wereldsimulatie.Beest#paar
      */
     public void stapDoorSimulatie() {
-        
+        Random rnd = new Random();
+        for (Beest b : beesten) {
+//            int newX = ((Integer)b.getPositie().get(0) + 1) % Wereld.WERELD_BREEDTE;
+//            int newY = ((Integer)b.getPositie().get(1) + 1) % Wereld.WERELD_HOOGTE;
+            int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
+            int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;
+            if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
+                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
+            }
+            boolean opLand = false;
+            for (int i = 0; i < oppervlak.size(); i += 2) {
+                if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
+                    b.beweeg(newX, newY); 
+                    opLand = true; 
+                    break;
+                }
+
+//                else if (oppervlak.get(i) != newX && oppervlak.get(i+1) != newY) {
+//                    b.setRichting(i, i);
+//                    newY = -newY;
+//                }
+//                else if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
+//                    
+//                }
+//                else if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
+//                    
+//                }
+            }
+            if (!opLand) {
+                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
+            }
+        }
     }
 }

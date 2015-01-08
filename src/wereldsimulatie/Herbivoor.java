@@ -5,11 +5,21 @@
  */
 package wereldsimulatie;
 
+import java.util.ArrayList;
+
 /**
  * Planteneter, extends Beest
  * @author Lars Ko Tarkan
  */
 public class Herbivoor extends Beest<Plant> {
+    
+
+     public Herbivoor(ArrayList<Integer> pos) {
+        this.positie = pos;
+        strength = 30;
+        energie = 3000;
+        stamina = 3000;
+    }    
     
     /**
      * @see wereldsimulatie.Beest#eet
@@ -19,5 +29,7 @@ public class Herbivoor extends Beest<Plant> {
     public void eet(Plant p) {
         
     }    
+    
+
     
 }
