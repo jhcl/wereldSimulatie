@@ -64,7 +64,7 @@ public class FXMLDocumentController implements Initializable, Observer {
         }
         for (Node r : grid.getChildren()) {
             if (r instanceof Rectangle) {
-                ((Rectangle)r).setFill(Color.BROWN);
+                ((Rectangle)r).setFill(Color.WHITE);
             }
         }    
         grid.getStyleClass().add("grid");
@@ -141,10 +141,13 @@ public class FXMLDocumentController implements Initializable, Observer {
             p.clear();
             if (arg instanceof ArrayList<?>) {
                 for (Beest pt : (ArrayList<Beest>)arg) {
-                    Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
+                    Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0});
                     pol.translateXProperty().set((Integer)pt.getPositie().get(0)*schaalX);
                     pol.translateYProperty().set((Integer)pt.getPositie().get(1)*schaalY);
  //                   pt.addObserver((Observer) pol);
+                    if (pt instanceof Carnivoor) {pol.setFill(Color.RED);}
+                    else if (pt instanceof Herbivoor) {pol.setFill(Color.BROWN);}
+                    else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
                     p.add(pol);
                     grid.getChildren().add(pol);
                 }

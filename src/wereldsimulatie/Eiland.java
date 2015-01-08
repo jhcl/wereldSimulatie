@@ -23,7 +23,7 @@ public class Eiland {
         oppervlak = opp;
         Random rnd = new Random();
         beesten = new ArrayList<>();
-        for (int i =0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
             int willekeurigX = rnd.nextInt(oppervlak.size());
             if (willekeurigX % 2 != 0) { 
                 if (willekeurigX != 0) {willekeurigX--; }
@@ -32,7 +32,16 @@ public class Eiland {
             ArrayList<Integer> pos = new ArrayList<>();
             pos.add(oppervlak.get(willekeurigX));
             pos.add(oppervlak.get(willekeurigX+1));
-            beesten.add(new Carnivoor(pos));
+            int temp = rnd.nextInt(3);
+            if (temp == 0) {
+                beesten.add(new Carnivoor(pos));
+            }
+            else if (temp == 1) {
+                beesten.add(new Herbivoor(pos));
+            }
+            else if (temp == 2) {
+                beesten.add(new Omnivoor(pos));
+            }            
         }
 
     }
