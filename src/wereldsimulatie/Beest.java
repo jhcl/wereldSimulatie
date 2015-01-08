@@ -48,6 +48,7 @@ abstract public class Beest<T> extends Observable {
     }
     
     /**
+     * test3
      * Abstracte methode die als argument een eetbaar object verwacht.
      * Voor herbivoren zijn dat plantobjecten en voor carnivoren beestobjecten, 
      * omnivoren eten beide.<br>
