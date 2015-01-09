@@ -23,7 +23,7 @@ public class Eiland {
         oppervlak = opp;
         Random rnd = new Random();
         beesten = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 120; i++) {
             int willekeurigX = rnd.nextInt(oppervlak.size());
             if (willekeurigX % 2 != 0) { 
                 if (willekeurigX != 0) {willekeurigX--; }
