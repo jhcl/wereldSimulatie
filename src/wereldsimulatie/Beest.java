@@ -16,11 +16,13 @@ import java.util.Random;
  */
 abstract public class Beest<T> extends Observable {
     
-    ArrayList<Integer> positie = new ArrayList<>();
-    ArrayList<Integer> richting = new ArrayList<>();
-    int strength;
-    int energie;
-    int stamina;    
+    protected ArrayList<Integer> positie = new ArrayList<>();
+    protected ArrayList<Integer> richting = new ArrayList<>();
+    protected int strength;
+    protected int energie;
+    protected int stamina;    
+    protected int gewicht;
+    protected int legs;
     
     
     /**
@@ -46,6 +48,29 @@ abstract public class Beest<T> extends Observable {
         richting.add(xRichting);
         richting.add(yRichting);
     }
+    
+    /**
+     * Constructor voor Beest
+     * Stamina = 100 * strength<br>
+     * Gewicht: #poten * 10<br>
+     * EnergieNivea is bijstart gelijk aan de stamina, dus maximaal.
+     * @param strength
+     */
+
+    public Beest(int strength, int legs) {
+        Random rnd = new Random();
+        int xRichting = rnd.nextInt(3) - 1;
+        int yRichting = rnd.nextInt(3) - 1;
+        richting.add(xRichting);
+        richting.add(yRichting);
+        this.strength = strength;
+        this.stamina = 100 * strength;
+        this.energie = stamina;
+        this.legs = legs;
+        this.gewicht = legs * 10;
+    }
+    
+    
     
     /**
      * Abstracte methode die als argument een eetbaar object verwacht.
