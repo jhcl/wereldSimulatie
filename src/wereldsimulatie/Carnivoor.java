@@ -13,12 +13,11 @@ import java.util.ArrayList;
  */
 public class Carnivoor extends Beest<Beest> {
     
-   
-//     public Carnivoor(ArrayList<Integer> pos) {
-//        this.positie = pos;
-//        strength = 50;
-//        energie = 5000;
-//        stamina = 5000;        
+//    
+//    public Carnivoor(int strength, int legs) {
+//        super(strength, legs);
+//        this.strength = 50;
+//        this.legs = 5;
 //    }
 
     public Carnivoor(int strength, int legs) {

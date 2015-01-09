@@ -16,8 +16,8 @@ import java.util.Random;
  */
 abstract public class Beest<T> extends Observable {
     
-    protected ArrayList<Integer> positie = new ArrayList<>();
-    protected ArrayList<Integer> richting = new ArrayList<>();
+    protected ArrayList<Integer> positie;  
+    protected ArrayList<Integer> richting; 
     protected int strength;
     protected int energie;
     protected int stamina;    
@@ -42,6 +42,8 @@ abstract public class Beest<T> extends Observable {
      * Bij 0 (nul) energie is een beest dood en verdwijnt het object<br>
      */
     public Beest() {
+        this.positie = new ArrayList<>();
+        this.richting = new ArrayList<>();
         Random rnd = new Random();
         int xRichting = rnd.nextInt(3) - 1;
         int yRichting = rnd.nextInt(3) - 1;
@@ -58,6 +60,8 @@ abstract public class Beest<T> extends Observable {
      */
 
     public Beest(int strength, int legs) {
+        this.positie = new ArrayList<>();
+        this.richting = new ArrayList<>();
         Random rnd = new Random();
         int xRichting = rnd.nextInt(3) - 1;
         int yRichting = rnd.nextInt(3) - 1;
@@ -69,6 +73,8 @@ abstract public class Beest<T> extends Observable {
         this.legs = legs;
         this.gewicht = legs * 10;
     }
+    
+    
     
     
     
