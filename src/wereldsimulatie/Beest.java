@@ -5,6 +5,7 @@
  */
 package wereldsimulatie;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
@@ -14,7 +15,7 @@ import java.util.Random;
  * @author Lars Ko Tarkan 
  * @param <T> Generics, te specificeren in child class
  */
-abstract public class Beest<T> extends Observable {
+abstract public class Beest<T> extends Observable implements Serializable {
     
     protected ArrayList<Integer> positie;  
     protected ArrayList<Integer> richting; 
@@ -22,12 +23,10 @@ abstract public class Beest<T> extends Observable {
     protected int energie;
     protected int stamina;    
     protected int gewicht;
-    protected int legs;
+    protected int legs;  
     
     
     /**
-     * TEST 2
-     * nieuwe regel
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
      * Stamina = 100 * strength<br>
      * Aantal poten: Carnivoor: 5, Herbivoor: 3, Omnivoor: 4 <br>
@@ -43,7 +42,7 @@ abstract public class Beest<T> extends Observable {
      */
     public Beest() {
         this.positie = new ArrayList<>();
-        this.richting = new ArrayList<>();
+        this.richting = new ArrayList<>();        
         Random rnd = new Random();
         int xRichting = rnd.nextInt(3) - 1;
         int yRichting = rnd.nextInt(3) - 1;
@@ -51,14 +50,6 @@ abstract public class Beest<T> extends Observable {
         richting.add(yRichting);
     }
     
-    /**
-     * Constructor voor Beest
-     * Stamina = 100 * strength<br>
-     * Gewicht: #poten * 10<br>
-     * EnergieNivea is bijstart gelijk aan de stamina, dus maximaal.
-     * @param strength
-     */
-
     public Beest(int strength, int legs) {
         this.positie = new ArrayList<>();
         this.richting = new ArrayList<>();
@@ -73,10 +64,6 @@ abstract public class Beest<T> extends Observable {
         this.legs = legs;
         this.gewicht = legs * 10;
     }
-    
-    
-    
-    
     
     /**
      * Abstracte methode die als argument een eetbaar object verwacht.
@@ -122,6 +109,7 @@ abstract public class Beest<T> extends Observable {
     public void beweeg(int x, int y) {
         positie.set(0, x);
         positie.set(1, y); 
+        energie -= 1;
     }
     
     /**

@@ -18,11 +18,12 @@ public class Eiland {
     ArrayList<Obstakel> obstakels;
     ArrayList<Plant> planten;
     ArrayList<Integer> oppervlak;
+    Wereld model;
     
     public Eiland(ArrayList<Integer> opp) {
         oppervlak = opp;
         Random rnd = new Random();
-        beesten = new ArrayList<>();
+        beesten = new ArrayList<>(); 
         for (int i = 0; i < 120; i++) {
             int willekeurigX = rnd.nextInt(oppervlak.size());
             if (willekeurigX % 2 != 0) { 
@@ -35,12 +36,12 @@ public class Eiland {
             int temp = rnd.nextInt(3);
             if (temp == 0) {
                 beesten.add(new Carnivoor(pos));
-            }
+            } 
             else if (temp == 1) {
                 beesten.add(new Herbivoor(pos));
             }
             else if (temp == 2) {
-                beesten.add(new Omnivoor(pos));
+                beesten.add(new Omnivoor(pos)); 
             }            
         }
 
@@ -103,8 +104,6 @@ public class Eiland {
     public void stapDoorSimulatie() {
         Random rnd = new Random();
         for (Beest b : beesten) {
-//            int newX = ((Integer)b.getPositie().get(0) + 1) % Wereld.WERELD_BREEDTE;
-//            int newY = ((Integer)b.getPositie().get(1) + 1) % Wereld.WERELD_HOOGTE;
             int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
             int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;
             if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
@@ -130,6 +129,10 @@ public class Eiland {
 //                }
             }
             if (!opLand) {
+                if (b.wilZwemmen()) {
+                    beesten.remove(b);
+                    System.out.println(beesten.size());
+                }
                 b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
         }

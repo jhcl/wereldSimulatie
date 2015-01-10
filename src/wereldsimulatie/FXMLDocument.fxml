@@ -6,23 +6,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="grid_totaal" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wereldsimulatie.FXMLDocumentController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="grid_totaal" xmlns="http://javafx.com/javafx/8" prefWidth="800" prefHeight="600"  fx:controller="wereldsimulatie.FXMLDocumentController">
     <gridLinesVisible>false</gridLinesVisible>
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.0" minWidth="10.0" prefWidth="352.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="390.0" minWidth="10.0" prefWidth="348.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="100.0" prefWidth="352.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="500.0" prefWidth="352.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="100.0" prefWidth="348.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER"  />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Pane  fx:id="grid" prefHeight="400.0" prefWidth="600.0" GridPane.rowIndex="2" GridPane.columnSpan="2">
-
-      </Pane>
-      <Slider fx:id="slider" onMouseReleased="#veranderSnelheid"  GridPane.rowIndex="1" />
-      <Slider fx:id="slider2" onMouseReleased="#zoom" prefHeight="14.0" prefWidth="92.0" />
+      <Label fx:id="labelSnelheid" text=" Snelheid" GridPane.rowIndex="1" /> 
+      <Label fx:id="labelZoom" text=" Zoom" /> 
+      <Slider fx:id="slider" onMouseReleased="#veranderSnelheid"  GridPane.rowIndex="1" GridPane.columnIndex="1"  />
+      <Slider fx:id="slider2" onMouseReleased="#zoom" prefHeight="14.0" prefWidth="92.0" GridPane.columnIndex="1" />
+      <ScrollPane  fx:id="scroll" prefHeight="400.0" prefWidth="800.0" GridPane.rowIndex="2" GridPane.columnSpan="20" />
+      <Button fx:id="save" onMouseClicked="#saveSim" text="save" GridPane.columnIndex="2" prefWidth="75"/>
+      <Button fx:id="restore" onMouseClicked="#restoreSim" text="restore" GridPane.columnIndex="2" GridPane.rowIndex="1" prefWidth="75"   />
+      <Button fx:id="pauzeer" onMouseClicked="#pauzeerSim" text="pause" GridPane.columnIndex="3"  prefWidth="75" />
+      <Button fx:id="start" onMouseClicked="#startSim" text="start" GridPane.columnIndex="3" GridPane.rowIndex="1" prefWidth="75" />
+      <Button fx:id="stap" onMouseClicked="#stapDoorSimulatie" text="stap" GridPane.columnIndex="4" GridPane.rowIndex="1" prefWidth="75" />
 <!--      <Button mnemonicParsing="false" onMouseClicked="#buttonHandler" text="Button" GridPane.columnIndex="1" /> -->
    </children>
    </GridPane>

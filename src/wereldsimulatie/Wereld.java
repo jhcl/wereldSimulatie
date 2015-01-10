@@ -5,6 +5,7 @@
  */
 package wereldsimulatie;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -13,17 +14,18 @@ import java.util.Observable;
  * Geheel van eilanden en zee. Dit is een op zichzelf staand geheel. De randen
  * van een wereld bestaan altijd uit water
  */
-public class Wereld extends Observable implements ModelFacade  {
+public class Wereld extends Observable implements ModelFacade, Serializable  {
     
     private final ArrayList<Eiland> eilanden;
     private final ArrayList<Integer> oppervlakEiland1;
     private final ArrayList<Integer> oppervlakEiland2;
-    static final Integer WERELD_BREEDTE = 300;
-    static final Integer WERELD_HOOGTE = 200;
-    private final Integer WERELD_MARGIN_BREEDTE = WERELD_BREEDTE / 10;
-    private final Integer WERELD_MARGIN_HOOGTE = WERELD_HOOGTE / 10;
-    private final Integer EILAND_BREEDTE = WERELD_BREEDTE / 3 ;
-    private final Integer EILAND_HOOGTE = WERELD_HOOGTE /2;
+    ArrayList<Beest> zwemmers;
+    static final Integer WERELD_BREEDTE = 160;
+    static final Integer WERELD_HOOGTE = 108;
+    private final Integer WERELD_MARGIN_BREEDTE = WERELD_BREEDTE / 20;
+    private final Integer WERELD_MARGIN_HOOGTE = WERELD_HOOGTE / 20;
+    private final Integer EILAND_BREEDTE = WERELD_BREEDTE / 2 - 2* WERELD_MARGIN_BREEDTE ;
+    private final Integer EILAND_HOOGTE = WERELD_HOOGTE / 2 - 2* WERELD_MARGIN_HOOGTE;
     
     
     public Wereld() {
@@ -34,7 +36,7 @@ public class Wereld extends Observable implements ModelFacade  {
             for (int j = 0; j < EILAND_HOOGTE ; j++) {
                 this.oppervlakEiland1.add(WERELD_MARGIN_BREEDTE + i);
                 this.oppervlakEiland1.add(WERELD_HOOGTE / 2 - EILAND_HOOGTE / 2 + j);
-                this.oppervlakEiland2.add(WERELD_BREEDTE/2 - WERELD_MARGIN_BREEDTE + EILAND_BREEDTE + i);
+                this.oppervlakEiland2.add(WERELD_BREEDTE - WERELD_MARGIN_BREEDTE - EILAND_BREEDTE + i);
                 this.oppervlakEiland2.add(WERELD_MARGIN_HOOGTE + j);
             }
         }
@@ -106,7 +108,6 @@ public class Wereld extends Observable implements ModelFacade  {
         grootte.add(WERELD_HOOGTE);
         return grootte;
     }
-
 
     
 }
