@@ -5,6 +5,7 @@
  */
 package wereldsimulatie;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -14,7 +15,7 @@ import java.util.Random;
  * Leefgebied
  * @author Lars Ko Tarkan
  */
-public class Eiland {
+public class Eiland implements Serializable{
     ArrayList<Beest> beesten;
     ArrayList<Obstakel> obstakels;
     ArrayList<Plant> planten;
@@ -112,9 +113,9 @@ public class Eiland {
      */
     public void stapDoorSimulatie() {
         Random rnd = new Random();
-        for (Iterator<Beest> iterator = beesten.iterator(); iterator.hasNext();) {
-            Beest b = iterator.next();
-//        for (Beest b : beesten) {
+//        for (Iterator<Beest> iterator = beesten.iterator(); iterator.hasNext();) {
+//            Beest b = iterator.next();
+        for (Beest b : beesten) {
             int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
             int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;
             if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {

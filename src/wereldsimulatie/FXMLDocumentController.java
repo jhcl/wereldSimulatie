@@ -69,7 +69,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     Random rand = new Random();
     long tikken = 100000000;
     
-    private final ModelFacade model;
+    private  ModelFacade model;
     int schaalX, schaalY;
 
     
@@ -169,7 +169,8 @@ public class FXMLDocumentController implements Initializable, Observer {
         FileInputStream inFile = new FileInputStream(file);
         try {
             ObjectInputStream in = new ObjectInputStream(inFile);
-            in.readObject();
+ //           Wereld model2 = new Wereld();
+            model = (Wereld)in.readObject();
         }
         catch (Exception e) {System.out.println(e.toString());}
         finally { 

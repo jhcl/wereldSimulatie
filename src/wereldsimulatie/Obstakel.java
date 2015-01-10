@@ -5,6 +5,7 @@
  */
 package wereldsimulatie;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * doorheen gelopen kan worden.
  * @author Lars Ko Tarkan
  */
-public class Obstakel {
+public class Obstakel implements Serializable {
     private ArrayList<Integer> positie;
     
     /**

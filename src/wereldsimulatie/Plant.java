@@ -5,13 +5,14 @@
  */
 package wereldsimulatie;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Eetbare vegetatie dat op land groeit
  * @author Lars Ko Tarkan
  */
-public class Plant {
+public class Plant implements Serializable{
     private ArrayList<Integer> positie;
     
     /**
