@@ -32,4 +32,8 @@ public class Plant {
         
     }
     
+    public ArrayList<Integer> getPositie() {
+        return positie;
+    }    
+    
 }

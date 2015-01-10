@@ -88,9 +88,12 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
         for (Eiland e : eilanden) {
             e.stapDoorSimulatie();
         }
-        ArrayList<Beest> lijstObjecten = new ArrayList<>();
+        ArrayList<Object> lijstObjecten = new ArrayList<>();
         for (Eiland e : eilanden) {
             lijstObjecten.addAll(e.getBeesten());
+            lijstObjecten.addAll(e.getPlanten());
+            lijstObjecten.addAll(e.getObstakels());
+            
         }
         setChanged();
         notifyObservers(lijstObjecten);
@@ -109,5 +112,9 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
         return grootte;
     }
 
+    public void voegZwemmersToe(Beest b) {
+        zwemmers.add(b);
+        System.out.println(zwemmers.size());
+    }
     
 }

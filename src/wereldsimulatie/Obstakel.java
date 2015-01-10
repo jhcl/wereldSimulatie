@@ -25,4 +25,8 @@ public class Obstakel {
         this.positie = positie;
     }
     
+    public ArrayList<Integer> getPositie() {
+        return positie;
+    }
+    
 }

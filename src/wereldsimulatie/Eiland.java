@@ -6,6 +6,7 @@
 package wereldsimulatie;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 
@@ -24,6 +25,8 @@ public class Eiland {
         oppervlak = opp;
         Random rnd = new Random();
         beesten = new ArrayList<>(); 
+        obstakels = new ArrayList<>();
+        planten = new ArrayList<>();
         for (int i = 0; i < 120; i++) {
             int willekeurigX = rnd.nextInt(oppervlak.size());
             if (willekeurigX % 2 != 0) { 
@@ -33,7 +36,7 @@ public class Eiland {
             ArrayList<Integer> pos = new ArrayList<>();
             pos.add(oppervlak.get(willekeurigX));
             pos.add(oppervlak.get(willekeurigX+1));
-            int temp = rnd.nextInt(3);
+            int temp = rnd.nextInt(5);
             if (temp == 0) {
                 beesten.add(new Carnivoor(pos));
             } 
@@ -42,6 +45,12 @@ public class Eiland {
             }
             else if (temp == 2) {
                 beesten.add(new Omnivoor(pos)); 
+            }    
+            else if (temp == 3) {
+                obstakels.add(new Obstakel(pos));
+            }
+            else if (temp == 4) {
+                planten.add(new Plant(pos));
             }            
         }
 
@@ -52,7 +61,7 @@ public class Eiland {
      * @return ArrayLis&lt;Obstakel&gt;
      */
     public ArrayList<Obstakel> getObstakels() {
-        return null;
+        return obstakels;
     }
     
     public ArrayList<Integer> getEilandOppervlak() {
@@ -72,7 +81,7 @@ public class Eiland {
      * @return ArrayLis&lt;Plant&gt;
      */
     public ArrayList<Plant> getPlanten() {
-        return null;
+        return planten;
     }
     
     /**
@@ -103,7 +112,9 @@ public class Eiland {
      */
     public void stapDoorSimulatie() {
         Random rnd = new Random();
-        for (Beest b : beesten) {
+        for (Iterator<Beest> iterator = beesten.iterator(); iterator.hasNext();) {
+            Beest b = iterator.next();
+//        for (Beest b : beesten) {
             int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
             int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;
             if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
@@ -130,7 +141,9 @@ public class Eiland {
             }
             if (!opLand) {
                 if (b.wilZwemmen()) {
+//                    model.voegZwemmersToe(b);
                     beesten.remove(b);
+                    
                     System.out.println(beesten.size());
                 }
                 b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);

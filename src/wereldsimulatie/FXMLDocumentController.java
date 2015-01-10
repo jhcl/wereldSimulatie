@@ -222,16 +222,32 @@ public class FXMLDocumentController implements Initializable, Observer {
             pane.getChildren().removeAll(p);
             p.clear();
             if (arg instanceof ArrayList<?>) {
-                for (Beest pt : (ArrayList<Beest>)arg) {
-                    Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0});
-                    pol.translateXProperty().set((Integer)pt.getPositie().get(0)*schaalX);
-                    pol.translateYProperty().set((Integer)pt.getPositie().get(1)*schaalY);
-//                   pt.addObserver((Observer) pol);
-                    if (pt instanceof Carnivoor) {pol.setFill(Color.RED);}
-                    else if (pt instanceof Herbivoor) {pol.setFill(Color.BROWN);}
-                    else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
-                    p.add(pol);
-                    pane.getChildren().add(pol);
+                for (Object pt : (ArrayList<Object>)arg) {
+                    if (pt instanceof Beest) { 
+                        Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0});
+                        pol.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
+                        pol.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY);
+    //                   pt.addObserver((Observer) pol);
+                        if (pt instanceof Carnivoor) {pol.setFill(Color.RED);}
+                        else if (pt instanceof Herbivoor) {pol.setFill(Color.BROWN);}
+                        else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
+                        p.add(pol);
+                        pane.getChildren().add(pol);
+                    }
+                    if (pt instanceof Obstakel) {
+                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
+                        pol.translateXProperty().set((Integer)((Obstakel)pt).getPositie().get(0)*schaalX);
+                        pol.translateYProperty().set((Integer)((Obstakel)pt).getPositie().get(1)*schaalY);  
+                        pol.setFill(Color.BLACK);
+                        pane.getChildren().add(pol);
+                    }
+                    if (pt instanceof Plant) {
+                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
+                        pol.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
+                        pol.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY);  
+                        pol.setFill(Color.GREEN);  
+                        pane.getChildren().add(pol);
+                    }
                 }
                 
             }
