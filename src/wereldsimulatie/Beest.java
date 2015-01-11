@@ -24,7 +24,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     protected int stamina;    
     protected int gewicht;
     protected int legs;  
-    
+    protected int hitsigheid; 
     
     /**
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
@@ -63,6 +63,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         this.energie = stamina;
         this.legs = legs;
         this.gewicht = legs * 10;
+        this.hitsigheid = hitsigheid;
     }
     
     /**
@@ -119,6 +120,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
     
     /**
+     * @author Lars
      * Maak één (1) nieuw Beest. Het nieuwe beest erft eigenschappen van ouders:<br>
      * Digestie, Stamina, Legs, Hitsigheid, Voortplantingskosten, Strength, 
      * Zwemdrempel, Beweegdrempel <br>
@@ -136,11 +138,111 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * 3. Herbivoren<br>
      * @return Beest (kind)
      * @param b Beest waarmee gepaard wordt
+     * 
+     * @TODO Als verschillende soorten beesten paren, winnen de dominante genen moet veranderd worden.(Oplossing: 50/50 type beesten die paren)
      */
+    
+     // @TODO ?Digestie bepalen
+     // @TODO ?Hitsigheid bepalen
+     // @TODO ?Energie bepalen en veranderen 
+     // @TODO ? ADDED: Dit beest haalt van ander beest af bij bepalen marge
     public Beest paar(Beest b) {
-        return null;
+        // Als beide dieren hitsigheid boven 60 hebben ga dan paren
+        if(this.getHitsigheid() > 60 && b.getHitsigheid() > 60){
+            // Trek voortplantingskosten ouders af
+                this.kostenStaminaBeest();
+                b.kostenStaminaBeest();
+                 
+                // Bepaal de values van een beest
+                // Gemiddelde bepalen en deze casten naar een int
+                int gemiddelde_strength = (int) (this.getStrength() + b.getStrength()) / 2;
+                int gemiddelde_stamina = (int) (this.getStamina() + b.getStamina()) / 2;
+                int gemiddelde_energie = (int) (this.getEnergie() + b.getEnergie()) / 2;
+                int gemiddelde_legs = (int) (this.getLegs() + b.getLegs()) / 2;
+                int gemiddelde_gewicht = (int) (this.getGewicht() + b.getGewicht()) / 2;
+                // Verschil ouders berekenen
+                int verschil_strength = this.getStrength() - b.getStrength();
+                int verschil_stamina = this.getStamina() - b.getStamina();
+                int verschil_energie = this.getEnergie() - b.getEnergie();
+                int verschil_legs = this.getLegs() - b.getLegs();
+                int verschil_gewicht = this.getGewicht() - b.getGewicht();
+                // Percentage Bepalen
+                double percentage_strength = (double) (Math.random() * 10) / 100;
+                double percentage_stamina = (double) (Math.random() * 10) / 100;
+                double percentage_energie = (double) (Math.random() * 10) / 100;
+                double percentage_legs = (double) (Math.random() * 10) / 100;
+                double percentage_gewicht = (double) (Math.random() * 10) / 100;
+                // Zet percentage double om in Integer
+                // Marge wat kind van de ouders nog overerft
+                int marge_strength = verschil_strength * (int) percentage_strength;
+                int marge_stamina = verschil_stamina * (int) percentage_stamina;
+                int marge_energie = verschil_energie * (int) percentage_energie;
+                int marge_legs = verschil_legs * (int) percentage_legs;
+                int marge_gewicht = verschil_gewicht * (int) percentage_gewicht;
+                
+                Random random = new Random();
+                int num = random.nextInt(2);
+                if(num == 1){
+                   strength = gemiddelde_strength + marge_strength;
+                   stamina = gemiddelde_stamina + marge_stamina;
+                   energie = gemiddelde_energie + marge_energie;
+                   legs = gemiddelde_legs + marge_legs;
+                   gewicht = gemiddelde_gewicht + marge_gewicht;
+                }
+                if(num == 2){
+                   strength = gemiddelde_strength - marge_strength;
+                   stamina = gemiddelde_stamina - marge_stamina;
+                   energie = gemiddelde_energie - marge_energie;
+                   legs = gemiddelde_legs - marge_legs;
+                   gewicht = gemiddelde_gewicht - marge_gewicht;
+                }
+            
+            // Als beide beesten omnivoor zijn doe dan dit ook uitvoeren                                      
+            if(this instanceof Omnivoor && b instanceof Omnivoor){
+                // @TODO Positie bepalen
+                ArrayList<Integer> pos = new ArrayList<>();
+                // Maak Omnivoor
+                Omnivoor o = new Omnivoor(pos);
+                // Print out Omnivoor to Console
+                o.toString();
+                return o;
+            }
+            if(this instanceof Omnivoor && b instanceof Carnivoor){
+                //
+                }
+                else{
+                    System.out.println("Kan geen beest maken.");
+                }
+            } 
+            return null;
     }
     
+    
+    public int getHitsigheid(){
+        return hitsigheid;
+    }   
+    public int getGewicht(){
+        return gewicht;
+    }
+    public int getStrength(){
+        return strength;
+    }
+    public int getStamina() {
+        return stamina;
+    }
+    public int getLegs() {
+        return legs;
+    }
+    // Voor paren, kosten 10% stamina van ouders aftrekken
+    public int kostenStaminaBeest() {
+        double voortplantingskosten = this.getStamina() - this.getStamina();
+        stamina = stamina - (int) voortplantingskosten;
+        return stamina;
+    }
+    @Override
+     public String toString() {
+        return "Strength: " + strength + "Stamina " + stamina + "Legs: " + legs + "Energie: " + energie;
+    }
     public ArrayList<Integer> getPositie() {
         return positie;
     }

@@ -12,14 +12,13 @@ import java.util.ArrayList;
  * @author Lars Ko Tarkan
  */
 public class Omnivoor extends Beest {
- 
     
-     public Omnivoor(ArrayList<Integer> pos) {
+    public Omnivoor(ArrayList<Integer> pos) {
         this.positie = pos;
         strength = 40;
         energie = 4000;
         stamina = 4000;        
-    }    
+    }     
     
     /**
      * @see wereldsimulatie.Beest#eet
