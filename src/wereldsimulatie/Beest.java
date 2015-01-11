@@ -180,8 +180,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
                 int marge_legs = verschil_legs * (int) percentage_legs;
                 int marge_gewicht = verschil_gewicht * (int) percentage_gewicht;
                 
+                // Random met een kans van 50 / 50
                 Random random = new Random();
                 int num = random.nextInt(2);
+                // +
                 if(num == 1){
                    strength = gemiddelde_strength + marge_strength;
                    stamina = gemiddelde_stamina + marge_stamina;
@@ -189,6 +191,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
                    legs = gemiddelde_legs + marge_legs;
                    gewicht = gemiddelde_gewicht + marge_gewicht;
                 }
+                // -
                 if(num == 2){
                    strength = gemiddelde_strength - marge_strength;
                    stamina = gemiddelde_stamina - marge_stamina;
@@ -207,14 +210,101 @@ abstract public class Beest<T> extends Observable implements Serializable {
                 o.toString();
                 return o;
             }
-            if(this instanceof Omnivoor && b instanceof Carnivoor){
-                //
+            // Als beide beesten carnivoor zijn doe dan dit ook uitvoeren                                      
+            if(this instanceof Carnivoor && b instanceof Carnivoor){
+                // @TODO Positie bepalen
+                ArrayList<Integer> pos = new ArrayList<>();
+                // Maak Omnivoor
+                Carnivoor c = new Carnivoor(pos);
+                // Print out Omnivoor to Console
+                c.toString();
+                return c;
+            }
+            // Als beide beesten herbivoor zijn doe dan dit ook uitvoeren                                      
+            if(this instanceof Herbivoor && b instanceof Herbivoor){
+                // @TODO Positie bepalen
+                ArrayList<Integer> pos = new ArrayList<>();
+                // Maak Omnivoor
+                Herbivoor h = new Herbivoor(pos);
+                // Print out Omnivoor to Console
+                h.toString();
+                return h;
+            }
+            
+            // Omnivoor en carnivoor dan dit uitvoeren
+            if((this instanceof Omnivoor && b instanceof Carnivoor) || 
+              (this instanceof Carnivoor && b instanceof Omnivoor)){
+                // @TODO Positie bepalen
+                ArrayList<Integer> pos = new ArrayList<>();
+                // 50 / 50
+                // Random met een kans van 50 / 50
+                int rbeest = random.nextInt(2);
+                if(rbeest == 1){
+                    // Maak Omnivoor
+                    Omnivoor o = new Omnivoor(pos);
+                    // Print out Omnivoor to Console
+                    o.toString();
+                    return o;
                 }
-                else{
-                    System.out.println("Kan geen beest maken.");
+                if(rbeest == 2){
+                    // Maak Carnivoor
+                    Carnivoor c = new Carnivoor(pos);
+                    // Print out Omnivoor to Console
+                    c.toString();
+                    return c;
+                }
+                }
+             // Omnivoor en herbivoor dan dit uitvoeren
+             if((this instanceof Omnivoor && b instanceof Herbivoor) || 
+              (this instanceof Herbivoor && b instanceof Omnivoor)){
+                // @TODO Positie bepalen
+                ArrayList<Integer> pos = new ArrayList<>();
+                // 50 / 50
+                // Random met een kans van 50 / 50
+                int rbeest = random.nextInt(2);
+                if(rbeest == 1){
+                    // Maak Omnivoor
+                    Omnivoor o = new Omnivoor(pos);
+                    // Print out Omnivoor to Console
+                    o.toString();
+                    return o;
+                }
+                if(rbeest == 2){
+                    // Maak Herbivoor
+                    Herbivoor h = new Herbivoor(pos);
+                    // Print out Omnivoor to Console
+                    h.toString();
+                    return h;
+                }
+                }
+            // Carnivoor en herbivoor dan dit uitvoeren
+            if((this instanceof Carnivoor && b instanceof Herbivoor) || 
+              (this instanceof Herbivoor && b instanceof Carnivoor)){
+                // @TODO Positie bepalen
+                ArrayList<Integer> pos = new ArrayList<>();
+                // 50 / 50
+                // Random met een kans van 50 / 50
+                int rbeest = random.nextInt(2);
+                if(rbeest == 1){
+                    // Maak Omnivoor
+                    Omnivoor o = new Omnivoor(pos);
+                    // Print out Omnivoor to Console
+                    o.toString();
+                    return o;
+                }
+                if(rbeest == 2){
+                    // Maak Herbivoor
+                    Herbivoor h = new Herbivoor(pos);
+                    // Print out Omnivoor to Console
+                    h.toString();
+                    return h;
+                }
                 }
             } 
-            return null;
+        else{
+            // @TODO als de beesten niet hitsig zijn en gaan paren
+        }
+        return null;
     }
     
     
@@ -233,7 +323,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public int getLegs() {
         return legs;
     }
-    // Voor paren, kosten 10% stamina van ouders aftrekken
+    // Voor paren, kosten 10% stamina van ouders aftrekken @author Lars
     public int kostenStaminaBeest() {
         double voortplantingskosten = this.getStamina() - this.getStamina();
         stamina = stamina - (int) voortplantingskosten;
