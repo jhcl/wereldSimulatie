@@ -25,6 +25,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
     protected int gewicht;
     protected int legs;  
     protected int hitsigheid; 
+    protected int zwemDrempel;
+    protected int voortplantingsKosten;
+    protected int beweegDrempel;
+    protected int honger;
     
     /**
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
@@ -49,22 +53,23 @@ abstract public class Beest<T> extends Observable implements Serializable {
         richting.add(xRichting);
         richting.add(yRichting);
     }
-    
-    public Beest(int strength, int legs) {
-        this.positie = new ArrayList<>();
-        this.richting = new ArrayList<>();
-        Random rnd = new Random();
-        int xRichting = rnd.nextInt(3) - 1;
-        int yRichting = rnd.nextInt(3) - 1;
-        richting.add(xRichting);
-        richting.add(yRichting);
+
+    public Beest(ArrayList<Integer> positie, ArrayList<Integer> richting, int strength, int energie, int stamina, int gewicht, int legs, int hitsigheid, int zwemDrempel, int voortplantingsKosten, int beweegDrempel, int honger) {
+        this.positie = positie;
+        this.richting = richting;
         this.strength = strength;
-        this.stamina = 100 * strength;
-        this.energie = stamina;
+        this.energie = energie;
+        this.stamina = stamina;
+        this.gewicht = gewicht;
         this.legs = legs;
-        this.gewicht = legs * 10;
         this.hitsigheid = hitsigheid;
+        this.zwemDrempel = zwemDrempel;
+        this.voortplantingsKosten = voortplantingsKosten;
+        this.beweegDrempel = beweegDrempel;
+        this.honger = honger;
     }
+    
+
     
     /**
      * Abstracte methode die als argument een eetbaar object verwacht.
