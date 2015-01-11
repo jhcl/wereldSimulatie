@@ -15,6 +15,9 @@ import java.util.Observable;
  */
 public class Plant extends Observable implements Serializable{
     private ArrayList<Integer> positie;
+    private int grootte;
+    protected int energie;
+    
     
     /**
      * Constructor voor plant. <br>
@@ -25,6 +28,14 @@ public class Plant extends Observable implements Serializable{
     public Plant(ArrayList<Integer> positie) {
         this.positie = positie;
     }
+
+    public Plant(ArrayList<Integer> positie, int grootte, int energie) {
+        this.positie = positie;
+        this.grootte = grootte;
+        this.energie = energie;
+    }
+    
+    
     
     /**
      * als plant niet dood is groeit het per method call 1 energie unit.

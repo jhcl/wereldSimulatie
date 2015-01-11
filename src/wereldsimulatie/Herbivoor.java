@@ -28,7 +28,24 @@ public class Herbivoor extends Beest<Plant> {
     @Override
     public void eet(Plant p) {
         
-    }    
+        int behoefte = strength * 10;
+        int schadePlant = 10;
+
+            if(p.energie >= schadePlant)
+            {
+                energie = energie + (behoefte);
+                p.energie = p.energie - schadePlant;
+            }
+            else
+            {
+                behoefte = p.energie * 10 ;
+                p.energie = p.energie - p.energie;
+                energie = energie + behoefte;  
+            }
+    
+        }
+        
+    
     
 
     

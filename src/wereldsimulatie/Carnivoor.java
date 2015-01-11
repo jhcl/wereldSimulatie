@@ -19,8 +19,7 @@ public class Carnivoor extends Beest<Beest> {
         energie = 5000;
         stamina = 5000;
     }    
-     
-     
+
 //    public Carnivoor(int strength, int legs) {
 //        super(strength, legs);
 //        this.strength = 50;
