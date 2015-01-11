@@ -54,7 +54,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         richting.add(yRichting);
     }
 
-    public Beest(ArrayList<Integer> positie, ArrayList<Integer> richting, int strength, int energie, int stamina, int gewicht, int legs, int hitsigheid, int zwemDrempel, int voortplantingsKosten, int beweegDrempel, int honger) {
+    public Beest(ArrayList<Integer> positie,  int stamina, int legs, int hitsigheid, int voortplantingsKosten, int beweegDrempel, int honger) {
         this.positie = positie;
         this.richting = richting;
         this.strength = strength;
