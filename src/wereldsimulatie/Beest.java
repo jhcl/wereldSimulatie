@@ -54,19 +54,21 @@ abstract public class Beest<T> extends Observable implements Serializable {
         richting.add(yRichting);
     }
 
-    public Beest(ArrayList<Integer> positie,  int stamina, int legs, int hitsigheid, int voortplantingsKosten, int beweegDrempel, int honger) {
+    public Beest(ArrayList<Integer> positie, int strength, int legs) {
+        this.richting = new ArrayList<>();        
+        Random rnd = new Random();
+        int xRichting = rnd.nextInt(3) - 1;
+        int yRichting = rnd.nextInt(3) - 1;
+        richting.add(xRichting);
+        richting.add(yRichting);
         this.positie = positie;
-        this.richting = richting;
         this.strength = strength;
-        this.energie = energie;
-        this.stamina = stamina;
-        this.gewicht = gewicht;
         this.legs = legs;
-        this.hitsigheid = hitsigheid;
-        this.zwemDrempel = zwemDrempel;
-        this.voortplantingsKosten = voortplantingsKosten;
-        this.beweegDrempel = beweegDrempel;
-        this.honger = honger;
+        this.stamina = strength * 100;
+        this.energie = stamina;
+        this.gewicht = legs * 10;
+        this.voortplantingsKosten = (int)Math.round(stamina * 0.1);
+        this.beweegDrempel = (int)Math.round(stamina * 0.05);
     }
     
 
