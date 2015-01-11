@@ -109,7 +109,13 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public void beweeg(int x, int y) {
         positie.set(0, x);
         positie.set(1, y); 
-        energie -= 5;
+        energie -= 10;
+        setChanged();
+        notifyObservers();
+    }
+    
+    public int getEnergie() {
+        return energie;
     }
     
     /**

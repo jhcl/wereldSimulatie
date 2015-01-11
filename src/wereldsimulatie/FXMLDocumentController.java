@@ -35,7 +35,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -75,12 +74,16 @@ public class FXMLDocumentController implements Initializable, Observer {
      
     private Pane pane = new Pane();
     private List<Polygon> p = new ArrayList<>(); 
+    private List<Poppetjes> pp = new ArrayList<>();    
     private Random rand = new Random();
     long tikken = 100000000;
     private ModelFacade model;
     private int schaalX, schaalY;
 
-    
+    /**
+     *
+     * @param model
+     */
     public FXMLDocumentController(ModelFacade model) {
         this.model = model;
     }
@@ -134,7 +137,6 @@ public class FXMLDocumentController implements Initializable, Observer {
             }
             else {
                 tikken = 100000*(long)Math.pow(slider.getValue(),2) + 100000000L;
-                System.out.println(tikken + " " + slider.getValue());
             }
             timer = new BeestTimer();
             timer.start();
@@ -176,6 +178,7 @@ public class FXMLDocumentController implements Initializable, Observer {
             InputStream inFile = new FileInputStream(file);
             InputStream buffer = new BufferedInputStream(inFile);
             try {
+                model.getEilanden().clear();
                 ObjectInput in = new ObjectInputStream(buffer);
                 model = (Wereld)in.readObject();
             }
@@ -207,8 +210,6 @@ public class FXMLDocumentController implements Initializable, Observer {
         double maxX = scroll.getContent().getBoundsInParent().getMaxX();
         double maxY = scroll.getContent().getBoundsInParent().getMaxY();
         scroll.getContent().setTranslateX((scroll.getPrefWidth()/2 - event.getX())/2);
-        System.out.println(scroll.getPrefWidth());
-        System.out.println(event.getX());
         
         scroll.getContent().setTranslateY((scroll.getPrefHeight()/2 - event.getY())/2);
         if (scroll.getContent().getBoundsInParent().getWidth() <= scroll.getContent().getBoundsInLocal().getWidth()) {
@@ -245,16 +246,28 @@ public class FXMLDocumentController implements Initializable, Observer {
             p.clear();
             if (arg instanceof ArrayList<?>) {
                 for (Object pt : (ArrayList<Object>)arg) {
-                    if (pt instanceof Beest) { 
+                    if (pt instanceof Beest) {
+//                        if (((Beest)pt).countObservers() != 1) {
+//                            Poppetjes polp = new Poppetjes(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0}); 
+//                            ((Beest)pt).addObserver((Observer) polp);
+//                            polp.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
+//                            polp.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY); 
+//                            pp.add(polp);
+//                            if (pt instanceof Carnivoor) {polp.setFill(Color.RED);}
+//                            else if (pt instanceof Herbivoor) {polp.setFill(Color.BROWN);}
+//                            else if (pt instanceof Omnivoor) {polp.setFill(Color.YELLOW);} 
+//                            pane.getChildren().add(polp);
+//                        }
+                        
+                        
+//                        System.out.println(((Beest)pt).getEnergie());
                         Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0});
                         pol.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
                         pol.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY);
-    //                   pt.addObserver((Observer) pol);
                         if (pt instanceof Carnivoor) {pol.setFill(Color.RED);}
                         else if (pt instanceof Herbivoor) {pol.setFill(Color.BROWN);}
                         else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
                         p.add(pol);
-//                        pane.getChildren().add(pol);
                     }
                     if (pt instanceof Obstakel) {
                         Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
@@ -264,6 +277,17 @@ public class FXMLDocumentController implements Initializable, Observer {
                         pane.getChildren().add(pol);
                     }
                     if (pt instanceof Plant) {
+                
+//                        if (((Plant)pt).countObservers() != 1) {
+//                            Poppetjes polp = new Poppetjes(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0}); 
+//                            ((Plant)pt).addObserver((Observer) polp);
+//                            polp.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
+//                            polp.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY); 
+//                            pp.add(polp);
+//                            polp.setFill(Color.GREEN);
+//                            pane.getChildren().add(polp);
+//                        }                         
+                        
                         Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
                         pol.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
                         pol.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY);  
@@ -272,6 +296,7 @@ public class FXMLDocumentController implements Initializable, Observer {
                     }
                 }
                 pane.getChildren().addAll(p);
+               
             }
         }
     }

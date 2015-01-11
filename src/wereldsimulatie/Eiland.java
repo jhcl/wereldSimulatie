@@ -128,6 +128,9 @@ public class Eiland implements Serializable{
             for (int i = 0; i < oppervlak.size(); i += 2) {
                 if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
                     b.beweeg(newX, newY); 
+                    if (b.getEnergie() <= 0) {
+                        opruimLijst.add(b);
+                    }
                     opLand = true; 
                     break;
                 }

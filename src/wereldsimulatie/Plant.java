@@ -7,12 +7,13 @@ package wereldsimulatie;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Eetbare vegetatie dat op land groeit
  * @author Lars Ko Tarkan
  */
-public class Plant implements Serializable{
+public class Plant extends Observable implements Serializable{
     private ArrayList<Integer> positie;
     
     /**
@@ -30,7 +31,8 @@ public class Plant implements Serializable{
      * 
      */
     public void groei() {
-        
+        setChanged();
+        notifyObservers();        
     }
     
     public ArrayList<Integer> getPositie() {

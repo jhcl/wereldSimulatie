@@ -94,6 +94,9 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
                 int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
                 int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;                 
                 b.beweeg(newX, newY);
+                if (b.getEnergie() <= 0) {
+                    opruimLijst.add(b);
+                }                
                 for (Eiland el : eilanden) {
                     for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
                         if (el.getEilandOppervlak().get(i) == newX && el.getEilandOppervlak().get(i+1) == newY) {
