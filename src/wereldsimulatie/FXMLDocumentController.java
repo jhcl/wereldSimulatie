@@ -148,11 +148,11 @@ public class FXMLDocumentController implements Initializable, Observer {
         FileChooser fc = new FileChooser(); 
         File file = fc.showSaveDialog(null);
         if (file != null) {
-            OutputStream outFile = new FileOutputStream(file, false);
-            OutputStream buffer = new BufferedOutputStream(outFile);
+            FileOutputStream outFile = new FileOutputStream(file, false);
+//            BufferedOutputStream buffer = new BufferedOutputStream(outFile);
             try {
-                ObjectOutput out = new ObjectOutputStream(buffer);
-                out.writeObject(model);
+                ObjectOutputStream out = new ObjectOutputStream(outFile);
+                out.writeObject((Wereld)model);
             }
             catch (IOException e) {System.out.println(e.toString());}
             finally { 
@@ -174,11 +174,11 @@ public class FXMLDocumentController implements Initializable, Observer {
         FileChooser fc = new FileChooser();
         File file = fc.showOpenDialog(null);
         if (file != null) {        
-            InputStream inFile = new FileInputStream(file);
-            InputStream buffer = new BufferedInputStream(inFile);
+            FileInputStream inFile = new FileInputStream(file);
+//            InputStream buffer = new BufferedInputStream(inFile);
             try {
                 model.getEilanden().clear();
-                ObjectInput in = new ObjectInputStream(buffer);
+                ObjectInputStream in = new ObjectInputStream(inFile);
                 model = (Wereld)in.readObject();
             }
             catch (Exception e) {System.out.println(e.toString());}
