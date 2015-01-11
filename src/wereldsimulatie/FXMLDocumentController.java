@@ -152,7 +152,7 @@ public class FXMLDocumentController implements Initializable, Observer {
 //            BufferedOutputStream buffer = new BufferedOutputStream(outFile);
             try {
                 ObjectOutputStream out = new ObjectOutputStream(outFile);
-                out.writeObject((Wereld)model);
+                out.writeObject((ModelFacade)model);
             }
             catch (IOException e) {System.out.println(e.toString());}
             finally { 
@@ -179,7 +179,22 @@ public class FXMLDocumentController implements Initializable, Observer {
             try {
                 model.getEilanden().clear();
                 ObjectInputStream in = new ObjectInputStream(inFile);
-                model = (Wereld)in.readObject();
+                model = (ModelFacade)in.readObject();
+//                for (Eiland ei : model.getEilanden()) {
+//                    System.out.println(ei.toString());
+//                    for (Beest bt : ei.getBeesten()) {
+//                        System.out.println(bt.getPositie());
+//                    }
+//                }
+                ArrayList<Polygon> opruimLijst = new ArrayList<>();
+                for (Object pi : pane.getChildren()) {
+                    if (pi instanceof Poppetjes) {
+                        opruimLijst.add((Poppetjes)pi);
+                    }
+                }
+                pane.getChildren().removeAll(opruimLijst);
+                opruimLijst.clear();
+                ((Wereld)model).addObserver(this);
             }
             catch (Exception e) {System.out.println(e.toString());}
             finally { 
@@ -239,6 +254,7 @@ public class FXMLDocumentController implements Initializable, Observer {
         if (o==this.model) {
             pane.getChildren().removeAll(p);
             p.clear();
+            
             if (arg instanceof ArrayList<?>) {
                 for (Object pt : (ArrayList<Object>)arg) {
                     if (pt instanceof Beest) {
@@ -254,7 +270,6 @@ public class FXMLDocumentController implements Initializable, Observer {
 //                        }
                         
                         
-//                        System.out.println(((Beest)pt).getEnergie());
                         Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0});
                         pol.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
                         pol.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY);

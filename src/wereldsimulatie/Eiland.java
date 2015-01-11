@@ -156,6 +156,5 @@ public class Eiland implements Serializable{
         }
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
-        
     }
 }
