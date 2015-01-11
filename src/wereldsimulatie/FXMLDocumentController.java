@@ -74,7 +74,6 @@ public class FXMLDocumentController implements Initializable, Observer {
      
     private Pane pane = new Pane();
     private List<Polygon> p = new ArrayList<>(); 
-    private List<Poppetjes> pp = new ArrayList<>();    
     private Random rand = new Random();
     long tikken = 100000000;
     private ModelFacade model;
@@ -205,10 +204,6 @@ public class FXMLDocumentController implements Initializable, Observer {
     private void zoom(ScrollEvent event) {
         pane.setScaleX(pane.getScaleX() + event.getDeltaY()/2000);
         pane.setScaleY(pane.getScaleY() + event.getDeltaY()/2000);
-        double minX = scroll.getContent().getBoundsInParent().getMinX();
-        double minY = scroll.getContent().getBoundsInParent().getMinY();
-        double maxX = scroll.getContent().getBoundsInParent().getMaxX();
-        double maxY = scroll.getContent().getBoundsInParent().getMaxY();
         scroll.getContent().setTranslateX((scroll.getPrefWidth()/2 - event.getX())/2);
         
         scroll.getContent().setTranslateY((scroll.getPrefHeight()/2 - event.getY())/2);
@@ -252,7 +247,6 @@ public class FXMLDocumentController implements Initializable, Observer {
 //                            ((Beest)pt).addObserver((Observer) polp);
 //                            polp.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
 //                            polp.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY); 
-//                            pp.add(polp);
 //                            if (pt instanceof Carnivoor) {polp.setFill(Color.RED);}
 //                            else if (pt instanceof Herbivoor) {polp.setFill(Color.BROWN);}
 //                            else if (pt instanceof Omnivoor) {polp.setFill(Color.YELLOW);} 
@@ -283,7 +277,6 @@ public class FXMLDocumentController implements Initializable, Observer {
 //                            ((Plant)pt).addObserver((Observer) polp);
 //                            polp.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
 //                            polp.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY); 
-//                            pp.add(polp);
 //                            polp.setFill(Color.GREEN);
 //                            pane.getChildren().add(polp);
 //                        }                         
