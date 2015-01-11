@@ -5,13 +5,19 @@
  */
 package wereldsimulatie;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -60,17 +69,16 @@ public class FXMLDocumentController implements Initializable, Observer {
     @FXML
     private Slider slider;
     @FXML
-    private Slider slider2;    
-    @FXML
     private GridPane grid_totaal;
-    
-    Pane pane = new Pane();
-    List<Polygon> p = new ArrayList<>(); 
-    Random rand = new Random();
+    @FXML
+    private FlowPane flow;
+     
+    private Pane pane = new Pane();
+    private List<Polygon> p = new ArrayList<>(); 
+    private Random rand = new Random();
     long tikken = 100000000;
-    
-    private  ModelFacade model;
-    int schaalX, schaalY;
+    private ModelFacade model;
+    private int schaalX, schaalY;
 
     
     public FXMLDocumentController(ModelFacade model) {
@@ -84,13 +92,11 @@ public class FXMLDocumentController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        pane.setPrefSize((model.getWereldSize().get(0)/model.getWereldSize().get(1))*scroll.getPrefHeight(), scroll.getPrefHeight());    
+        pane.setPrefSize(((double)model.getWereldSize().get(0)/model.getWereldSize().get(1))*scroll.getPrefHeight(), scroll.getPrefHeight());    
         scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
-//        scroll.setPannable(true);
         scroll.setContent(pane);
-
-        schaalX = (int)scroll.getPrefWidth() / model.getWereldSize().get(0);
+       schaalX = (int)scroll.getPrefWidth() / model.getWereldSize().get(0);
  //       schaalY = (int)pane.getPrefHeight() / model.getWereldSize().get(1);
         schaalY = schaalX;
         for (Eiland e : model.getEilanden()) {
@@ -107,8 +113,6 @@ public class FXMLDocumentController implements Initializable, Observer {
         slider.setValue(0);
         slider.setMax(100);
         slider.setMin(-100);
-        slider2.setMax(10);
-        slider2.setMin(1);
         timer.start();
         
     } 
@@ -129,7 +133,8 @@ public class FXMLDocumentController implements Initializable, Observer {
                 tikken = 100000000 - 1000000 * (int)slider.getValue();
             }
             else {
-                tikken = 100000000 + 100000*(long)Math.pow(slider.getValue(),2);
+                tikken = 100000*(long)Math.pow(slider.getValue(),2) + 100000000L;
+                System.out.println(tikken + " " + slider.getValue());
             }
             timer = new BeestTimer();
             timer.start();
@@ -142,9 +147,10 @@ public class FXMLDocumentController implements Initializable, Observer {
         FileChooser fc = new FileChooser(); 
         File file = fc.showSaveDialog(null);
         if (file != null) {
-            FileOutputStream outFile = new FileOutputStream(file, false);
+            OutputStream outFile = new FileOutputStream(file, false);
+            OutputStream buffer = new BufferedOutputStream(outFile);
             try {
-                ObjectOutputStream out = new ObjectOutputStream(outFile);
+                ObjectOutput out = new ObjectOutputStream(buffer);
                 out.writeObject(model);
             }
             catch (IOException e) {System.out.println(e.toString());}
@@ -166,20 +172,22 @@ public class FXMLDocumentController implements Initializable, Observer {
     public void restoreSim(javafx.scene.input.MouseEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
         File file = fc.showOpenDialog(null);
-        FileInputStream inFile = new FileInputStream(file);
-        try {
-            ObjectInputStream in = new ObjectInputStream(inFile);
- //           Wereld model2 = new Wereld();
-            model = (Wereld)in.readObject();
-        }
-        catch (Exception e) {System.out.println(e.toString());}
-        finally { 
+        if (file != null) {        
+            InputStream inFile = new FileInputStream(file);
+            InputStream buffer = new BufferedInputStream(inFile);
             try {
-                inFile.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                ObjectInput in = new ObjectInputStream(buffer);
+                model = (Wereld)in.readObject();
             }
-        }        
+            catch (Exception e) {System.out.println(e.toString());}
+            finally { 
+                try {
+                    inFile.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 
     
@@ -191,12 +199,25 @@ public class FXMLDocumentController implements Initializable, Observer {
     }
     
     @FXML
-    private void zoom(javafx.scene.input.MouseEvent event) {
-       if (event.getSource() == slider2) {
-            scroll.setScaleX(slider2.getValue());
-            scroll.setScaleY(slider2.getValue());
+    private void zoom(ScrollEvent event) {
+        pane.setScaleX(pane.getScaleX() + event.getDeltaY()/2000);
+        pane.setScaleY(pane.getScaleY() + event.getDeltaY()/2000);
+        double minX = scroll.getContent().getBoundsInParent().getMinX();
+        double minY = scroll.getContent().getBoundsInParent().getMinY();
+        double maxX = scroll.getContent().getBoundsInParent().getMaxX();
+        double maxY = scroll.getContent().getBoundsInParent().getMaxY();
+        scroll.getContent().setTranslateX((scroll.getPrefWidth()/2 - event.getX())/2);
+        System.out.println(scroll.getPrefWidth());
+        System.out.println(event.getX());
+        
+        scroll.getContent().setTranslateY((scroll.getPrefHeight()/2 - event.getY())/2);
+        if (scroll.getContent().getBoundsInParent().getWidth() <= scroll.getContent().getBoundsInLocal().getWidth()) {
+            scroll.getContent().setTranslateX(0);
+            scroll.getContent().setTranslateY(0);            
         }
     }    
+
+    
     /**
      * stop timer om simulatie te pauzeren
      */
@@ -233,7 +254,7 @@ public class FXMLDocumentController implements Initializable, Observer {
                         else if (pt instanceof Herbivoor) {pol.setFill(Color.BROWN);}
                         else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
                         p.add(pol);
-                        pane.getChildren().add(pol);
+//                        pane.getChildren().add(pol);
                     }
                     if (pt instanceof Obstakel) {
                         Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
@@ -250,7 +271,7 @@ public class FXMLDocumentController implements Initializable, Observer {
                         pane.getChildren().add(pol);
                     }
                 }
-                
+                pane.getChildren().addAll(p);
             }
         }
     }

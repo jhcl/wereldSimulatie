@@ -7,7 +7,6 @@ package wereldsimulatie;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 
@@ -16,19 +15,23 @@ import java.util.Random;
  * @author Lars Ko Tarkan
  */
 public class Eiland implements Serializable{
-    ArrayList<Beest> beesten;
-    ArrayList<Obstakel> obstakels;
-    ArrayList<Plant> planten;
-    ArrayList<Integer> oppervlak;
-    Wereld model;
+    private ArrayList<Beest> beesten;
+    private ArrayList<Obstakel> obstakels;
+    private ArrayList<Plant> planten;
+    private ArrayList<Integer> oppervlak;
+    private ArrayList<Beest> opruimLijst;
+    Wereld ouder;
     
-    public Eiland(ArrayList<Integer> opp) {
+    public Eiland(ArrayList<Integer> opp, Wereld w) {
+        ouder = w;
         oppervlak = opp;
         Random rnd = new Random();
         beesten = new ArrayList<>(); 
         obstakels = new ArrayList<>();
         planten = new ArrayList<>();
-        for (int i = 0; i < 120; i++) {
+        opruimLijst = new ArrayList<>();
+        
+        for (int i = 0; i < 60; i++) {
             int willekeurigX = rnd.nextInt(oppervlak.size());
             if (willekeurigX % 2 != 0) { 
                 if (willekeurigX != 0) {willekeurigX--; }
@@ -37,20 +40,22 @@ public class Eiland implements Serializable{
             ArrayList<Integer> pos = new ArrayList<>();
             pos.add(oppervlak.get(willekeurigX));
             pos.add(oppervlak.get(willekeurigX+1));
-            int temp = rnd.nextInt(5);
-            if (temp == 0) {
+            
+            // Snelle manier om aantal objecten naar verhouding te maken
+            int temp = rnd.nextInt(10);
+            if (temp == 0 || temp == 1 || temp == 2 || temp == 3) {
                 beesten.add(new Carnivoor(pos));
             } 
-            else if (temp == 1) {
+            else if (temp == 4) {
                 beesten.add(new Herbivoor(pos));
             }
-            else if (temp == 2) {
+            else if (temp == 5) {
                 beesten.add(new Omnivoor(pos)); 
             }    
-            else if (temp == 3) {
+            else if (temp == 6) {
                 obstakels.add(new Obstakel(pos));
             }
-            else if (temp == 4) {
+            else if (temp == 7 || temp == 8 || temp ==9) {
                 planten.add(new Plant(pos));
             }            
         }
@@ -113,8 +118,6 @@ public class Eiland implements Serializable{
      */
     public void stapDoorSimulatie() {
         Random rnd = new Random();
-//        for (Iterator<Beest> iterator = beesten.iterator(); iterator.hasNext();) {
-//            Beest b = iterator.next();
         for (Beest b : beesten) {
             int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
             int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;
@@ -142,13 +145,14 @@ public class Eiland implements Serializable{
             }
             if (!opLand) {
                 if (b.wilZwemmen()) {
-//                    model.voegZwemmersToe(b);
-                    beesten.remove(b);
-                    
-                    System.out.println(beesten.size());
+                    ouder.voegZwemmersToe(b);
+                    opruimLijst.add(b);
                 }
                 b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
         }
+        beesten.removeAll(opruimLijst);
+        opruimLijst.clear();
+        
     }
 }
