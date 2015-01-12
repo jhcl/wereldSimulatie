@@ -25,6 +25,7 @@ public class Carnivoor extends Beest<Beest> {
         super(positie, strength, legs);
         this.strength = 50;
         this.legs = 5;
+        this.positie = positie;
     }
 
     /**

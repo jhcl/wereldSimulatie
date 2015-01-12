@@ -29,6 +29,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     protected int voortplantingsKosten;
     protected int beweegDrempel;
     protected int honger;
+    protected int snelheid;
     
     /**
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
@@ -45,13 +46,14 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * Bij 0 (nul) energie is een beest dood en verdwijnt het object<br>
      */
     public Beest() {
-        this.positie = new ArrayList<>();
-        this.richting = new ArrayList<>();        
+        positie = new ArrayList<>();
+        richting = new ArrayList<>();        
         Random rnd = new Random();
         int xRichting = rnd.nextInt(3) - 1;
         int yRichting = rnd.nextInt(3) - 1;
         richting.add(xRichting);
         richting.add(yRichting);
+        snelheid = legs - (int)Math.floor(energie-strength / 1000);
     }
 
     public Beest(ArrayList<Integer> positie, int strength, int legs) {
@@ -356,5 +358,9 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public void setRichting(int x, int y) {
         richting.set(0,x);
         richting.set(1,y);
+    }
+    
+    public int getSnelheid() {
+        return snelheid;
     }
 }

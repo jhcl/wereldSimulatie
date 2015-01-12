@@ -91,15 +91,15 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
         for (Eiland e : eilanden) {
             e.stapDoorSimulatie();
             for (Beest b : zwemmers) {
-                int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
-                int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;                 
-                b.beweeg(newX, newY);
-                if (b.getEnergie() <= 0) {
-                    opruimLijst.add(b);
-                }                
+                if (!(this.staatOpPositie(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1)) instanceof Obstakel)) {
+                    b.beweeg(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1));
+                    if (b.getEnergie() <= 0) {
+                        opruimLijst.add(b);
+                    }                
+                }
                 for (Eiland el : eilanden) {
                     for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
-                        if (el.getEilandOppervlak().get(i) == newX && el.getEilandOppervlak().get(i+1) == newY) {
+                        if (el.getEilandOppervlak().get(i) == this.nieuwePositie(b).get(0) && el.getEilandOppervlak().get(i+1) == this.nieuwePositie(b).get(1)) {
                             el.getBeesten().add(b);
                             opruimLijst.add(b);
                         }
@@ -143,5 +143,36 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
     public ArrayList<Beest> getZwemmers() {
         return zwemmers;
     }
+    
+    public ArrayList<Integer> nieuwePositie(Beest b) {
+        ArrayList<Integer> nieuwePos = new ArrayList<>();
+        int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
+        int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE; 
+        nieuwePos.add(newX);
+        nieuwePos.add(newY);
+        return nieuwePos;
+    }
+    
+    public Object staatOpPositie(Integer x, Integer y) {
+        for (Eiland e : eilanden) {
+            for (Beest b : e.getBeesten()) {
+                    if (b.getPositie().get(0) == x && b.getPositie().get(1) == y) {
+                        return b;
+                    }
+            }
+            for (Obstakel o : e.getObstakels()) {
+                    if (o.getPositie().get(0) == x && o.getPositie().get(1) == y) {
+                        return o;
+                    }
+            }
+            for (Plant p : e.getPlanten()) {
+                    if (p.getPositie().get(0) == x && p.getPositie().get(1) == y) {
+                        return p;
+                    }
+            }            
+        }
+        
+        return null;
+    }    
     
 }
