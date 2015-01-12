@@ -188,8 +188,8 @@ public class FXMLDocumentController implements Initializable, Observer {
 //                }
                 ArrayList<Polygon> opruimLijst = new ArrayList<>();
                 for (Object pi : pane.getChildren()) {
-                    if (pi instanceof Poppetjes) {
-                        opruimLijst.add((Poppetjes)pi);
+                    if (pi instanceof Poppetje) {
+                        opruimLijst.add((Poppetje)pi);
                     }
                 }
                 pane.getChildren().removeAll(opruimLijst);
@@ -254,12 +254,13 @@ public class FXMLDocumentController implements Initializable, Observer {
         if (o==this.model) {
             pane.getChildren().removeAll(p);
             p.clear();
-            
             if (arg instanceof ArrayList<?>) {
                 for (Object pt : (ArrayList<Object>)arg) {
                     if (pt instanceof Beest) {
+                        
 //                        if (((Beest)pt).countObservers() != 1) {
-//                            Poppetjes polp = new Poppetjes(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0}); 
+//                            
+//                            Poppetje polp = new Poppetje(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0}); 
 //                            ((Beest)pt).addObserver((Observer) polp);
 //                            polp.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
 //                            polp.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY); 
@@ -283,12 +284,13 @@ public class FXMLDocumentController implements Initializable, Observer {
                         pol.translateXProperty().set((Integer)((Obstakel)pt).getPositie().get(0)*schaalX);
                         pol.translateYProperty().set((Integer)((Obstakel)pt).getPositie().get(1)*schaalY);  
                         pol.setFill(Color.BLACK);
-                        pane.getChildren().add(pol);
+                        p.add(pol);
+                        
                     }
                     if (pt instanceof Plant) {
                 
 //                        if (((Plant)pt).countObservers() != 1) {
-//                            Poppetjes polp = new Poppetjes(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0}); 
+//                            Poppetje polp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0}); 
 //                            ((Plant)pt).addObserver((Observer) polp);
 //                            polp.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
 //                            polp.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY); 
@@ -299,8 +301,8 @@ public class FXMLDocumentController implements Initializable, Observer {
                         Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
                         pol.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
                         pol.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY);  
-                        pol.setFill(Color.GREEN);  
-                        pane.getChildren().add(pol);
+                        pol.setFill(Color.GREEN); 
+                        p.add(pol);
                     }
                 }
                 pane.getChildren().addAll(p);

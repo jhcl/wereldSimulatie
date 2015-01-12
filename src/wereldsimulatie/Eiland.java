@@ -31,7 +31,7 @@ public class Eiland implements Serializable{
         planten = new ArrayList<>();
         opruimLijst = new ArrayList<>();
         
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 300; i++) {
             int willekeurigX = rnd.nextInt(oppervlak.size());
             if (willekeurigX % 2 != 0) { 
                 if (willekeurigX != 0) {willekeurigX--; }
@@ -130,6 +130,7 @@ public class Eiland implements Serializable{
                     b.beweeg(newX, newY); 
                     if (b.getEnergie() <= 0) {
                         opruimLijst.add(b);
+                        b.deleteObservers();
                     }
                     opLand = true; 
                     break;
