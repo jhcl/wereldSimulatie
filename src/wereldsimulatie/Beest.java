@@ -30,7 +30,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     protected int beweegDrempel;
     protected int honger;
     protected int snelheid;
-    
+    protected Random rnd;
     /**
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
      * Stamina = 100 * strength<br>
@@ -48,7 +48,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public Beest() {
         positie = new ArrayList<>();
         richting = new ArrayList<>();        
-        Random rnd = new Random();
+        rnd = new Random();
         int xRichting = rnd.nextInt(3) - 1;
         int yRichting = rnd.nextInt(3) - 1;
         richting.add(xRichting);
@@ -362,5 +362,23 @@ abstract public class Beest<T> extends Observable implements Serializable {
     
     public int getSnelheid() {
         return snelheid;
+    }
+    
+    public int bots() {
+        energie = energie/2;
+        return energie;
+    }
+    
+    public ArrayList<Integer> kiesAndereRichting() {
+        ArrayList<Integer> temp = new ArrayList<>(); 
+        temp.add(-1);
+        temp.add(0);
+        temp.add(1);
+        temp.remove(richting.get(0));
+        int xRichting = temp.get(rnd.nextInt(2));
+        temp.add(richting.get(0));
+        temp.remove(richting.get(1));
+        int yRichting = temp.get(rnd.nextInt(2));        
+        return temp;
     }
 }

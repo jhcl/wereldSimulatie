@@ -95,7 +95,11 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
                     b.beweeg(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1));
                     if (b.getEnergie() <= 0) {
                         opruimLijst.add(b);
-                    }                
+                    } 
+                    else {
+                        b.bots();
+                        b.kiesAndereRichting();
+                    }
                 }
                 for (Eiland el : eilanden) {
                     for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
