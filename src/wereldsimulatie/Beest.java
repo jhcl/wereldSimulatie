@@ -119,7 +119,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public void beweeg(int x, int y) {
         positie.set(0, x);
         positie.set(1, y); 
-        energie -= 10;
+        energie -= this.getGewicht();
         setChanged();
         notifyObservers();
     }
@@ -321,8 +321,14 @@ abstract public class Beest<T> extends Observable implements Serializable {
         return hitsigheid;
     }   
     public int getGewicht(){
-        return gewicht;
+        if (energie - strength > 0) {
+            return 10 * legs + (energie - strength);
+        }
+        else {
+            return 10 * legs;
+        }
     }
+
     public int getStrength(){
         return strength;
     }
