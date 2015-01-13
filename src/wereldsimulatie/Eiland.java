@@ -157,6 +157,8 @@ public class Eiland implements Serializable{
                     }
                     stappenTeller ++;
                 }
+
+                
                 Object gezelschap = ouder.staatOpPositie((int)b.getPositie().get(0), (int)b.getPositie().get(1));
                 if (gezelschap != null) {
                     boolean eetbaar = false;
@@ -166,7 +168,7 @@ public class Eiland implements Serializable{
                         eetbaar = true;
                     }
                     if (b instanceof Herbivoor && gezelschap instanceof Plant) {
-                        System.out.println("Herbivoor bij plant");
+                        System.out.println("Herbivoor bij plant" + b.getClass());
                         b.eet(gezelschap);
                         eetbaar = true;
                     }   
@@ -191,12 +193,9 @@ public class Eiland implements Serializable{
                 else {
                     b.setRichting((int)b.kiesAndereRichting().get(0), (int)b.kiesAndereRichting().get(1));
                 }
-//                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
         }
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
     }
-    
-
 }

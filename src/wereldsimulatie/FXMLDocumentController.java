@@ -259,26 +259,26 @@ public class FXMLDocumentController implements Initializable, Observer {
                 for (Object pt : (ArrayList<Object>)arg) {
                     if (pt instanceof Beest) {
                         
-//                        if (((Beest)pt).countObservers() != 1) {
-//                            
-//                            Poppetje polp = new Poppetje(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0}); 
-//                            ((Beest)pt).addObserver((Observer) polp);
-//                            polp.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
-//                            polp.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY); 
-//                            if (pt instanceof Carnivoor) {polp.setFill(Color.RED);}
-//                            else if (pt instanceof Herbivoor) {polp.setFill(Color.BROWN);}
-//                            else if (pt instanceof Omnivoor) {polp.setFill(Color.YELLOW);} 
-//                            pane.getChildren().add(polp);
-//                        }
+                        if (((Beest)pt).countObservers() != 1) {
+                            
+                            Poppetje polp = new Poppetje(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0}); 
+                            ((Beest)pt).addObserver((Observer) polp);
+                            polp.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
+                            polp.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY); 
+                            if (pt instanceof Carnivoor) {polp.setFill(Color.RED);}
+                            else if (pt instanceof Herbivoor) {polp.setFill(Color.BROWN);}
+                            else if (pt instanceof Omnivoor) {polp.setFill(Color.YELLOW);} 
+                            pane.getChildren().add(polp);
+                        }
                         
                         
-                        Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0});
-                        pol.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
-                        pol.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY);
-                        if (pt instanceof Carnivoor) {pol.setFill(Color.RED);}
-                        else if (pt instanceof Herbivoor) {pol.setFill(Color.BROWN);}
-                        else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
-                        p.add(pol);
+//                        Polygon pol = new Polygon(new double[]{0.0, 0.0, 10.0, 0.0 ,5.0, 5.0});
+//                        pol.translateXProperty().set((Integer)((Beest)pt).getPositie().get(0)*schaalX);
+//                        pol.translateYProperty().set((Integer)((Beest)pt).getPositie().get(1)*schaalY);
+//                        if (pt instanceof Carnivoor) {pol.setFill(Color.RED);}
+//                        else if (pt instanceof Herbivoor) {pol.setFill(Color.BROWN);}
+//                        else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
+//                        p.add(pol);
                     }
                     if (pt instanceof Obstakel) {
                         Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
@@ -289,21 +289,21 @@ public class FXMLDocumentController implements Initializable, Observer {
                         
                     }
                     if (pt instanceof Plant) {
-                
-//                        if (((Plant)pt).countObservers() != 1) {
-//                            Poppetje polp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0}); 
-//                            ((Plant)pt).addObserver((Observer) polp);
-//                            polp.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
-//                            polp.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY); 
-//                            polp.setFill(Color.GREEN);
-//                            pane.getChildren().add(polp);
-//                        }                         
+
+                        if (((Plant)pt).countObservers() != 1) {
+                            Poppetje polp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0}); 
+                            ((Plant)pt).addObserver((Observer) polp);
+                            polp.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
+                            polp.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY); 
+                            polp.setFill(Color.GREEN);
+                            pane.getChildren().add(polp);
+                        }                         
                         
-                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
-                        pol.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
-                        pol.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY);  
-                        pol.setFill(Color.GREEN); 
-                        p.add(pol);
+//                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
+//                        pol.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
+//                        pol.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY);  
+//                        pol.setFill(Color.GREEN); 
+//                        p.add(pol);
                     }
                 }
                 pane.getChildren().addAll(p);

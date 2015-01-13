@@ -27,6 +27,7 @@ public class Plant extends Observable implements Serializable{
      */
     public Plant(ArrayList<Integer> positie) {
         this.positie = positie;
+        this.energie = 10;
     }
 
     public Plant(ArrayList<Integer> positie, int grootte, int energie) {
@@ -42,8 +43,22 @@ public class Plant extends Observable implements Serializable{
      * 
      */
     public void groei() {
+        energie += 1;
+        
+    }
+    
+    /**
+     *
+     * @param hoeveelheid
+     */
+    public void wordtGegeten(int hoeveelheid) {
+        this.energie -= hoeveelheid;
         setChanged();
         notifyObservers();        
+    }
+    
+    public int getEnergie() {
+        return energie;
     }
     
     public ArrayList<Integer> getPositie() {

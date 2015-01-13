@@ -49,7 +49,7 @@ public class Herbivoor extends Beest<Plant> {
             p.energie = p.energie - p.energie;
             energie = energie + behoefte;
         }
-
+        p.wordtGegeten(2);
     }
 
 }

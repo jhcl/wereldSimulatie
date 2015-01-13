@@ -17,11 +17,21 @@ public class Poppetje extends Polygon implements Observer{
     
     @Override
     public void update(Observable o, Object arg) {
-        if (((Beest)o).getEnergie() <= 0) {
-            this.setVisible(false);
+        if (o instanceof Beest) {
+            if (((Beest)o).getEnergie() <= 0) {
+                this.setVisible(false);
+            }
+            this.translateXProperty().set((Integer)((Beest)o).getPositie().get(0)*5);
+            this.translateYProperty().set((Integer)((Beest)o).getPositie().get(1)*5); 
         }
-        this.translateXProperty().set((Integer)((Beest)o).getPositie().get(0)*5);
-        this.translateYProperty().set((Integer)((Beest)o).getPositie().get(1)*5); 
+        
+        if (o instanceof Plant) {
+            if (((Plant)o).getEnergie() <= 0) {
+                this.setVisible(false);   
+            }
+            System.out.println(((Plant)o).getEnergie());
+        }
+        
     }
     
     public Poppetje (double... points) {

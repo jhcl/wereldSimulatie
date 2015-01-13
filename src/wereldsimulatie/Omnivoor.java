@@ -73,7 +73,6 @@ public class Omnivoor extends Beest {
                 energie = energie + behoefte;
             }
         }
-
     }
 
 }
