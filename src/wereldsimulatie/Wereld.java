@@ -91,6 +91,8 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
         for (Eiland e : eilanden) {
             e.stapDoorSimulatie();
             for (Beest b : zwemmers) {
+                
+                // controleer of we aan de rand van een eiland met een obstakel terecht gekomen zijn 
                 if (!(this.staatOpPositie(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1)) instanceof Obstakel)) {
                     b.beweeg(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1));
                     if (b.getEnergie() <= 0) {
@@ -101,6 +103,8 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
                         b.kiesAndereRichting();
                     }
                 }
+                
+                // zijn we geland ?
                 for (Eiland el : eilanden) {
                     for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
                         if (el.getEilandOppervlak().get(i) == this.nieuwePositie(b).get(0) && el.getEilandOppervlak().get(i+1) == this.nieuwePositie(b).get(1)) {
