@@ -128,17 +128,18 @@ public class Eiland implements Serializable{
             boolean doorlopen = true;
             int newX = ouder.nieuwePositie(b).get(0);
             int newY = ouder.nieuwePositie(b).get(1);
-            
+            int stappenTeller = 0;
+            while (stappenTeller < b.getSnelheid() && doorlopen) {
             // is de volgende positie nog land
-            for (int i = 0; i < oppervlak.size(); i += 2) {
-                if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
-                opLand = true;
-                break;
-                }
-            } 
-            if (opLand) {
-                int stappenTeller = 0;
-                while (stappenTeller < b.getSnelheid() && doorlopen) {
+                for (int i = 0; i < oppervlak.size(); i += 2) {
+                    if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
+                    opLand = true;
+                    break;
+                    }
+                } 
+                if (opLand) {
+
+
                     newX = ouder.nieuwePositie(b).get(0);
                     newY = ouder.nieuwePositie(b).get(1);
 
@@ -155,10 +156,29 @@ public class Eiland implements Serializable{
                             b.deleteObservers();
                         }
                     }
-                    stappenTeller ++;
+                    
                 }
-
-                
+                else {
+                    if (b.wilZwemmen()) {
+                        b.beweeg(newX, newY);
+                        if (b.getEnergie() <= 0) {
+                            opruimLijst.add(b);
+                            b.deleteObservers();                            
+                        }
+                        else {
+                            ouder.voegZwemmersToe(b);
+                            opruimLijst.add(b);
+                            break;
+                        }
+                        
+                    }
+                    else {
+                        b.setRichting((int)b.kiesAndereRichting().get(0), (int)b.kiesAndereRichting().get(1));
+                    }
+                }
+                stappenTeller ++;
+            }
+            if (opLand) {
                 Object gezelschap = ouder.staatOpPositie((int)b.getPositie().get(0), (int)b.getPositie().get(1));
                 if (gezelschap != null) {
                     boolean eetbaar = false;
@@ -179,23 +199,17 @@ public class Eiland implements Serializable{
                     }  
                     if (!eetbaar) {
                         if (b instanceof Beest && gezelschap instanceof Beest && b.isHitsig() && ((Beest)gezelschap).isHitsig()) {
-                            b.paar((Beest)gezelschap);
+                            beesten.add(b.paar((Beest)gezelschap));
+                            System.out.println("En weer een beest erbij.");
                         }
                     }
                 }
             }
-            else {
-                if (b.wilZwemmen()) {
-                    b.beweeg(newX, newY);
-                    ouder.voegZwemmersToe(b);
-                    opruimLijst.add(b);
-                }
-                else {
-                    b.setRichting((int)b.kiesAndereRichting().get(0), (int)b.kiesAndereRichting().get(1));
-                }
-            }
         }
+        System.out.println(beesten.size());
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
     }
+
 }
+

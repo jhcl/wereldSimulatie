@@ -119,12 +119,13 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * van het beest.<br>
      */
     public void beweeg(int x, int y) {
-        this.positie.set(0, x);
-        this.positie.set(1, y); 
-        this.energie -= this.getGewicht();
-        
-        setChanged();
-        notifyObservers();
+        if (this.energie > this.beweegDrempel) {
+            this.positie.set(0, x);
+            this.positie.set(1, y); 
+            this.energie -= this.getGewicht();
+            setChanged();
+            notifyObservers();
+        }
     }
     
     public int getEnergie() {
@@ -376,7 +377,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
     
     public int getSnelheid() {
-        return snelheid;
+        return this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);
+//        return snelheid;
     }
     
     public int bots() {
@@ -384,10 +386,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
         return energie;
     }
     
-    public boolean kanBewegen() {
-        if (energie > (beweegDrempel/100) * stamina) { return true; }
-        return false;
-    }
     
     public ArrayList<Integer> kiesAndereRichting() {
         ArrayList<Integer> temp = new ArrayList<>(); 
