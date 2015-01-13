@@ -56,6 +56,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         this.richting = new ArrayList<>();        
         this.richting.add(xRichting);
         this.richting.add(yRichting);
+      
     }
 
     public Beest(ArrayList<Integer> positie, int strength, int legs) {
@@ -121,7 +122,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public void beweeg(int x, int y) {
         this.positie.set(0, x);
         this.positie.set(1, y); 
-        this.energie -= this.getGewicht();
+        this.energie -= this.getGewicht()/100;
         
         setChanged();
         notifyObservers();

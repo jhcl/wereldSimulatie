@@ -47,10 +47,10 @@ public class Eiland implements Serializable{
                 beesten.add(new Carnivoor(pos));
             } 
             else if (temp == 4) {
-                beesten.add(new Herbivoor(pos));
+                beesten.add(new Omnivoor(pos));
             }
             else if (temp == 5) {
-                beesten.add(new Omnivoor(pos)); 
+                beesten.add(new Herbivoor(pos)); 
             }    
             else if (temp == 6) {
                 obstakels.add(new Obstakel(pos));
@@ -160,7 +160,7 @@ public class Eiland implements Serializable{
                 Object gezelschap = ouder.staatOpPositie((int)b.getPositie().get(0), (int)b.getPositie().get(1));
                 if (gezelschap != null) {
                     boolean eetbaar = false;
-                    if (b instanceof Carnivoor && gezelschap instanceof Beest) {
+                    if (b instanceof Carnivoor && gezelschap instanceof Beest && b != gezelschap) {
                         System.out.println("Carnivoor bij beest");
                         b.eet((Beest)gezelschap);
                         eetbaar = true;
@@ -170,14 +170,16 @@ public class Eiland implements Serializable{
                         b.eet(gezelschap);
                         eetbaar = true;
                     }   
-                    if (b instanceof Omnivoor && (gezelschap instanceof Beest || gezelschap instanceof Plant)) {
+                    if (b instanceof Omnivoor && (gezelschap instanceof Beest || gezelschap instanceof Plant) && b != gezelschap) {
                         System.out.println("Omnivoor bij beest of plant");
+                        System.out.println("Weer een beest erbij");
                         b.eet(gezelschap);
                         eetbaar = true;
                     }  
                     if (!eetbaar) {
                         if (b instanceof Beest && gezelschap instanceof Beest && b.isHitsig() && ((Beest)gezelschap).isHitsig()) {
-                            b.paar((Beest)gezelschap);
+                            beesten.add(b.paar((Beest)gezelschap));
+                            
                         }
                     }
                 }

@@ -22,8 +22,7 @@ public class Carnivoor extends Beest<Beest> {
         this.energie = this.stamina;
         this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
         this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
-        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);        
-    }
+        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);       }
 
     public Carnivoor(ArrayList<Integer> positie, int strength, int legs) {
         super(positie, strength, legs);
@@ -38,29 +37,30 @@ public class Carnivoor extends Beest<Beest> {
      */
     @Override
     public void eet(Beest b) {
-        int schade = strength * 10;
-
-        if (energie <= stamina - (schade)) {
+        int schade = this.strength * 10;
+        System.out.print(this + " " + b + "  " + this.getEnergie() + "    ");
+        if (this.energie <= this.stamina - (schade)) {
             if (b.energie >= schade) {
-                energie = energie + (schade);
+                this.energie = this.energie + (schade);
                 b.energie = b.energie - schade;
             } else {
                 schade = b.energie;
                 b.energie = b.energie - schade;
-                energie = energie + schade;
+                this.energie = this.energie + schade;
             }
         } else {
-            schade = stamina - energie;
+            schade = this.stamina - this.energie;
 
             if (b.energie >= schade) {
-                energie = energie + (schade);
+                this.energie = this.energie + (schade);
                 b.energie = b.energie - schade;
             } else {
                 schade = b.energie;
                 b.energie = b.energie - schade;
-                energie = energie + schade;
+                this.energie = this.energie + schade;
             }
         }
+        System.out.println(this.getEnergie());
     }
 
 }
