@@ -31,6 +31,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     protected int honger;
     protected int snelheid;
     protected Random rnd;
+    
     /**
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
      * Stamina = 100 * strength<br>
@@ -44,16 +45,17 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * snelheid (ofwel aantal stappen per simulatiestap): <br>
      *      #poten - Math.floor(energie-strength / 1000)<br>
      * Bij 0 (nul) energie is een beest dood en verdwijnt het object<br>
+     * @param positie
      */
-    public Beest() {
-        positie = new ArrayList<>();
-        richting = new ArrayList<>();        
+    public Beest(ArrayList<Integer> positie) {
         rnd = new Random();
         int xRichting = rnd.nextInt(3) - 1;
-        int yRichting = rnd.nextInt(3) - 1;
-        richting.add(xRichting);
-        richting.add(yRichting);
-        snelheid = legs - (int)Math.floor(energie-strength / 1000);
+        int yRichting = rnd.nextInt(3) - 1;        
+        this.positie = new ArrayList<>();
+        this.positie = positie;
+        this.richting = new ArrayList<>();        
+        this.richting.add(xRichting);
+        this.richting.add(yRichting);
     }
 
     public Beest(ArrayList<Integer> positie, int strength, int legs) {
@@ -117,9 +119,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * van het beest.<br>
      */
     public void beweeg(int x, int y) {
-        positie.set(0, x);
-        positie.set(1, y); 
-        energie -= this.getGewicht();
+        this.positie.set(0, x);
+        this.positie.set(1, y); 
+        this.energie -= this.getGewicht();
+        
         setChanged();
         notifyObservers();
     }
@@ -320,9 +323,15 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public int getHitsigheid(){
         return hitsigheid;
     }   
+    
+    public boolean isHitsig() {
+        if (this.getHitsigheid() > 60) { return true; }
+        return false;
+    }
     public int getGewicht(){
         if (energie - strength > 0) {
-            return 10 * legs + (energie - strength);
+//            return 10 * legs + (energie - strength);
+            return 10 * legs;
         }
         else {
             return 10 * legs;
@@ -375,16 +384,27 @@ abstract public class Beest<T> extends Observable implements Serializable {
         return energie;
     }
     
+    public boolean kanBewegen() {
+        if (energie > (beweegDrempel/100) * stamina) { return true; }
+        return false;
+    }
+    
     public ArrayList<Integer> kiesAndereRichting() {
         ArrayList<Integer> temp = new ArrayList<>(); 
+        int xRichting;
+        int yRichting;
         temp.add(-1);
         temp.add(0);
         temp.add(1);
         temp.remove(richting.get(0));
-        int xRichting = temp.get(rnd.nextInt(2));
+        xRichting = temp.get(rnd.nextInt(2));
         temp.add(richting.get(0));
         temp.remove(richting.get(1));
-        int yRichting = temp.get(rnd.nextInt(2));        
+        yRichting = temp.get(rnd.nextInt(2));        
         return temp;
+//        temp.add(-richting.get(0));
+//        temp.add(-richting.get(1));
+//        return temp; 
     }
+    
 }

@@ -44,6 +44,7 @@ public class WereldSimulatie extends Application {
         scene.getStylesheets().add(getClass().getResource("wereld.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
+
     }
 
     /**

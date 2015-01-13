@@ -31,7 +31,7 @@ public class Eiland implements Serializable{
         planten = new ArrayList<>();
         opruimLijst = new ArrayList<>();
         
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 100; i++) {
             int willekeurigX = rnd.nextInt(oppervlak.size());
             if (willekeurigX % 2 != 0) { 
                 if (willekeurigX != 0) {willekeurigX--; }
@@ -119,40 +119,79 @@ public class Eiland implements Serializable{
     public void stapDoorSimulatie() {
         Random rnd = new Random();
         for (Beest b : beesten) {
-            int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
-            int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE;
+            
+            // niet te lang stilstaan ?
             if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
                 b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
             boolean opLand = false;
+            boolean doorlopen = true;
+            int newX = ouder.nieuwePositie(b).get(0);
+            int newY = ouder.nieuwePositie(b).get(1);
+            
+            // is de volgende positie nog land
             for (int i = 0; i < oppervlak.size(); i += 2) {
                 if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
-                    b.beweeg(newX, newY); 
-                    if (b.getEnergie() <= 0) {
-                        opruimLijst.add(b);
-                        b.deleteObservers();
-                    }
-                    opLand = true; 
-                    break;
+                opLand = true;
+                break;
                 }
+            } 
+            if (opLand) {
+                int stappenTeller = 0;
+                while (stappenTeller < b.getSnelheid() && doorlopen) {
+                    newX = ouder.nieuwePositie(b).get(0);
+                    newY = ouder.nieuwePositie(b).get(1);
 
-//                else if (oppervlak.get(i) != newX && oppervlak.get(i+1) != newY) {
-//                    b.setRichting(i, i);
-//                    newY = -newY;
-//                }
-//                else if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
-//                    
-//                }
-//                else if (oppervlak.get(i) == newX && oppervlak.get(i+1) == newY) {
-//                    
-//                }
+                    // lopen we tegen een obstakel aan
+                    if (ouder.staatOpPositie(newX, newY) instanceof Obstakel) {
+                        b.bots();
+                        b.setRichting((int)b.kiesAndereRichting().get(0), (int)b.kiesAndereRichting().get(1));
+                        doorlopen = false;
+                    }
+                    else {
+                        b.beweeg(newX, newY); 
+                        if (b.getEnergie() <= 0) {
+                            opruimLijst.add(b);
+                            b.deleteObservers();
+                        }
+                    }
+                    stappenTeller ++;
+                }
+                Object gezelschap = ouder.staatOpPositie((int)b.getPositie().get(0), (int)b.getPositie().get(1));
+                if (gezelschap != null) {
+                    boolean eetbaar = false;
+                    if (b instanceof Carnivoor && gezelschap instanceof Beest) {
+                        System.out.println("Carnivoor bij beest");
+                        b.eet((Beest)gezelschap);
+                        eetbaar = true;
+                    }
+                    if (b instanceof Herbivoor && gezelschap instanceof Plant) {
+                        System.out.println("Herbivoor bij plant");
+                        b.eet(gezelschap);
+                        eetbaar = true;
+                    }   
+                    if (b instanceof Omnivoor && (gezelschap instanceof Beest || gezelschap instanceof Plant)) {
+                        System.out.println("Omnivoor bij beest of plant");
+                        b.eet(gezelschap);
+                        eetbaar = true;
+                    }  
+                    if (!eetbaar) {
+                        if (b instanceof Beest && gezelschap instanceof Beest && b.isHitsig() && ((Beest)gezelschap).isHitsig()) {
+                            b.paar((Beest)gezelschap);
+                        }
+                    }
+                }
             }
-            if (!opLand) {
+            else {
                 if (b.wilZwemmen()) {
+                    b.beweeg(newX, newY);
                     ouder.voegZwemmersToe(b);
                     opruimLijst.add(b);
                 }
-                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
+                else {
+                    b.setRichting((int)b.kiesAndereRichting().get(0), (int)b.kiesAndereRichting().get(1));
+                }
+//                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
         }
         beesten.removeAll(opruimLijst);

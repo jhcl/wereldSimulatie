@@ -15,10 +15,14 @@ import java.util.ArrayList;
 public class Omnivoor extends Beest {
 
     public Omnivoor(ArrayList<Integer> pos) {
-        this.positie = pos;
-        strength = 40;
-        energie = 4000;
-        stamina = 4000;
+        super(pos);
+        this.legs = 4;
+        this.strength = 40;
+        this.stamina = 100* this.strength;
+        this.energie = this.stamina;
+        this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
+        this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
+        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);   
     }
 
     /**

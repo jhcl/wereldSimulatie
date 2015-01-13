@@ -117,6 +117,7 @@ public class FXMLDocumentController implements Initializable, Observer {
         slider.setMin(-100);
         timer.start();
         
+        
     } 
     
     /**
@@ -252,7 +253,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o==this.model) {
-            pane.getChildren().removeAll(p);
+           pane.getChildren().removeAll(p);
             p.clear();
             if (arg instanceof ArrayList<?>) {
                 for (Object pt : (ArrayList<Object>)arg) {
@@ -306,7 +307,6 @@ public class FXMLDocumentController implements Initializable, Observer {
                     }
                 }
                 pane.getChildren().addAll(p);
-               
             }
         }
     }

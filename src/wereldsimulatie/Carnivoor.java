@@ -15,10 +15,14 @@ import java.util.ArrayList;
 public class Carnivoor extends Beest<Beest> {
 
     public Carnivoor(ArrayList<Integer> pos) {
-        this.positie = pos;
-        strength = 50;
-        energie = 5000;
-        stamina = 5000;
+        super(pos);
+        this.legs = 5;
+        this.strength = 50;
+        this.stamina = 100* this.strength;
+        this.energie = this.stamina;
+        this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
+        this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
+        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);        
     }
 
     public Carnivoor(ArrayList<Integer> positie, int strength, int legs) {

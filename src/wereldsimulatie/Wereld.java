@@ -150,8 +150,8 @@ public class Wereld extends Observable implements ModelFacade, Serializable  {
     
     public ArrayList<Integer> nieuwePositie(Beest b) {
         ArrayList<Integer> nieuwePos = new ArrayList<>();
-        int newX = ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0)) % Wereld.WERELD_BREEDTE;
-        int newY = ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1)) % Wereld.WERELD_HOOGTE; 
+        int newX = (Wereld.WERELD_BREEDTE + ((Integer)b.getPositie().get(0) + (Integer)b.getRichting().get(0))) % Wereld.WERELD_BREEDTE;
+        int newY = (Wereld.WERELD_HOOGTE + ((Integer)b.getPositie().get(1) + (Integer)b.getRichting().get(1))) % Wereld.WERELD_HOOGTE; 
         nieuwePos.add(newX);
         nieuwePos.add(newY);
         return nieuwePos;

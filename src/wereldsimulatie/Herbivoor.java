@@ -15,10 +15,14 @@ import java.util.ArrayList;
 public class Herbivoor extends Beest<Plant> {
 
     public Herbivoor(ArrayList<Integer> pos) {
-        this.positie = pos;
-        strength = 30;
-        energie = 3000;
-        stamina = 3000;
+        super(pos);
+        this.legs = 3;
+        this.strength = 30;
+        this.stamina = 100* this.strength;
+        this.energie = this.stamina;
+        this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
+        this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
+        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);   
     }
 
     public Herbivoor(ArrayList<Integer> positie, int strength, int legs) {
