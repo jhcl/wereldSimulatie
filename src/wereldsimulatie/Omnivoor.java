@@ -23,6 +23,8 @@ public class Omnivoor extends Beest {
         this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
         this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
         this.beweegDrempel = (int)Math.round(this.stamina * 0.05);   
+        this.hitsigheid = (int)Math.round(this.stamina * 0.60);
+        
     }
 
     /**
@@ -40,7 +42,7 @@ public class Omnivoor extends Beest {
 
             if (energie <= stamina - (schade)) {
                 if (b.energie >= schade) {
-                    energie = energie + (schade);
+                    this.energie = this.energie + (schade);
                     b.energie = b.energie - schade;
                 } else {
                     schade = b.energie;
@@ -60,7 +62,7 @@ public class Omnivoor extends Beest {
                 }
             }
         } else {
-            Plant p = (Plant) o;
+            wereldsimulatie.Plant p = (wereldsimulatie.Plant) o;
             int behoefte = strength * 10;
             int schadePlant = 10;
 
@@ -72,7 +74,9 @@ public class Omnivoor extends Beest {
                 p.energie = p.energie - p.energie;
                 energie = energie + behoefte;
             }
+            p.wordtGegeten(schadePlant);
         }
+        
     }
 
 }

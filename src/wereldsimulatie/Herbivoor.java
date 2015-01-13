@@ -22,7 +22,9 @@ public class Herbivoor extends Beest<Plant> {
         this.energie = this.stamina;
         this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
         this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
-        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);   
+        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);
+        this.hitsigheid = (int)Math.round(this.stamina * 0.60);
+
     }
 
     public Herbivoor(ArrayList<Integer> positie, int strength, int legs) {
@@ -38,18 +40,18 @@ public class Herbivoor extends Beest<Plant> {
     @Override
     public void eet(Plant p) {
 
-        int behoefte = strength * 10;
+        int behoefte = this.strength * 10;
         int schadePlant = 10;
 
         if (p.energie >= schadePlant) {
-            energie = energie + (behoefte);
+            this.energie = this.energie + (behoefte);
             p.energie = p.energie - schadePlant;
         } else {
             behoefte = p.energie * 10;
             p.energie = p.energie - p.energie;
-            energie = energie + behoefte;
+            this.energie = this.energie + behoefte;
         }
-        p.wordtGegeten(2);
+        p.wordtGegeten(schadePlant);
     }
 
 }

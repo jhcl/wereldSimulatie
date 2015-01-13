@@ -5,7 +5,6 @@
  */
 package wereldsimulatie;
 
-import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,14 +14,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author 310054544
+ * @author nl08940
  */
-public class CarnivoorTest {
-    Beest b;
-    ArrayList<Integer> pos = new ArrayList<>();
+public class HerbivoorTest {
     
-    public CarnivoorTest() {
-        
+    public HerbivoorTest() {
     }
     
     @BeforeClass
@@ -42,21 +38,16 @@ public class CarnivoorTest {
     }
 
     /**
-     * Test of eet method, of class Carnivoor.
+     * Test of eet method, of class Herbivoor.
      */
     @Test
     public void testEet() {
         System.out.println("eet");
-        b = new Herbivoor(pos);
-        int y = b.getEnergie();
-        b.setEnergie(-300);
-        
-        Carnivoor instance = new Carnivoor(pos);
-        instance.eet(b);
-        int x = b.getEnergie();
-        assertTrue(y - x == 300);
+        Plant p = null;
+        Herbivoor instance = null;
+        instance.eet(p);
         // TODO review the generated test code and remove the default call to fail.
-        //
+        fail("The test case is a prototype.");
     }
     
 }

@@ -13,7 +13,7 @@ import java.util.Observable;
  * Eetbare vegetatie dat op land groeit
  * @author Lars Ko Tarkan
  */
-public class Plant extends Observable implements Serializable{
+public class Plant extends Observable implements Serializable {
     private ArrayList<Integer> positie;
     private int grootte;
     protected int energie;
@@ -27,7 +27,7 @@ public class Plant extends Observable implements Serializable{
      */
     public Plant(ArrayList<Integer> positie) {
         this.positie = positie;
-        this.energie = 10;
+        this.energie = 30;
     }
 
     public Plant(ArrayList<Integer> positie, int grootte, int energie) {
@@ -53,6 +53,7 @@ public class Plant extends Observable implements Serializable{
      */
     public void wordtGegeten(int hoeveelheid) {
         this.energie -= hoeveelheid;
+        System.out.println("hier");
         setChanged();
         notifyObservers();        
     }

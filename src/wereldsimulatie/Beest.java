@@ -122,14 +122,14 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public void beweeg(int x, int y) {
         this.positie.set(0, x);
         this.positie.set(1, y); 
-        this.energie -= this.getGewicht()/100;
+        this.energie -= this.getGewicht()/10;
         
         setChanged();
         notifyObservers();
     }
     
     public int getEnergie() {
-        return energie;
+        return this.energie;
     }
     
     /**
@@ -161,7 +161,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
      // @TODO ? ADDED: Dit beest haalt van ander beest af bij bepalen marge
     public Beest paar(Beest b) {
         // Als beide dieren hitsigheid boven 60 hebben ga dan paren
-        if(this.getHitsigheid() > 60 && b.getHitsigheid() > 60){
+        if(this.isHitsig() && b.isHitsig()){
             // Trek voortplantingskosten ouders af
                 this.kostenStaminaBeest();
                 b.kostenStaminaBeest();
@@ -216,31 +216,28 @@ abstract public class Beest<T> extends Observable implements Serializable {
             // Als beide beesten omnivoor zijn doe dan dit ook uitvoeren                                      
             if(this instanceof Omnivoor && b instanceof Omnivoor){
                 // @TODO Positie bepalen
-                ArrayList<Integer> pos = new ArrayList<>();
                 // Maak Omnivoor
-                Omnivoor o = new Omnivoor(pos);
+                Omnivoor o = new Omnivoor(this.getPositie());
                 // Print out Omnivoor to Console
-                o.toString();
+//                System.out.println(o.toString());
                 return o;
             }
             // Als beide beesten carnivoor zijn doe dan dit ook uitvoeren                                      
             if(this instanceof Carnivoor && b instanceof Carnivoor){
                 // @TODO Positie bepalen
-                ArrayList<Integer> pos = new ArrayList<>();
                 // Maak Omnivoor
-                Carnivoor c = new Carnivoor(pos);
+                Carnivoor c = new Carnivoor(this.getPositie());
                 // Print out Omnivoor to Console
-                c.toString();
+ //               System.out.println(c.toString());
                 return c;
             }
             // Als beide beesten herbivoor zijn doe dan dit ook uitvoeren                                      
             if(this instanceof Herbivoor && b instanceof Herbivoor){
                 // @TODO Positie bepalen
-                ArrayList<Integer> pos = new ArrayList<>();
                 // Maak Omnivoor
-                Herbivoor h = new Herbivoor(pos);
+                Herbivoor h = new Herbivoor(this.getPositie());
                 // Print out Omnivoor to Console
-                h.toString();
+//                System.out.println(h.toString());
                 return h;
             }
             
@@ -248,22 +245,21 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if((this instanceof Omnivoor && b instanceof Carnivoor) || 
               (this instanceof Carnivoor && b instanceof Omnivoor)){
                 // @TODO Positie bepalen
-                ArrayList<Integer> pos = new ArrayList<>();
                 // 50 / 50
                 // Random met een kans van 50 / 50
                 int rbeest = random.nextInt(2);
                 if(rbeest == 1){
                     // Maak Omnivoor
-                    Omnivoor o = new Omnivoor(pos);
+                    Omnivoor o = new Omnivoor(this.getPositie());
                     // Print out Omnivoor to Console
                     o.toString();
                     return o;
                 }
                 if(rbeest == 2){
                     // Maak Carnivoor
-                    Carnivoor c = new Carnivoor(pos);
+                    Carnivoor c = new Carnivoor(this.getPositie());
                     // Print out Omnivoor to Console
-                    c.toString();
+//                    System.out.println(c.toString());
                     return c;
                 }
                 }
@@ -271,22 +267,21 @@ abstract public class Beest<T> extends Observable implements Serializable {
              if((this instanceof Omnivoor && b instanceof Herbivoor) || 
               (this instanceof Herbivoor && b instanceof Omnivoor)){
                 // @TODO Positie bepalen
-                ArrayList<Integer> pos = new ArrayList<>();
                 // 50 / 50
                 // Random met een kans van 50 / 50
                 int rbeest = random.nextInt(2);
                 if(rbeest == 1){
                     // Maak Omnivoor
-                    Omnivoor o = new Omnivoor(pos);
+                    Omnivoor o = new Omnivoor(this.getPositie());
                     // Print out Omnivoor to Console
                     o.toString();
                     return o;
                 }
                 if(rbeest == 2){
                     // Maak Herbivoor
-                    Herbivoor h = new Herbivoor(pos);
+                    Herbivoor h = new Herbivoor(this.getPositie());
                     // Print out Omnivoor to Console
-                    h.toString();
+//                    System.out.println(h.toString());
                     return h;
                 }
                 }
@@ -294,28 +289,27 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if((this instanceof Carnivoor && b instanceof Herbivoor) || 
               (this instanceof Herbivoor && b instanceof Carnivoor)){
                 // @TODO Positie bepalen
-                ArrayList<Integer> pos = new ArrayList<>();
                 // 50 / 50
                 // Random met een kans van 50 / 50
                 int rbeest = random.nextInt(2);
                 if(rbeest == 1){
                     // Maak Omnivoor
-                    Omnivoor o = new Omnivoor(pos);
+                    Omnivoor o = new Omnivoor(this.getPositie());
                     // Print out Omnivoor to Console
-                    o.toString();
+//                    System.out.println(o.toString());
                     return o;
                 }
                 if(rbeest == 2){
                     // Maak Herbivoor
-                    Herbivoor h = new Herbivoor(pos);
+                    Herbivoor h = new Herbivoor(this.getPositie());
                     // Print out Omnivoor to Console
-                    h.toString();
+//                    System.out.println(h.toString());
                     return h;
                 }
                 }
             } 
         else{
-            // @TODO als de beesten niet hitsig zijn en gaan paren
+ //           System.out.println(this.getClass() + " " + b.getClass());
         }
         return null;
     }
@@ -326,9 +320,9 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }   
     
     public boolean isHitsig() {
-        if (this.getHitsigheid() > 60) { return true; }
-        return false;
+        return (int)Math.round(this.stamina * 0.60) < this.energie;
     }
+    
     public int getGewicht(){
         if (energie - strength > 0) {
 //            return 10 * legs + (energie - strength);
@@ -351,8 +345,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
     // Voor paren, kosten 10% stamina van ouders aftrekken @author Lars
     public int kostenStaminaBeest() {
         double voortplantingskosten = this.getStamina() - this.getStamina();
-        stamina = stamina - (int) voortplantingskosten;
-        return stamina;
+        this.energie = this.energie - (int) voortplantingskosten;
+        return this.energie;
     }
     @Override
      public String toString() {
@@ -390,7 +384,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         return false;
     }
     
-    public ArrayList<Integer> kiesAndereRichting() {
+    public void kiesAndereRichting() {
         ArrayList<Integer> temp = new ArrayList<>(); 
         int xRichting;
         int yRichting;
@@ -402,10 +396,14 @@ abstract public class Beest<T> extends Observable implements Serializable {
         temp.add(richting.get(0));
         temp.remove(richting.get(1));
         yRichting = temp.get(rnd.nextInt(2));        
-        return temp;
+        this.setRichting(xRichting, yRichting);
 //        temp.add(-richting.get(0));
 //        temp.add(-richting.get(1));
 //        return temp; 
+    }
+    
+    public void setEnergie(int x) {
+        this.energie += x;
     }
     
 }
