@@ -56,6 +56,7 @@ public class CarnivoorTest {
         instance.eet(b);
 
         assertTrue(b.getEnergie() ==  2500);
+        assertTrue(instance.getEnergie() == 4500);
 
     }
     /**
@@ -73,8 +74,8 @@ public class CarnivoorTest {
         instance.eet(b);
         int x = b.getEnergie();
         assertTrue(b.getEnergie() == 0);
-        // TODO review the generated test code and remove the default call to fail.
-        //    
+        assertTrue(instance.getEnergie() == 4300);
+ 
     }
     /**
      * Unit test
@@ -89,6 +90,7 @@ public class CarnivoorTest {
         instance.eet(b);
         int x = b.getEnergie();
         assertTrue(b.getEnergie() == 2850);
+        assertTrue(instance.getEnergie() == 5000);
  
     }
     
@@ -105,6 +107,7 @@ public class CarnivoorTest {
         instance.eet(b);
         int x = b.getEnergie();
         assertTrue(b.getEnergie() == 0);
+        assertTrue(instance.getEnergie() == 4900);
  
     }
 
