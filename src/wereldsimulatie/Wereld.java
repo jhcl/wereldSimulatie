@@ -89,9 +89,13 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
         for (Eiland e : eilanden) {
             e.stapDoorSimulatie();
             for (Beest b : zwemmers) {
-
+                
                 // controleer of we aan de rand van een eiland met een obstakel terecht gekomen zijn 
-                if (!(this.staatOpPositie(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1)) instanceof Obstakel)) {
+                boolean erStaatEenObstakel = false;
+                for (Object o : this.staatOpPositie(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1))) {
+                    if (o instanceof Obstakel) { erStaatEenObstakel = true; }
+                } 
+                if (!erStaatEenObstakel) {
                     b.beweeg(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1));
                     if (b.getEnergie() <= 0) {
                         opruimLijst.add(b);
@@ -158,24 +162,25 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
         return nieuwePos;
     }
 
-    public Object staatOpPositie(Integer x, Integer y) {
+    public ArrayList<Object> staatOpPositie(Integer x, Integer y) {
+        ArrayList<Object> staatOpElkaar = new ArrayList<>();
         for (Eiland e : eilanden) {
             for (Beest b : e.getBeesten()) {
                 if (b.getPositie().get(0) == x && b.getPositie().get(1) == y) {
-                    return b;
+                    staatOpElkaar.add(b);
                 }
             }            
             for (Plant p : e.getPlanten()) {
                 if (p.getPositie().get(0) == x && p.getPositie().get(1) == y) {
-                    return p;
+                    staatOpElkaar.add(p);
                 }
             }            
             for (Obstakel o : e.getObstakels()) {
                 if (o.getPositie().get(0) == x && o.getPositie().get(1) == y) {
-                    return o;
+                    staatOpElkaar.add(o);
                 }
             }
-
+            return staatOpElkaar;
         }
 
         return null;

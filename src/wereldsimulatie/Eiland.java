@@ -150,8 +150,12 @@ public class Eiland implements Serializable {
                     newX = ouder.nieuwePositie(b).get(0);
                     newY = ouder.nieuwePositie(b).get(1);
 
-                    // lopen we tegen een obstakel aan
-                    if (ouder.staatOpPositie(newX, newY) instanceof Obstakel) {
+                // lopen we tegen een obstakel aan ?
+                boolean erStaatEenObstakel = false;
+                for (Object o : ouder.staatOpPositie(newX, newY)) {
+                    if (o instanceof Obstakel) { erStaatEenObstakel = true; }
+                }                     
+                    if (erStaatEenObstakel) {
                         b.bots();
                         b.kiesAndereRichting();
                         doorlopen = false;
