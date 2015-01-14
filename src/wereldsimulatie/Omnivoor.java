@@ -72,7 +72,8 @@ public class Omnivoor extends Beest {
                     this.energie = this.energie + (behoefte);
                     //p.energie = p.energie - schadePlant;
                 } else {
-                    behoefte = p.energie * 10;
+                    schadePlant = p.energie;
+                    behoefte = p.energie * strength;
                     //p.energie = p.energie - p.energie;
                     this.energie = this.energie + behoefte;
                 }
@@ -84,7 +85,8 @@ public class Omnivoor extends Beest {
                     this.energie = this.energie + (behoefte);
                     //p.energie = p.energie - schadePlant;
                 } else {
-                    behoefte = p.energie * 10;
+                    schadePlant = p.energie;
+                    behoefte = schadePlant * strength;
                     //p.energie = p.energie - p.energie;
                     this.energie = this.energie + behoefte;
                 }
