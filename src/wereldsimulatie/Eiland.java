@@ -18,7 +18,7 @@ public class Eiland implements Serializable {
 
     private ArrayList<Beest> beesten;
     private ArrayList<Obstakel> obstakels;
-    private ArrayList<wereldsimulatie.Plant> planten;
+    private ArrayList<Plant> planten;
     private ArrayList<Integer> oppervlak;
     private ArrayList<Beest> opruimLijst;
     private ArrayList<Beest> toevoegLijst;
@@ -58,7 +58,7 @@ public class Eiland implements Serializable {
             } else if (temp == 6) {
                 obstakels.add(new Obstakel(pos));
             } else if (temp == 7 || temp == 8 || temp == 9) {
-                planten.add(new wereldsimulatie.Plant(pos));
+                planten.add(new Plant(pos));
             }
         }
 
@@ -91,7 +91,7 @@ public class Eiland implements Serializable {
      *
      * @return ArrayLis&lt;Plant&gt;
      */
-    public ArrayList<wereldsimulatie.Plant> getPlanten() {
+    public ArrayList<Plant> getPlanten() {
         return planten;
     }
 
@@ -117,7 +117,7 @@ public class Eiland implements Serializable {
      * vervolgens voor stilstaan, er wordt vervolgens een niuwe richting
      * gekozen<br>
      *
-     * @see wereldsimulatie.Plant#groei
+     * @see Plant#groei
      * @see wereldsimulatie.Beest#beweeg
      * @see wereldsimulatie.Beest#paar
      * @see wereldsimulatie.Beest#eet
@@ -172,12 +172,13 @@ public class Eiland implements Serializable {
                         b.eet((Beest) gezelschap);
                         eetbaar = true;
                     }
-                    if (b instanceof Herbivoor && gezelschap instanceof wereldsimulatie.Plant) {
+                    if (b instanceof Herbivoor && gezelschap instanceof Plant) {
 //                        System.out.println("Herbivoor bij plant");
-                        b.eet(gezelschap);
+ //                       System.out.println(gezelschap.getClass());
+                        b.eet((Plant)gezelschap);
                         eetbaar = true;
                     }
-                    if (b instanceof Omnivoor && (gezelschap instanceof Beest || gezelschap instanceof wereldsimulatie.Plant) && b != gezelschap) {
+                    if (b instanceof Omnivoor && (gezelschap instanceof Beest || gezelschap instanceof Plant) && b != gezelschap) {
 //                        System.out.println("Omnivoor bij beest of plant");
                         b.eet(gezelschap);
                         eetbaar = true;

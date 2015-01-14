@@ -26,12 +26,11 @@ public class Poppetje extends Polygon implements Observer{
             this.translateYProperty().set((Integer)((Beest)o).getPositie().get(1)*5); 
         }
         
-        if (o instanceof wereldsimulatie.Plant) {
-            System.out.println("hier");
-            if (((wereldsimulatie.Plant)o).getEnergie() <= 0) {
+        if (o instanceof Plant) {
+            if (((Plant)o).getEnergie() <= 0) {
                 this.setVisible(false);   
             }
-        }
+        } 
         
     }
     

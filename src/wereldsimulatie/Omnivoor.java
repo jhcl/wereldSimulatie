@@ -62,7 +62,7 @@ public class Omnivoor extends Beest {
                 }
             }
         } else {
-            wereldsimulatie.Plant p = (wereldsimulatie.Plant) o;
+            Plant p = (Plant) o;
             int behoefte = strength * 10;
             int schadePlant = 10;
 

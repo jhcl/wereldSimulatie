@@ -53,7 +53,6 @@ public class Plant extends Observable implements Serializable {
      */
     public void wordtGegeten(int hoeveelheid) {
         this.energie -= hoeveelheid;
-        System.out.println("hier");
         setChanged();
         notifyObservers();        
     }

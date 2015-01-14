@@ -164,17 +164,18 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
                 if (b.getPositie().get(0) == x && b.getPositie().get(1) == y) {
                     return b;
                 }
-            }
+            }            
+            for (Plant p : e.getPlanten()) {
+                if (p.getPositie().get(0) == x && p.getPositie().get(1) == y) {
+                    return p;
+                }
+            }            
             for (Obstakel o : e.getObstakels()) {
                 if (o.getPositie().get(0) == x && o.getPositie().get(1) == y) {
                     return o;
                 }
             }
-            for (Plant p : e.getPlanten()) {
-                if (p.getPositie().get(0) == x && p.getPositie().get(1) == y) {
-                    return p;
-                }
-            }
+
         }
 
         return null;

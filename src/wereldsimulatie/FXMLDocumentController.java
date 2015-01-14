@@ -289,14 +289,17 @@ public class FXMLDocumentController implements Initializable, Observer {
                         
                     }
                     
-                    if (pt instanceof wereldsimulatie.Plant) {
-                        if (((wereldsimulatie.Plant)pt).countObservers() != 1) {
+                    if (pt instanceof Plant) {
+                        if (((Plant)pt).countObservers() != 1) {
                             Poppetje polpp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0}); 
-                            ((wereldsimulatie.Plant)pt).addObserver((Observer) polpp);
-                            polpp.translateXProperty().set((Integer)((wereldsimulatie.Plant)pt).getPositie().get(0)*schaalX);
-                            polpp.translateYProperty().set((Integer)((wereldsimulatie.Plant)pt).getPositie().get(1)*schaalY); 
+                            ((Plant)pt).addObserver((Observer) polpp);
+                            polpp.translateXProperty().set((Integer)((Plant)pt).getPositie().get(0)*schaalX);
+                            polpp.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY); 
                             polpp.setFill(Color.GREEN);
                             pane.getChildren().add(polpp);
+                            if (((Plant)pt).getEnergie() <= 0) {
+                                polpp.setVisible(false);
+                            }
                         }   
                         
 //                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
