@@ -5,6 +5,7 @@
  */
 package wereldsimulatie;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,6 +18,8 @@ import static org.junit.Assert.*;
  * @author nl08940
  */
 public class HerbivoorTest {
+    
+    ArrayList<Integer> pos = new ArrayList<>();
     
     public HerbivoorTest() {
     }
@@ -43,11 +46,16 @@ public class HerbivoorTest {
     @Test
     public void testEet() {
         System.out.println("eet");
-        Plant p = null;
-        Herbivoor instance = null;
+        Plant p = new Plant(pos);
+        Herbivoor instance = new Herbivoor(pos);
+        instance.setEnergie(-1000);
+        
+        
         instance.eet(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(p.getEnergie() ==  20);
+        assertTrue(instance.getEnergie() == 2300);  
+
+        
     }
     
 }
