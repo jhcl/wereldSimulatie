@@ -17,6 +17,7 @@ public class Plant extends Observable implements Serializable {
     private ArrayList<Integer> positie;
     private int grootte;
     protected int energie;
+    private int tellerAantalKeerNul;
     
     
     /**
@@ -28,6 +29,7 @@ public class Plant extends Observable implements Serializable {
     public Plant(ArrayList<Integer> positie) {
         this.positie = positie;
         this.energie = 30;
+        this.tellerAantalKeerNul = 0;
     }
 
     public Plant(ArrayList<Integer> positie, int grootte, int energie) {
@@ -48,14 +50,27 @@ public class Plant extends Observable implements Serializable {
     }
     
     /**
-     *
-     * @param hoeveelheid
+     *Methode waarbij energie van plant wordt bijgehouden en de aantalkeer dat plant op nul is gekomen
+     * @param hoeveelheid energie dat er af gaat bij plant
      */
     public void wordtGegeten(int hoeveelheid) {
         this.energie -= hoeveelheid;
+        System.out.println("hier");
+        
+        if(this.energie == 0)
+        {
+            tellerAantalKeerNul++;
+        }
+        else
+        {
+            //do nothing
+        }
         setChanged();
-        notifyObservers();        
+        notifyObservers(); 
+        
     }
+    
+    
     
     public int getEnergie() {
         return energie;
@@ -68,5 +83,15 @@ public class Plant extends Observable implements Serializable {
     public ArrayList<Integer> getPositie() {
         return positie;
     }    
+
+    public int getTellerAantalKeerNul() {
+        return tellerAantalKeerNul;
+    }
+
+    public void setTellerAantalKeerNul(int tellerAantalKeerNul) {
+        this.tellerAantalKeerNul = tellerAantalKeerNul;
+    }
+    
+    
     
 }
