@@ -46,7 +46,7 @@ public class CarnivoorTest {
     /**
      * Unit test
      * Test of eet method, of class Carnivoor.
-     * Eatable portion is 500, other b has also enough energy to provide
+     * Carnivoor heeft 1000 honger, eetbare portie is 500, ander beest heeft voldoende energie
      */
     @Test
     public void testEet() {
@@ -63,8 +63,9 @@ public class CarnivoorTest {
     }
     /**
      * Unit test 
-     * Carnivoor energie is set to 4000, his hunger is 1000, he can eat 500, but animal only has 300
-     * Energy of Herbivoor will be set to 300. Maximum eatable portion is 300, is true when energie is 0
+     * Carnivoor energie is gezet 4000, zijn honger is 1000, hij kan maximaal 500 eten, maar ander beest heeft 300
+     * Energie van Herbivoor wordt gezet op 300. Maximum eetbare portie is 300. 
+     * 
      */
         @Test
     public void testEet2() {
@@ -83,7 +84,7 @@ public class CarnivoorTest {
     }
     /**
      * Unit test
-     * Available hunger Carnivoor is 150, other b has more than this to provide
+     * hunger Carnivoor is 150, ander beest heeft meer energie dan dit.
      */
         @Test
     public void testEet3() {
@@ -102,7 +103,7 @@ public class CarnivoorTest {
     }
     
     /**
-     * Available hunger Carnivoor is 300, other b has only 200 to provide
+     * Honger Carnivoor is 300, ander beest heeft maar 200 
      */
         @Test
     public void testEet4() {
