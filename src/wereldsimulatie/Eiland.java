@@ -168,40 +168,45 @@ public class Eiland implements Serializable {
                     }
                     stappenTeller++;
                 }
-                Object gezelschap = ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
+                ArrayList<Object> gezelschap = ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
+                gezelschap.remove(b);
                 if (gezelschap != null) {
-                    boolean eetbaar = false;
-                    if (b instanceof Carnivoor && gezelschap instanceof Beest && b != gezelschap) {
-//                        System.out.println("Carnivoor bij beest");
-                        b.eet((Beest) gezelschap);
-                        eetbaar = true;
-                    }
-                    if (b instanceof Herbivoor && gezelschap instanceof Plant) {
-//                        System.out.println("Herbivoor bij plant");
- //                       System.out.println(gezelschap.getClass());
-                        b.eet((Plant)gezelschap);
-                        eetbaar = true;
-                    }
-                    if (b instanceof Omnivoor && (gezelschap instanceof Beest || gezelschap instanceof Plant) && b != gezelschap) {
-//                        System.out.println("Omnivoor bij beest of plant");
-                        b.eet(gezelschap);
-                        eetbaar = true;
-                    }
-                    if (!eetbaar) {
-                        
-                        if (b instanceof Beest && gezelschap instanceof Beest && b.isHitsig() && ((Beest)gezelschap).isHitsig() && b!= gezelschap) {
-                            if (gezelschap != slaOver) {
-                                slaOver = (Beest)gezelschap;
-                                Beest baby = b.paar((Beest) gezelschap);
-                                if (baby != null) {
-                                    if (baby.getRichting().equals(gezelschap)) {
-                                        baby.kiesAndereRichting();
+                    for (Object o : gezelschap) {
+                        if (!gezelschap.isEmpty()) {
+                            boolean eetbaar = false;
+                            if (b instanceof Carnivoor && o instanceof Beest) {
+        //                        System.out.println("Carnivoor bij beest");
+                                b.eet((Beest) o);
+                                eetbaar = true;
+                            }
+                            if (b instanceof Herbivoor && o instanceof Plant) {
+        //                        System.out.println("Herbivoor bij plant");
+         //                       System.out.println(gezelschap.getClass());
+                                b.eet((Plant)o);
+                                eetbaar = true;
+                            }
+                            if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
+        //                        System.out.println("Omnivoor bij beest of plant");
+                                b.eet(o);
+                                eetbaar = true;
+                            }
+                            if (!eetbaar) {
+
+                                if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest)o).isHitsig()) {
+                                    if (o != slaOver) {
+                                        slaOver = (Beest)o;
+                                        Beest baby = b.paar((Beest) o);
+                                        if (baby != null) {
+                                            if (baby.getRichting().equals(gezelschap)) {
+                                                baby.kiesAndereRichting();
+                                            }
+         //                                   System.out.println("Weer een " + baby.getClass() + " erbij");
+                                            toevoegLijst.add(baby);
+                                        }
                                     }
- //                                   System.out.println("Weer een " + baby.getClass() + " erbij");
-                                    toevoegLijst.add(baby);
+                                    else { slaOver = null; }
                                 }
                             }
-                            else { slaOver = null; }
                         }
                     }
                 }
