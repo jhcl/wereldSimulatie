@@ -5,6 +5,7 @@
  */
 package wereldsimulatie;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,6 +18,8 @@ import static org.junit.Assert.*;
  * @author nl08940
  */
 public class HerbivoorTest {
+    
+    ArrayList<Integer> pos = new ArrayList<>();
     
     public HerbivoorTest() {
     }
@@ -39,15 +42,77 @@ public class HerbivoorTest {
 
     /**
      * Test of eet method, of class Herbivoor.
+     * Beest behoefte is 1000, kan maximaal 300 eten, plant heeft energie 30 en maximaal 10 gegeten worden
      */
     @Test
     public void testEet() {
         System.out.println("eet");
-        Plant p = null;
-        Herbivoor instance = null;
+        Plant p = new Plant(pos);
+        Herbivoor instance = new Herbivoor(pos);
+        instance.setEnergie(-1000);
+        
+        int x = p.getEnergie();
+        int y = instance.getEnergie();
+        
         instance.eet(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(p.getEnergie() == x - 10);
+        assertTrue(instance.getEnergie() == y + 300);  
+    }
+    
+        /**
+     * Test of eet method, of class Herbivoor.
+     * Beest behoefte is 200, plant heeft energie 30 en maximaal 10 gegeten worden
+     */
+    @Test
+    public void testEet2() {
+        System.out.println("eet");
+        Plant p = new Plant(pos);
+        Herbivoor instance = new Herbivoor(pos);
+        instance.setEnergie(-200);
+        int x = p.getEnergie();
+        int y = instance.getEnergie();
+        instance.eet(p);
+        assertTrue(p.getEnergie() == x - (int)Math.round(200/instance.strength));
+        assertTrue(instance.getEnergie() == y + 200 );  
+    }
+    
+    
+            /**
+     * Test of eet method, of class Herbivoor.
+     * Beest behoefte is 200, plant heeft energie 5. Dus Dier kan maximaal  5*strenght eten. 150
+     */
+    @Test
+    public void testEet3() {
+        System.out.println("eet");
+        Plant p = new Plant(pos);
+        Herbivoor instance = new Herbivoor(pos);
+        instance.setEnergie(-200);
+        p.setEnergie(-25);
+        
+        int x = p.getEnergie();
+        int y = instance.getEnergie();
+        instance.eet(p);
+        assertTrue(p.getEnergie() == x - (int)Math.round(150/instance.strength));
+        assertTrue(instance.getEnergie() == y + 150 );  
+    }
+    
+      /**
+     * Test of eet method, of class Herbivoor.
+     * Beest behoefte is 1000, kan max 300 eten.  plant heeft energie 5. Dus Dier kan maximaal  5*strenght eten. 150
+     */
+        @Test
+    public void testEet4() {
+        System.out.println("eet");
+        Plant p = new Plant(pos);
+        Herbivoor instance = new Herbivoor(pos);
+        instance.setEnergie(-1000);
+        p.setEnergie(-25);
+        
+        int x = p.getEnergie();
+        int y = instance.getEnergie();
+        instance.eet(p);
+        assertTrue(p.getEnergie() == x - (int)Math.round(150/instance.strength));
+        assertTrue(instance.getEnergie() == y + 150 );  
     }
     
 }

@@ -23,6 +23,8 @@ public class CarnivoorTest {
     
     public CarnivoorTest() {
         
+        b = new Herbivoor(pos);
+        
     }
     
     @BeforeClass
@@ -42,21 +44,83 @@ public class CarnivoorTest {
     }
 
     /**
+     * Unit test
      * Test of eet method, of class Carnivoor.
+     * Carnivoor heeft 1000 honger, eetbare portie is 500, ander beest heeft voldoende energie
      */
     @Test
     public void testEet() {
         System.out.println("eet");
-        b = new Herbivoor(pos);
-        int y = b.getEnergie();
-        b.setEnergie(-300);
-        
         Carnivoor instance = new Carnivoor(pos);
+        instance.setEnergie(-1000); 
+        
+        int x = b.getEnergie(); 
+        int y = instance.getEnergie();
         instance.eet(b);
-        int x = b.getEnergie();
-        assertTrue(y - x == 300);
-        // TODO review the generated test code and remove the default call to fail.
-        //
+        assertTrue(b.getEnergie() ==  x - 500);
+        assertTrue(instance.getEnergie() == y + 500);
+
     }
+    /**
+     * Unit test 
+     * Carnivoor energie is gezet 4000, zijn honger is 1000, hij kan maximaal 500 eten, maar ander beest heeft 300
+     * Energie van Herbivoor wordt gezet op 300. Maximum eetbare portie is 300. 
+     * 
+     */
+        @Test
+    public void testEet2() {
+        System.out.println("eet");
+        Carnivoor instance = new Carnivoor(pos);
+        instance.setEnergie(-1000);
+        b.setEnergie(-2700);
+       
+        int x = b.getEnergie();
+        int y = instance.getEnergie();
+        
+        instance.eet(b);
+        assertTrue(b.getEnergie() == x - 300);
+        assertTrue(instance.getEnergie() == y + 300);
+ 
+    }
+    /**
+     * Unit test
+     * hunger Carnivoor is 150, ander beest heeft meer energie dan dit.
+     */
+        @Test
+    public void testEet3() {
+        System.out.println("eet");
+        Carnivoor instance = new Carnivoor(pos);
+        instance.setEnergie(-150);
+        
+        
+        int x = b.getEnergie();
+        int y = instance.getEnergie();
+        
+        instance.eet(b);
+        assertTrue(b.getEnergie() == x - 150);
+        assertTrue(instance.getEnergie() == y + 150);
+ 
+    }
+    
+    /**
+     * Honger Carnivoor is 300, ander beest heeft maar 200 
+     */
+        @Test
+    public void testEet4() {
+        System.out.println("eet");
+        Carnivoor instance = new Carnivoor(pos);
+        instance.setEnergie(-300);
+        b.setEnergie(-2800);
+        
+        
+        int x = b.getEnergie();
+        int y = instance.getEnergie();
+        
+        instance.eet(b);
+        assertTrue(b.getEnergie() == x - 200);
+        assertTrue(instance.getEnergie() == y + 200);
+ 
+    }
+
     
 }

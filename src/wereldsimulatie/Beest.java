@@ -59,24 +59,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
       
     }
 
-    public Beest(ArrayList<Integer> positie, int strength, int legs) {
-        this.richting = new ArrayList<>();        
-        Random rnd = new Random();
-        int xRichting = rnd.nextInt(3) - 1;
-        int yRichting = rnd.nextInt(3) - 1;
-        richting.add(xRichting);
-        richting.add(yRichting);
-        this.positie = positie;
-        this.strength = strength;
-        this.legs = legs;
-        this.stamina = strength * 100;
-        this.energie = stamina;
-        this.gewicht = legs * 10;
-        this.voortplantingsKosten = (int)Math.round(stamina * 0.1);
-        this.beweegDrempel = (int)Math.round(stamina * 0.05);
-    }
-    
-
     
     /**
      * Abstracte methode die als argument een eetbaar object verwacht.

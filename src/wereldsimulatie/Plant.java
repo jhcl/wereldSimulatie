@@ -61,6 +61,10 @@ public class Plant extends Observable implements Serializable {
         return energie;
     }
     
+    public void setEnergie(int x) {
+        this.energie += x;
+    }
+    
     public ArrayList<Integer> getPositie() {
         return positie;
     }    

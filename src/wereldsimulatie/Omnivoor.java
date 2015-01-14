@@ -14,17 +14,21 @@ import java.util.ArrayList;
  */
 public class Omnivoor extends Beest {
 
+    /**
+     * Constructor voor omnivoor. Hierbij worden de genetische eigenschappen van Omnivoor bepaald
+     * @param pos De positie van de Omnivoor wordt meegegeven door Eiland klasse, deze positie is random.
+     */
     public Omnivoor(ArrayList<Integer> pos) {
         super(pos);
         this.legs = 4;
         this.strength = 40;
-        this.stamina = 100* this.strength;
+        this.stamina = 100 * this.strength;
         this.energie = this.stamina;
-        this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
-        this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
-        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);   
-        this.hitsigheid = (int)Math.round(this.stamina * 0.60);
-        
+        this.snelheid = this.legs - (int) Math.floor((this.energie - this.strength) / 1000.0);
+        this.voortplantingsKosten = (int) Math.round(this.stamina * 0.1);
+        this.beweegDrempel = (int) Math.round(this.stamina * 0.05);
+        this.hitsigheid = (int) Math.round(this.stamina * 0.60);
+
     }
 
     /**
@@ -66,17 +70,34 @@ public class Omnivoor extends Beest {
             int behoefte = strength * 10;
             int schadePlant = 10;
 
-            if (p.energie >= schadePlant) {
-                energie = energie + (behoefte);
-                p.energie = p.energie - schadePlant;
+            if (this.energie <= this.stamina - (behoefte)) {
+
+                if (p.energie >= schadePlant) {
+                    this.energie = this.energie + (behoefte);
+                    //p.energie = p.energie - schadePlant;
+                } else {
+                    schadePlant = p.energie;
+                    behoefte = p.energie * strength;
+                    //p.energie = p.energie - p.energie;
+                    this.energie = this.energie + behoefte;
+                }
+                p.wordtGegeten(schadePlant);
             } else {
-                behoefte = p.energie * 10;
-                p.energie = p.energie - p.energie;
-                energie = energie + behoefte;
+                behoefte = this.stamina - this.energie;
+                schadePlant = (int) Math.round(behoefte / strength);
+                if (p.energie >= schadePlant) {
+                    this.energie = this.energie + (behoefte);
+                    //p.energie = p.energie - schadePlant;
+                } else {
+                    schadePlant = p.energie;
+                    behoefte = schadePlant * strength;
+                    //p.energie = p.energie - p.energie;
+                    this.energie = this.energie + behoefte;
+                }
+                p.wordtGegeten(schadePlant);
             }
-            p.wordtGegeten(schadePlant);
         }
-        
+
     }
 
 }

@@ -14,6 +14,10 @@ import java.util.ArrayList;
  */
 public class Carnivoor extends Beest<Beest> {
 
+    /**
+     * Constructor voor Carnivoor. Hierbij worden de genetische eigenschappen van Omnivoor bepaald
+     * @param pos De positie van de Carnivoor wordt meegegeven door Eiland klasse, deze positie is random.
+     */
     public Carnivoor(ArrayList<Integer> pos) {
         super(pos);
         this.legs = 5;
@@ -24,13 +28,6 @@ public class Carnivoor extends Beest<Beest> {
         this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
         this.beweegDrempel = (int)Math.round(this.stamina * 0.05);  
         this.hitsigheid = (int)Math.round(this.stamina * 0.60);
-    }
-
-    public Carnivoor(ArrayList<Integer> positie, int strength, int legs) {
-        super(positie, strength, legs);
-        this.strength = 50;
-        this.legs = 5;
-        this.positie = positie;
     }
 
     /**
