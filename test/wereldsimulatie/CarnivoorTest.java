@@ -53,10 +53,12 @@ public class CarnivoorTest {
         System.out.println("eet");
         Carnivoor instance = new Carnivoor(pos);
         instance.setEnergie(-1000); 
+        
+        int x = b.getEnergie(); 
+        int y = instance.getEnergie();
         instance.eet(b);
-
-        assertTrue(b.getEnergie() ==  2500);
-        assertTrue(instance.getEnergie() == 4500);
+        assertTrue(b.getEnergie() ==  x - 500);
+        assertTrue(instance.getEnergie() == y + 500);
 
     }
     /**
@@ -71,10 +73,12 @@ public class CarnivoorTest {
         instance.setEnergie(-1000);
         b.setEnergie(-2700);
        
-        instance.eet(b);
         int x = b.getEnergie();
-        assertTrue(b.getEnergie() == 0);
-        assertTrue(instance.getEnergie() == 4300);
+        int y = instance.getEnergie();
+        
+        instance.eet(b);
+        assertTrue(b.getEnergie() == x - 300);
+        assertTrue(instance.getEnergie() == y + 300);
  
     }
     /**
@@ -86,11 +90,14 @@ public class CarnivoorTest {
         System.out.println("eet");
         Carnivoor instance = new Carnivoor(pos);
         instance.setEnergie(-150);
-               
-        instance.eet(b);
+        
+        
         int x = b.getEnergie();
-        assertTrue(b.getEnergie() == 2850);
-        assertTrue(instance.getEnergie() == 5000);
+        int y = instance.getEnergie();
+        
+        instance.eet(b);
+        assertTrue(b.getEnergie() == x - 150);
+        assertTrue(instance.getEnergie() == y + 150);
  
     }
     
@@ -103,11 +110,14 @@ public class CarnivoorTest {
         Carnivoor instance = new Carnivoor(pos);
         instance.setEnergie(-300);
         b.setEnergie(-2800);
-               
-        instance.eet(b);
+        
+        
         int x = b.getEnergie();
-        assertTrue(b.getEnergie() == 0);
-        assertTrue(instance.getEnergie() == 4900);
+        int y = instance.getEnergie();
+        
+        instance.eet(b);
+        assertTrue(b.getEnergie() == x - 200);
+        assertTrue(instance.getEnergie() == y + 200);
  
     }
 
