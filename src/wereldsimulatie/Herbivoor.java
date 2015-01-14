@@ -18,12 +18,12 @@ public class Herbivoor extends Beest<Plant> {
         super(pos);
         this.legs = 3;
         this.strength = 30;
-        this.stamina = 100* this.strength;
+        this.stamina = 100 * this.strength;
         this.energie = this.stamina;
-        this.snelheid = this.legs - (int)Math.floor((this.energie - this.strength) / 1000.0);   
-        this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
-        this.beweegDrempel = (int)Math.round(this.stamina * 0.05);
-        this.hitsigheid = (int)Math.round(this.stamina * 0.60);
+        this.snelheid = this.legs - (int) Math.floor((this.energie - this.strength) / 1000.0);
+        this.voortplantingsKosten = (int) Math.round(this.stamina * 0.1);
+        this.beweegDrempel = (int) Math.round(this.stamina * 0.05);
+        this.hitsigheid = (int) Math.round(this.stamina * 0.60);
 
     }
 
@@ -43,15 +43,32 @@ public class Herbivoor extends Beest<Plant> {
         int behoefte = this.strength * 10;
         int schadePlant = 10;
 
-        if (p.energie >= schadePlant) {
-            this.energie = this.energie + (behoefte);
-            p.energie = p.energie - schadePlant;
-        } else {
-            behoefte = p.energie * 10;
-            p.energie = p.energie - p.energie;
-            this.energie = this.energie + behoefte;
+        if (this.energie <= this.stamina - (behoefte)) {
+
+            if (p.energie >= schadePlant) {
+                this.energie = this.energie + (behoefte);
+                //p.energie = p.energie - schadePlant;
+            } else {
+                behoefte = p.energie * 10;
+                //p.energie = p.energie - p.energie;
+                this.energie = this.energie + behoefte;
+            }
+            p.wordtGegeten(schadePlant);
         }
-        p.wordtGegeten(schadePlant);
+        else
+        {
+            behoefte = this.stamina - this.energie;
+            if (p.energie >= schadePlant) {
+                this.energie = this.energie + (behoefte);
+                //p.energie = p.energie - schadePlant;
+            } else {
+                behoefte = p.energie * 10;
+                //p.energie = p.energie - p.energie;
+                this.energie = this.energie + behoefte;
+            }
+            p.wordtGegeten(schadePlant);            
+        }
+
     }
 
 }
