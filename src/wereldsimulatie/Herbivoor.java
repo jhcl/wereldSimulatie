@@ -13,7 +13,10 @@ import java.util.ArrayList;
  * @author Lars Ko Tarkan
  */
 public class Herbivoor extends Beest<Plant> {
-
+/**
+     * Constructor voor Herbivoor. Hierbij worden de genetische eigenschappen van Omnivoor bepaald
+     * @param pos De positie van de Herbivoor wordt meegegeven door Eiland klasse, deze positie is random.
+ */
     public Herbivoor(ArrayList<Integer> pos) {
         super(pos);
         this.legs = 3;
@@ -27,11 +30,6 @@ public class Herbivoor extends Beest<Plant> {
 
     }
 
-    public Herbivoor(ArrayList<Integer> positie, int strength, int legs) {
-        super(positie, strength, legs);
-        this.strength = 30;
-        this.legs = 3;
-    }
 
     /**
      * @see wereldsimulatie.Beest#eet

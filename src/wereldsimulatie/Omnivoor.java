@@ -14,6 +14,10 @@ import java.util.ArrayList;
  */
 public class Omnivoor extends Beest {
 
+    /**
+     * Constructor voor omnivoor. Hierbij worden de genetische eigenschappen van Omnivoor bepaald
+     * @param pos De positie van de Omnivoor wordt meegegeven door Eiland klasse, deze positie is random.
+     */
     public Omnivoor(ArrayList<Integer> pos) {
         super(pos);
         this.legs = 4;
