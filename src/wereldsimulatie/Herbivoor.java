@@ -58,6 +58,7 @@ public class Herbivoor extends Beest<Plant> {
         else
         {
             behoefte = this.stamina - this.energie;
+            schadePlant = (int)Math.round(behoefte/strength);
             if (p.energie >= schadePlant) {
                 this.energie = this.energie + (behoefte);
                 //p.energie = p.energie - schadePlant;
