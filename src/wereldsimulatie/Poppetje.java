@@ -31,6 +31,7 @@ public class Poppetje extends Polygon implements Observer{
             if (((Plant)o).getEnergie() <= 0) {
                 this.setVisible(false);   
             }
+            else { this.setVisible(false); }
         } 
         
     }
