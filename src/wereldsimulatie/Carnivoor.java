@@ -24,7 +24,7 @@ public class Carnivoor extends Beest<Beest> {
         this.strength = 50;
         this.stamina = 100* this.strength;
         this.energie = this.stamina;
-        this.snelheid = 5;//this.legs;   
+        this.snelheid = 1;//this.legs;   
         this.voortplantingsKosten = (int)Math.round(this.stamina * 0.1);
         this.beweegDrempel = (int)Math.round(this.stamina * 0.05);  
         this.hitsigheid = (int)Math.round(this.stamina * 0.60);
