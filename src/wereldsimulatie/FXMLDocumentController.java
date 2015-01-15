@@ -291,9 +291,6 @@ public class FXMLDocumentController implements Initializable, Observer {
                             polpp.translateYProperty().set((Integer)((Plant)pt).getPositie().get(1)*schaalY); 
                             polpp.setFill(Color.GREEN);
                             pane.getChildren().add(polpp);
-                            if (((Plant)pt).getEnergie() <= 0) {
-                                polpp.setVisible(false);
-                            }
                         }   
                         
 //                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});

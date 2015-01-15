@@ -7,6 +7,7 @@ package wereldsimulatie;
 
 import java.util.Observable;
 import java.util.Observer;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -29,9 +30,9 @@ public class Poppetje extends Polygon implements Observer{
         if (o instanceof Plant) {
 //            System.out.println(((Plant)o).getEnergie());
             if (((Plant)o).getEnergie() <= 0) {
-                this.setVisible(false);   
+                this.fillProperty().set(Color.CYAN);   
             }
-            else { this.setVisible(true); }
+            else { this.fillProperty().set(Color.GREEN); }
         } 
         
     }

@@ -26,7 +26,7 @@ public class Herbivoor extends Beest<Plant> {
         this.snelheid = this.legs - (int) Math.floor((this.energie - this.strength) / 1000.0);
         this.voortplantingsKosten = (int) Math.round(this.stamina * 0.1);
         this.beweegDrempel = (int) Math.round(this.stamina * 0.05);
-        this.hitsigheid = (int) Math.round(this.stamina * 0.60);
+ //       this.hitsigheid = (int) Math.round(this.stamina * 0.60);
 
     }
 

@@ -18,6 +18,7 @@ public class Plant extends Observable implements Serializable {
     private int grootte;
     protected int energie;
     private int tellerAantalKeerNul;
+    private int onderGronds;
     
     
     /**
@@ -30,23 +31,27 @@ public class Plant extends Observable implements Serializable {
         this.positie = positie;
         this.energie = 30;
         this.tellerAantalKeerNul = 0;
+        this.onderGronds = 0;
     }
 
-    public Plant(ArrayList<Integer> positie, int grootte, int energie) {
-        this.positie = positie;
-        this.grootte = grootte;
-        this.energie = energie;
-    }
-    
-    
     
     /**
      * als plant niet dood is groeit het per method call 1 energie unit.
      * 
      */
     public void groei() {
-        this.energie += 1;
-        
+        if (this.tellerAantalKeerNul < 5) {
+            this.energie += 1;
+        }
+        else {
+            onderGronds++;
+        }
+        if (onderGronds == 100) {
+            this.tellerAantalKeerNul = 0;
+            this.onderGronds = 0;
+        } 
+//        setChanged();
+//        notifyObservers();         
     }
     
     /**
@@ -54,7 +59,7 @@ public class Plant extends Observable implements Serializable {
      * @param hoeveelheid energie dat er af gaat bij plant
      */
     public void wordtGegeten(int hoeveelheid) {
-        this.energie -= hoeveelheid;
+        this.energie -= hoeveelheid*10;
         
         if(this.energie == 0)
         {

@@ -15,24 +15,25 @@ import java.util.Observable;
  */
 public class Wereld extends Observable implements ModelFacade, Serializable {
 
-    private final ArrayList<Eiland> eilanden;
-    private final ArrayList<Integer> oppervlakEiland1;
-    private final ArrayList<Integer> oppervlakEiland2;
+    private ArrayList<Eiland> eilanden;
+    private ArrayList<Integer> oppervlakEiland1;
+    private ArrayList<Integer> oppervlakEiland2;
     private ArrayList<Beest> zwemmers;
-    static final Integer WERELD_BREEDTE = 160;
+    static Integer WERELD_BREEDTE = 160;
     static final Integer WERELD_HOOGTE = 120;
     private final Integer WERELD_MARGIN_BREEDTE = WERELD_BREEDTE / 20;
     private final Integer WERELD_MARGIN_HOOGTE = WERELD_HOOGTE / 20;
     private final Integer EILAND_BREEDTE = WERELD_BREEDTE / 2 - 2 * WERELD_MARGIN_BREEDTE;
     private final Integer EILAND_HOOGTE = WERELD_HOOGTE / 2 - 2 * WERELD_MARGIN_HOOGTE;
     private ArrayList<Beest> opruimLijst;
+    private Eiland e1, e2;
 
     public Wereld() {
         this.eilanden = new ArrayList<>();
         this.oppervlakEiland1 = new ArrayList<>();
         this.oppervlakEiland2 = new ArrayList<>();
-        opruimLijst = new ArrayList<>();
-        zwemmers = new ArrayList<>();
+        this.opruimLijst = new ArrayList<>();
+        this.zwemmers = new ArrayList<>();
         for (int i = 0; i < EILAND_BREEDTE; i++) {
             for (int j = 0; j < EILAND_HOOGTE; j++) {
                 this.oppervlakEiland1.add(WERELD_MARGIN_BREEDTE + i);
@@ -41,6 +42,11 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
                 this.oppervlakEiland2.add(WERELD_MARGIN_HOOGTE + j);
             }
         }
+//        e1 = new Eiland(this.oppervlakEiland1, this);
+//        e2 = new Eiland(this.oppervlakEiland2, this);
+
+//        this.eilanden.add(e2);
+//        this.eilanden.add(e1);
         eilanden.add(new Eiland(oppervlakEiland1, this));
         eilanden.add(new Eiland(oppervlakEiland2, this));
     }
@@ -77,7 +83,7 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
      * @return ArrayList van Eiland objecten
      */
     public ArrayList<Eiland> getEilanden() {
-        return eilanden;
+        return this.eilanden;
     }
 
     /**
@@ -88,37 +94,40 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
     public void step() {
         for (Eiland e : eilanden) {
             e.stapDoorSimulatie();
-            for (Beest b : zwemmers) {
-                
-                // controleer of we aan de rand van een eiland met een obstakel terecht gekomen zijn 
-                boolean erStaatEenObstakel = false;
-                for (Object o : this.staatOpPositie(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1))) {
-                    if (o instanceof Obstakel) { erStaatEenObstakel = true; }
-                } 
-                if (!erStaatEenObstakel) {
-                    b.beweeg(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1));
-                    if (b.getEnergie() <= 0) {
-                        opruimLijst.add(b);
-                    }
+        }
+        for (Beest b : zwemmers) {
 
-                } else {
-                    b.bots();
-                    b.kiesAndereRichting();
-                }
-                // zijn we geland ?
-                for (Eiland el : eilanden) {
-                    for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
-                        if (el.getEilandOppervlak().get(i) == this.nieuwePositie(b).get(0) && el.getEilandOppervlak().get(i + 1) == this.nieuwePositie(b).get(1)) {
-                            el.getBeesten().add(b);
-                            opruimLijst.add(b);
-                        }
-                    }
-
+            // controleer of we aan de rand van een eiland met een obstakel terecht gekomen zijn 
+            boolean erStaatEenObstakel = false;
+            for (Object o : this.staatOpPositie(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1))) {
+                if (o instanceof Obstakel) {
+                    erStaatEenObstakel = true;
                 }
             }
-            zwemmers.removeAll(opruimLijst);
-            opruimLijst.clear();
+            if (!erStaatEenObstakel) {
+                b.beweeg(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1));
+                if (b.getEnergie() <= 0) {
+                    opruimLijst.add(b);
+                }
+
+            } else {
+                b.bots();
+                b.kiesAndereRichting();
+            }
+            // zijn we geland ?
+            for (Eiland el : eilanden) {
+                for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
+                    if (el.getEilandOppervlak().get(i) == this.nieuwePositie(b).get(0) && el.getEilandOppervlak().get(i + 1) == this.nieuwePositie(b).get(1)) {
+                        el.getBeesten().add(b);
+                        opruimLijst.add(b);
+                    }
+                }
+
+            }
         }
+        zwemmers.removeAll(opruimLijst);
+        opruimLijst.clear();
+
         ArrayList<Object> lijstObjecten = new ArrayList<>();
         for (Eiland e : eilanden) {
             lijstObjecten.addAll(e.getBeesten());
@@ -162,28 +171,28 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
         return nieuwePos;
     }
 
-    public ArrayList<Object> staatOpPositie(Integer x, Integer y) {
+    public ArrayList<Object> staatOpPositie(int x, int y) {
         ArrayList<Object> staatOpElkaar = new ArrayList<>();
-        for (Eiland e : eilanden) {
+        for (Eiland e : this.eilanden) {
             for (Beest b : e.getBeesten()) {
-                if (b.getPositie().get(0) == x && b.getPositie().get(1) == y) {
+                if ((int) b.getPositie().get(0) == x && (int) b.getPositie().get(1) == y) {
                     staatOpElkaar.add(b);
                 }
-            }            
+            }
             for (Plant p : e.getPlanten()) {
                 if (p.getPositie().get(0) == x && p.getPositie().get(1) == y) {
                     staatOpElkaar.add(p);
                 }
-            }            
+            }
             for (Obstakel o : e.getObstakels()) {
                 if (o.getPositie().get(0) == x && o.getPositie().get(1) == y) {
                     staatOpElkaar.add(o);
                 }
             }
-            return staatOpElkaar;
+
         }
 
-        return null;
+        return staatOpElkaar;
     }
 
 }
