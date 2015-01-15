@@ -16,18 +16,19 @@ import java.util.Random;
  */
 public class Eiland implements Serializable {
 
-    private ArrayList<Beest> beesten;
+    private ArrayList<Beest> beesten; 
     private ArrayList<Obstakel> obstakels;
     private ArrayList<Plant> planten;
     private ArrayList<Integer> oppervlak;
     private ArrayList<Beest> opruimLijst;
     private ArrayList<Beest> toevoegLijst;
+    Random rnd;
     Wereld ouder;
 
     public Eiland(ArrayList<Integer> opp, Wereld w) {
         ouder = w;
         oppervlak = opp;
-        Random rnd = new Random();
+        rnd = new Random();
         beesten = new ArrayList<>();
         obstakels = new ArrayList<>();
         planten = new ArrayList<>();
@@ -196,15 +197,9 @@ public class Eiland implements Serializable {
                                         slaOver = (Beest)o;
                                         Beest baby = b.paar((Beest)o);
                                         if (baby != null) {
-                                            if (baby.getRichting().equals(((Beest)o).getRichting())) {
-                                                baby.kiesAndereRichting();
-                                            }
-                                            if (baby.getRichting().equals(b.getRichting())) {
-                                                baby.kiesAndereRichting();
-                                            }
-                                            if (b.getRichting().equals(((Beest)o).getRichting()))
-//                                            System.out.println(b.hashCode() + " + " + ((Beest)o).hashCode() + " = " + baby.hashCode());
-//                                            System.out.println(b.getRichting() + " + " + ((Beest)o).getRichting() + " = " + baby.getRichting());
+                                            this.iederZijnsWeegs(baby, b, (Beest)o);
+                                            System.out.println(b.hashCode() + " + " + ((Beest)o).hashCode() + " = " + baby.hashCode());
+                                            System.out.println(b.getRichting() + " + " + ((Beest)o).getRichting() + " = " + baby.getRichting());
                                             toevoegLijst.add(baby);
                                         }
                                     }
@@ -230,6 +225,28 @@ public class Eiland implements Serializable {
         beesten.addAll(toevoegLijst);
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
+    }
+    
+    private void iederZijnsWeegs(Beest a, Beest b, Beest c) {
+        ArrayList<ArrayList<Integer>> opties = new ArrayList<>();
+        int temp;
+        opties.add(new ArrayList<Integer>());opties.get(0).add(-1); opties.get(0).add(-1);
+        opties.add(new ArrayList<Integer>());opties.get(1).add(-1); opties.get(1).add(0);
+        opties.add(new ArrayList<Integer>());opties.get(2).add(-1); opties.get(2).add(1);
+        opties.add(new ArrayList<Integer>());opties.get(3).add(0); opties.get(3).add(-1);
+        opties.add(new ArrayList<Integer>());opties.get(4).add(0); opties.get(4).add(0);
+        opties.add(new ArrayList<Integer>());opties.get(5).add(0); opties.get(5).add(1);
+        opties.add(new ArrayList<Integer>());opties.get(6).add(1); opties.get(6).add(-1);
+        opties.add(new ArrayList<Integer>());opties.get(7).add(1); opties.get(7).add(0);
+        opties.add(new ArrayList<Integer>());opties.get(8).add(1); opties.get(8).add(1);
+        temp = rnd.nextInt(opties.size());
+        a.setRichting(opties.get(temp).get(0), opties.get(temp).get(1));
+        opties.remove(temp);
+        temp = rnd.nextInt(opties.size());
+        b.setRichting(opties.get(temp).get(0), opties.get(temp).get(1));
+        opties.remove(temp);
+        temp = rnd.nextInt(opties.size());
+        c.setRichting(opties.get(temp).get(0), opties.get(temp).get(1));
     }
 
 }
