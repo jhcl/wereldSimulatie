@@ -181,12 +181,6 @@ public class FXMLDocumentController implements Initializable, Observer {
                 model.getEilanden().clear();
                 ObjectInputStream in = new ObjectInputStream(inFile);
                 model = (ModelFacade)in.readObject();
-//                for (Eiland ei : model.getEilanden()) {
-//                    System.out.println(ei.toString());
-//                    for (Beest bt : ei.getBeesten()) {
-//                        System.out.println(bt.getPositie());
-//                    }
-//                }
                 ArrayList<Polygon> opruimLijst = new ArrayList<>();
                 for (Object pi : pane.getChildren()) {
                     if (pi instanceof Poppetje) {

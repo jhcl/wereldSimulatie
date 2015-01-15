@@ -175,37 +175,43 @@ public class Eiland implements Serializable {
                         if (!gezelschap.isEmpty()) {
                             boolean eetbaar = false;
                             if (b instanceof Carnivoor && o instanceof Beest) {
-        //                        System.out.println("Carnivoor bij beest");
                                 b.eet((Beest) o);
                                 eetbaar = true;
+                                break;
                             }
                             if (b instanceof Herbivoor && o instanceof Plant) {
-        //                        System.out.println("Herbivoor bij plant");
-         //                       System.out.println(gezelschap.getClass());
                                 b.eet((Plant)o);
                                 eetbaar = true;
+                                break;
                             }
                             if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
-        //                        System.out.println("Omnivoor bij beest of plant");
                                 b.eet(o);
                                 eetbaar = true;
+                                break;
                             }
                             if (!eetbaar) {
 
                                 if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest)o).isHitsig()) {
                                     if (o != slaOver) {
                                         slaOver = (Beest)o;
-                                        Beest baby = b.paar((Beest) o);
+                                        Beest baby = b.paar((Beest)o);
                                         if (baby != null) {
-                                            if (baby.getRichting().equals(gezelschap)) {
+                                            if (baby.getRichting().equals(((Beest)o).getRichting())) {
                                                 baby.kiesAndereRichting();
                                             }
-         //                                   System.out.println("Weer een " + baby.getClass() + " erbij");
+                                            if (baby.getRichting().equals(b.getRichting())) {
+                                                baby.kiesAndereRichting();
+                                            }
+                                            if (b.getRichting().equals(((Beest)o).getRichting()))
+//                                            System.out.println(b.hashCode() + " + " + ((Beest)o).hashCode() + " = " + baby.hashCode());
+//                                            System.out.println(b.getRichting() + " + " + ((Beest)o).getRichting() + " = " + baby.getRichting());
                                             toevoegLijst.add(baby);
                                         }
                                     }
                                     else { slaOver = null; }
+                                    break;
                                 }
+                                
                             }
                         }
                     }

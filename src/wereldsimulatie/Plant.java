@@ -45,7 +45,7 @@ public class Plant extends Observable implements Serializable {
      * 
      */
     public void groei() {
-        energie += 1;
+        this.energie += 1;
         
     }
     

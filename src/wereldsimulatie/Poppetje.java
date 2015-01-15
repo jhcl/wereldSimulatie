@@ -27,6 +27,7 @@ public class Poppetje extends Polygon implements Observer{
         }
         
         if (o instanceof Plant) {
+//            System.out.println(((Plant)o).getEnergie());
             if (((Plant)o).getEnergie() <= 0) {
                 this.setVisible(false);   
             }
