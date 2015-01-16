@@ -141,40 +141,61 @@ public class Eiland implements Serializable {
             boolean doorlopen = true;
             int newX = this.ouder.nieuwePositie(b).get(0);
             int newY = this.ouder.nieuwePositie(b).get(1);
+            int stappenTeller = 0;
+            while (stappenTeller < b.getSnelheid() && doorlopen) {
 
-            // is de volgende positie nog land
-            for (int i = 0; i < this.oppervlak.size(); i += 2) {
-                if (this.oppervlak.get(i) == newX && this.oppervlak.get(i + 1) == newY) {
-                    opLand = true;
-                    break;
-                }
-            }
-            if (opLand) {
-                int stappenTeller = 0;
-//                while (stappenTeller < b.getSnelheid() && doorlopen) {
-                newX = this.ouder.nieuwePositie(b).get(0);
-                newY = this.ouder.nieuwePositie(b).get(1);
-
-                // lopen we tegen een obstakel aan ?
-                boolean erStaatEenObstakel = false;
-                for (Object o : this.ouder.staatOpPositie(newX, newY)) {
-                    if (o instanceof Obstakel) {
-                        erStaatEenObstakel = true;
+                // is de volgende positie nog land
+                for (int i = 0; i < this.oppervlak.size(); i += 2) {
+                    if (this.oppervlak.get(i) == newX && this.oppervlak.get(i + 1) == newY) {
+                        opLand = true;
+                        break;
                     }
                 }
-                if (erStaatEenObstakel) {
-                    b.bots();
-                    b.kiesAndereRichting();
-                    doorlopen = false;
-                } else {
-                    b.beweeg(newX, newY);
-                    if (b.getEnergie() <= 0) {
-                        this.opruimLijst.add(b);
-                        b.deleteObservers();
+                if (opLand) {
+
+//                    newX = this.ouder.nieuwePositie(b).get(0);
+//                    newY = this.ouder.nieuwePositie(b).get(1);
+
+                    // lopen we tegen een obstakel aan ?
+                    boolean erStaatEenObstakel = false;
+                    for (Object o : this.ouder.staatOpPositie(newX, newY)) {
+                        if (o instanceof Obstakel) {
+                            erStaatEenObstakel = true;
+                        }
                     }
+                    if (erStaatEenObstakel) {
+                        b.bots();
+                        b.kiesAndereRichting();
+                        doorlopen = false;
+                    } else {
+                        b.beweeg(newX, newY);
+                        if (b.getEnergie() <= 0) {
+                            this.opruimLijst.add(b);
+                            b.deleteObservers();
+                        }
+                    }
+                } 
+                else {
+                    if (b.wilZwemmen()) {
+                        b.beweeg(newX, newY);
+                        if (b.getEnergie() <= 0) {
+                            opruimLijst.add(b);
+//                            b.deleteObservers();
+                        } 
+                        else {
+                            this.ouder.voegZwemmersToe(b);
+                            this.opruimLijst.add(b);
+                        }
+//                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
+                    } 
+                    else {
+                        b.kiesAndereRichting();
+                    }
+
                 }
                 stappenTeller++;
-//                }
+            }
+            if (opLand) {
                 ArrayList<Object> gezelschap = this.ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
                 gezelschap.remove(b);
                 if (!gezelschap.isEmpty()) {
@@ -223,15 +244,6 @@ public class Eiland implements Serializable {
                         }
                     }
                 }
-            } else {
-                if (b.wilZwemmen()) {
-                    b.beweeg(newX, newY);
-                    this.ouder.voegZwemmersToe(b);
-                    this.opruimLijst.add(b);
-                } else {
-                    b.kiesAndereRichting();
-                }
-//                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
         }
         this.beesten.addAll(this.toevoegLijst);
