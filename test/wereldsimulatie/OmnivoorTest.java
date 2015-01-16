@@ -53,7 +53,7 @@ public class OmnivoorTest {
         System.out.println("eet");
         Object o = (Beest)b;
         Omnivoor instance = new Omnivoor(pos);
-        instance.setEnergie(-1000);
+        instance.setEnergie(3000);
         
         int x = b.getEnergie();
         int y = instance.getEnergie();
@@ -72,7 +72,7 @@ public class OmnivoorTest {
         System.out.println("eet");
         Object o = (Plant)p;
         Omnivoor instance = new Omnivoor(pos);
-        instance.setEnergie(-1000);
+        instance.setEnergie(3000);
         
         int x = p.getEnergie();
         int y = instance.getEnergie();

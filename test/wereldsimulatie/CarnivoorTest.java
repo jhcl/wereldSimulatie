@@ -52,7 +52,7 @@ public class CarnivoorTest {
     public void testEet() {
         System.out.println("eet");
         Carnivoor instance = new Carnivoor(pos);
-        instance.setEnergie(-1000); 
+        instance.setEnergie(4000); 
         
         int x = b.getEnergie(); 
         int y = instance.getEnergie();
@@ -71,8 +71,8 @@ public class CarnivoorTest {
     public void testEet2() {
         System.out.println("eet");
         Carnivoor instance = new Carnivoor(pos);
-        instance.setEnergie(-1000);
-        b.setEnergie(-2700);
+        instance.setEnergie(4000);
+        b.setEnergie(300);
        
         int x = b.getEnergie();
         int y = instance.getEnergie();
@@ -90,7 +90,7 @@ public class CarnivoorTest {
     public void testEet3() {
         System.out.println("eet");
         Carnivoor instance = new Carnivoor(pos);
-        instance.setEnergie(-150);
+        instance.setEnergie(4850);
         
         
         int x = b.getEnergie();
@@ -109,8 +109,8 @@ public class CarnivoorTest {
     public void testEet4() {
         System.out.println("eet");
         Carnivoor instance = new Carnivoor(pos);
-        instance.setEnergie(-300);
-        b.setEnergie(-2800);
+        instance.setEnergie(4700);
+        b.setEnergie(200);
         
         
         int x = b.getEnergie();

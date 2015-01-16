@@ -49,7 +49,7 @@ public class HerbivoorTest {
         System.out.println("eet");
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
-        instance.setEnergie(-1000);
+        instance.setEnergie(2000);
         
         int x = p.getEnergie();
         int y = instance.getEnergie();
@@ -68,7 +68,7 @@ public class HerbivoorTest {
         System.out.println("eet");
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
-        instance.setEnergie(-200);
+        instance.setEnergie(2800);
         int x = p.getEnergie();
         int y = instance.getEnergie();
         instance.eet(p);
@@ -86,7 +86,7 @@ public class HerbivoorTest {
         System.out.println("eet");
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
-        instance.setEnergie(-200);
+        instance.setEnergie(2800);
         p.setEnergie(-25);
         
         int x = p.getEnergie();
@@ -105,7 +105,7 @@ public class HerbivoorTest {
         System.out.println("eet");
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
-        instance.setEnergie(-1000);
+        instance.setEnergie(2000);
         p.setEnergie(-25);
         
         int x = p.getEnergie();
