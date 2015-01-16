@@ -180,13 +180,12 @@ public class Eiland implements Serializable {
                         b.beweeg(newX, newY);
                         if (b.getEnergie() <= 0) {
                             opruimLijst.add(b);
-//                            b.deleteObservers();
+                            b.deleteObservers();
                         } 
                         else {
                             this.ouder.voegZwemmersToe(b);
                             this.opruimLijst.add(b);
                         }
-//                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
                     } 
                     else {
                         b.kiesAndereRichting();

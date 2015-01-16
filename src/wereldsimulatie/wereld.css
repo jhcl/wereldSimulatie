@@ -18,3 +18,14 @@
 	-fx-background-image: url("images/dolphin_in_deep_blue_sea-normal.jpg"); 
 	-fx-background-size: 100% 100%;
 }
+
+.list-cell {
+    -fx-cell-size: 10;
+}
+
+.list-view .scroll-bar:vertical .increment-arrow,
+.list-view .scroll-bar:vertical .decrement-arrow,
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button{
+    -fx-padding: 0;
+}
