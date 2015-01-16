@@ -39,7 +39,7 @@ public class Herbivoor extends Beest<Plant> {
     public void eet(Plant p) {
 
         int behoefte = this.strength * 10;
-        int schadePlant = 10;
+        int schadePlant = 30;
 
         if (this.energie <= this.stamina - (behoefte)) {
 
