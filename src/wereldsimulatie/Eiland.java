@@ -200,7 +200,6 @@ public class Eiland implements Serializable {
                                 break;
                             }
                             if (!eetbaar) {
-
                                 if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
                                     if (o != slaOver) {
                                         slaOver = (Beest) o;

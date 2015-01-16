@@ -274,13 +274,25 @@ public class FXMLDocumentController implements Initializable, Observer {
 //                        else if (pt instanceof Omnivoor) {pol.setFill(Color.YELLOW);}
 //                        p.add(pol);
                     }
+                    
+                    
                     if (pt instanceof Obstakel) {
-                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
-                        pol.translateXProperty().set((Integer)((Obstakel)pt).getPositie().get(0)*schaalX);
-                        pol.translateYProperty().set((Integer)((Obstakel)pt).getPositie().get(1)*schaalY);  
-                        pol.setFill(Color.BLACK);
-                        p.add(pol);
                         
+//                        Polygon pol = new Polygon(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0});
+//                        pol.translateXProperty().set((Integer)((Obstakel)pt).getPositie().get(0)*schaalX);
+//                        pol.translateYProperty().set((Integer)((Obstakel)pt).getPositie().get(1)*schaalY);  
+//                        pol.setFill(Color.BLACK);
+//                        p.add(pol);
+//                    }
+
+                        if (((Obstakel)pt).countObservers() != 1) {
+                            Poppetje polpp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0 ,0.0, 10.0}); 
+                            ((Obstakel)pt).addObserver((Observer) polpp);
+                            polpp.translateXProperty().set((Integer)((Obstakel)pt).getPositie().get(0)*schaalX);
+                            polpp.translateYProperty().set((Integer)((Obstakel)pt).getPositie().get(1)*schaalY); 
+                            polpp.setFill(Color.BLACK);
+                            pane.getChildren().add(polpp);
+                        } 
                     }
                     
                     if (pt instanceof Plant) {

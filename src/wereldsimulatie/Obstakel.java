@@ -7,13 +7,14 @@ package wereldsimulatie;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Een obstakel is een sta-in-de-weg waar niets op groeit en waar niet in of 
  * doorheen gelopen kan worden.
  * @author Lars Ko Tarkan
  */
-public class Obstakel implements Serializable {
+public class Obstakel extends Observable implements Serializable {
     private ArrayList<Integer> positie;
     
     /**
