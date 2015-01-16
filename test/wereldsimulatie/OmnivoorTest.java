@@ -78,7 +78,7 @@ public class OmnivoorTest {
         int y = instance.getEnergie();
         
         instance.eet(o);
-        assertTrue(p.getEnergie() == x - 10);
+        assertTrue(p.getEnergie() == x - 30);
         assertTrue(instance.getEnergie() == y + 400);
     }
     

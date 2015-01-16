@@ -55,7 +55,7 @@ public class HerbivoorTest {
         int y = instance.getEnergie();
         
         instance.eet(p);
-        assertTrue(p.getEnergie() == x - 10);
+        assertTrue(p.getEnergie() == x - 30);
         assertTrue(instance.getEnergie() == y + 300);  
     }
     
