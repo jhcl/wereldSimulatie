@@ -68,7 +68,7 @@ public class Omnivoor extends Beest {
         } else {
             Plant p = (Plant) o;
             int behoefte = strength * 10;
-            int schadePlant = 10;
+            int schadePlant = 30;
 
             if (this.energie <= this.stamina - (behoefte)) {
 

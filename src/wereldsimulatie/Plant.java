@@ -37,10 +37,12 @@ public class Plant extends Observable implements Serializable {
 
     /**
      * als plant niet dood is groeit het per method call 1 energie unit.
+     * Na 10 keer nul te zijn geweest, groeit plant niet meer voor 100 simulatiestappen
+     * als plant 100 simulatieplant onder gind is geweest wordt teller aantalKeerNul en ondergronds weer op Nul gezet
      *
      */
     public void groei() {
-        if (this.tellerAantalKeerNul < 5) {
+        if (this.tellerAantalKeerNul < 10) {
             this.energie += 1;
         } else {
             onderGronds++;
@@ -61,7 +63,7 @@ public class Plant extends Observable implements Serializable {
      * @param hoeveelheid energie dat er af gaat bij plant
      */
     public void wordtGegeten(int hoeveelheid) {
-        this.energie -= hoeveelheid * 10;
+        this.energie -= hoeveelheid;
 
         if (this.energie == 0) {
             tellerAantalKeerNul++;
@@ -73,22 +75,42 @@ public class Plant extends Observable implements Serializable {
 
     }
 
+    /**
+     *opvragen huidige energie van plant
+     * @return energie van plant
+     */
     public int getEnergie() {
         return energie;
     }
 
+    /**
+     *Hierbij wordt enerie aangepast, gebruikt voor unit test
+     * @param x Int dat meegegeven wordt om energie te zetten.
+     */
     public void setEnergie(int x) {
         this.energie += x;
     }
 
+    /**
+     *Opvragen positie
+     * @return
+     */
     public ArrayList<Integer> getPositie() {
         return positie;
     }
 
+    /**
+     *Opvragen hoeveel keer de plant op Nul is geweest
+     * @return
+     */
     public int getTellerAantalKeerNul() {
         return tellerAantalKeerNul;
     }
 
+    /**
+     *Hier wordt de teller gezet. 
+     * @param tellerAantalKeerNul
+     */
     public void setTellerAantalKeerNul(int tellerAantalKeerNul) {
         this.tellerAantalKeerNul = tellerAantalKeerNul;
     }
