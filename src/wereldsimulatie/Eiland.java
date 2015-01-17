@@ -15,7 +15,7 @@ import java.util.Random;
  * @author Lars Ko Tarkan
  */
 public class Eiland implements Serializable {
-
+    
     private ArrayList<Beest> beesten;
     private ArrayList<Obstakel> obstakels;
     private ArrayList<Plant> planten;
@@ -23,7 +23,7 @@ public class Eiland implements Serializable {
     private ArrayList<Beest> opruimLijst;
     private ArrayList<Beest> toevoegLijst;
     private Wereld ouder;
-
+    
     public Eiland(ArrayList<Integer> opp, Wereld w) {
         this.ouder = w;
         this.oppervlak = opp;
@@ -32,7 +32,7 @@ public class Eiland implements Serializable {
         this.planten = new ArrayList<>();
         this.opruimLijst = new ArrayList<>();
         this.toevoegLijst = new ArrayList<>();
-
+        
         maakEiland();
     }
 
@@ -46,8 +46,8 @@ public class Eiland implements Serializable {
     public void maakEiland() {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
-
-        for (int i = 0; i < 500; i++) {
+        
+        for (int i = 0; i < 2000; i++) {
             int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
                 willekeurigX--;
@@ -82,7 +82,7 @@ public class Eiland implements Serializable {
     public ArrayList<Obstakel> getObstakels() {
         return this.obstakels;
     }
-
+    
     public ArrayList<Integer> getEilandOppervlak() {
         return this.oppervlak;
     }
@@ -159,7 +159,7 @@ public class Eiland implements Serializable {
                 for (int i = 0; i < this.oppervlak.size(); i += 2) {
                     if (this.oppervlak.get(i) == newX && this.oppervlak.get(i + 1) == newY) {
                         opLand = true;
-                        break;
+ //                       break;
                     }
                 }
                 if (opLand) {
@@ -176,7 +176,11 @@ public class Eiland implements Serializable {
                         b.kiesAndereRichting();
                         doorlopen = false;
                     } else {
-                        b.beweeg(newX, newY);
+                        if (b.kanBewegen()) {
+                            b.beweeg(newX, newY);
+                        } else {
+                            b.setEnergie(b.getEnergie() - 5);
+                        }
                         if (b.getEnergie() <= 0) {
                             this.opruimLijst.add(b);
                             b.deleteObservers();
@@ -184,7 +188,11 @@ public class Eiland implements Serializable {
                     }
                 } else {
                     if (b.wilZwemmen()) {
-                        b.beweeg(newX, newY);
+                        if (b.kanBewegen()) {
+                            b.beweeg(newX, newY);
+                        } else {
+                            b.setEnergie(b.getEnergie() - 5);
+                        }
                         if (b.getEnergie() <= 0) {
                             opruimLijst.add(b);
                             b.deleteObservers();
@@ -196,11 +204,13 @@ public class Eiland implements Serializable {
                     } else {
                         b.kiesAndereRichting();
                     }
-
+                    
                 }
                 stappenTeller++;
+//                System.out.print(newX + "," + newY + " ");
             }
-            if (opLand) {
+//            System.out.println(b.getRichting() + " " + " " + stappenTeller + " " + opLand);
+            if (!opruimLijst.contains(b)) {
                 ArrayList<Object> gezelschap = ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
                 gezelschap.remove(b);
                 if (!gezelschap.isEmpty()) {
@@ -213,7 +223,7 @@ public class Eiland implements Serializable {
                                         hebbenGepaard.add(b);
                                         hebbenGepaard.add((Beest) o);
                                         this.iederZijnsWeegs(baby, b, (Beest) o);
-
+                                        
                                         toevoegLijst.add(baby);
                                     } else {
                                     }
@@ -235,7 +245,7 @@ public class Eiland implements Serializable {
                                         hebbenGepaard.add(b);
                                         hebbenGepaard.add((Beest) o);
                                         this.iederZijnsWeegs(baby, b, (Beest) o);
-
+                                        
                                         toevoegLijst.add(baby);
                                     } else {
                                     }
@@ -246,18 +256,18 @@ public class Eiland implements Serializable {
                                 break;
                             }
                             if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
+                                if (!hebbenGepaard.contains((Beest)o) && !hebbenGepaard.contains(b)) {
                                     Beest baby = b.paar((Beest) o);
                                     hebbenGepaard.add(b);
                                     hebbenGepaard.add((Beest) o);
                                     this.iederZijnsWeegs(baby, b, (Beest) o);
-
+                                    
                                     toevoegLijst.add(baby);
                                 } else {
                                 }
                                 break;
                             }
-
+                            
                         }
                     }
                 }
@@ -267,9 +277,9 @@ public class Eiland implements Serializable {
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
         toevoegLijst.clear();
-
+        
     }
-
+    
     private void iederZijnsWeegs(Beest a, Beest b, Beest c) {
         ArrayList<ArrayList<Integer>> opties = new ArrayList<>();
         Random rnd = new Random();
@@ -310,5 +320,5 @@ public class Eiland implements Serializable {
         temp = rnd.nextInt(opties.size());
         c.setRichting(opties.get(temp).get(0), opties.get(temp).get(1));
     }
-
+    
 }

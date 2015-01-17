@@ -108,13 +108,9 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * @param y int om y waarde mee te geven
      */
     public void beweeg(int x, int y) {
-        if (this.kanBewegen()) {
             this.positie.set(0, x);
             this.positie.set(1, y);
             this.energie -= this.getGewicht() / 10;
-        } else {
-            this.setEnergie(this.getEnergie() - 5);
-        }
         setChanged();
         notifyObservers();
     }
@@ -459,8 +455,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
      *
      * @param verandering integer die wordt megegeven bij aanroep
      */
-    public void setEnergie(int verandering) {
-        this.energie = verandering;
+    public void setEnergie(int nieuweEnergie) {
+        this.energie = nieuweEnergie;
+        setChanged();
+        notifyObservers();        
     }
     
 }
