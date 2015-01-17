@@ -42,7 +42,7 @@ public class HerbivoorTest {
 
     /**
      * Test of eet method, of class Herbivoor.
-     * Beest behoefte is 1000, kan maximaal 300 eten, plant heeft energie 30 en maximaal 10 gegeten worden
+     * Beest behoefte is 1000, kan maximaal 300 eten, plant heeft energie 100
      */
     @Test
     public void testEet() {
@@ -50,18 +50,19 @@ public class HerbivoorTest {
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
         instance.setEnergie(2000);
+        p.setEnergie(70);
         
         int x = p.getEnergie();
         int y = instance.getEnergie();
         
         instance.eet(p);
-        assertTrue(p.getEnergie() == x - 30);
+        assertTrue(p.getEnergie() == x - 50);
         assertTrue(instance.getEnergie() == y + 300);  
     }
     
         /**
      * Test of eet method, of class Herbivoor.
-     * Beest behoefte is 200, plant heeft energie 30 en maximaal 10 gegeten worden
+     * Beest behoefte is 200, plant heeft energie 100 en maximaal 50 gegeten worden
      */
     @Test
     public void testEet2() {
@@ -69,17 +70,24 @@ public class HerbivoorTest {
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
         instance.setEnergie(2800);
+        p.setEnergie(70);
         int x = p.getEnergie();
         int y = instance.getEnergie();
+        
+        
         instance.eet(p);
-        assertTrue(p.getEnergie() == x - (int)Math.round(200/instance.strength));
+        
+        float result =  ((float)200 /((float)(instance.strength * 10)) * 50);
+        int r = (int)result;
+        
+        assertTrue(p.getEnergie() == x - r);
         assertTrue(instance.getEnergie() == y + 200 );  
     }
     
     
             /**
      * Test of eet method, of class Herbivoor.
-     * Beest behoefte is 200, plant heeft energie 5. Dus Dier kan maximaal  5*strenght eten. 150
+     * Beest behoefte is 200, plant heeft energie 5. 
      */
     @Test
     public void testEet3() {
@@ -92,8 +100,8 @@ public class HerbivoorTest {
         int x = p.getEnergie();
         int y = instance.getEnergie();
         instance.eet(p);
-        assertTrue(p.getEnergie() == x - (int)Math.round(150/instance.strength));
-        assertTrue(instance.getEnergie() == y + 150 );  
+        assertTrue(p.getEnergie() == x - 5);
+        assertTrue(instance.getEnergie() == y + 20 );  
     }
     
       /**
@@ -111,8 +119,8 @@ public class HerbivoorTest {
         int x = p.getEnergie();
         int y = instance.getEnergie();
         instance.eet(p);
-        assertTrue(p.getEnergie() == x - (int)Math.round(150/instance.strength));
-        assertTrue(instance.getEnergie() == y + 150 );  
+        assertTrue(p.getEnergie() == x - 5);
+        assertTrue(instance.getEnergie() == y + 30 );  
     }
     
 }

@@ -73,12 +73,13 @@ public class OmnivoorTest {
         Object o = (Plant)p;
         Omnivoor instance = new Omnivoor(pos);
         instance.setEnergie(3000);
+        p.setEnergie(20);
         
         int x = p.getEnergie();
         int y = instance.getEnergie();
         
         instance.eet(o);
-        assertTrue(p.getEnergie() == x - 30);
+        assertTrue(p.getEnergie() == x - 50);
         assertTrue(instance.getEnergie() == y + 400);
     }
     
