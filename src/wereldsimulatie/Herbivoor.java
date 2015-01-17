@@ -39,7 +39,7 @@ public class Herbivoor extends Beest<Plant> {
     public void eet(Plant p) {
 
         int behoefte = this.strength * 10;
-        int schadePlant = 30;
+        int schadePlant = 50;
 
         if (this.energie <= this.stamina - (behoefte)) {
 
@@ -47,9 +47,13 @@ public class Herbivoor extends Beest<Plant> {
                 this.energie = this.energie + (behoefte);
                 //p.energie = p.energie - schadePlant;
             } else {
+                
+               float result = ((float)p.energie/(float)schadePlant) * ((float)strength * (float)10);
+                
+                behoefte = (int)result;
+                
                 schadePlant = p.energie;
-                behoefte = p.energie * strength;
-                //p.energie = p.energie - p.energie;
+
                 this.energie = this.energie + behoefte;
             }
             p.wordtGegeten(schadePlant);
@@ -57,14 +61,26 @@ public class Herbivoor extends Beest<Plant> {
         else
         {
             behoefte = this.stamina - this.energie;
-            schadePlant = (int)Math.round(behoefte/strength);
+            
+            //schadePlant = 0;
             if (p.energie >= schadePlant) {
+                
+                float result = ((float)behoefte/((float)this.strength * 10)) * schadePlant ;
+                Math.round(result);
+                
+                schadePlant = (int)result;
+                
                 this.energie = this.energie + (behoefte);
+                
                 //p.energie = p.energie - schadePlant;
             } else {
+               
+                
+               float result = ((float)p.energie/(float)schadePlant) * behoefte;
+                
+                behoefte = (int)result;
                 schadePlant = p.energie;
-                behoefte = schadePlant * strength;
-                //p.energie = p.energie - p.energie;
+
                 this.energie = this.energie + behoefte;
             }
             p.wordtGegeten(schadePlant);            

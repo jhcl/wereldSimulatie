@@ -67,35 +67,54 @@ public class Omnivoor extends Beest {
             }
         } else {
             Plant p = (Plant) o;
-            int behoefte = strength * 10;
-            int schadePlant = 30;
+        int behoefte = this.strength * 10;
+        int schadePlant = 50;
 
-            if (this.energie <= this.stamina - (behoefte)) {
+        if (this.energie <= this.stamina - (behoefte)) {
 
-                if (p.energie >= schadePlant) {
-                    this.energie = this.energie + (behoefte);
-                    //p.energie = p.energie - schadePlant;
-                } else {
-                    schadePlant = p.energie;
-                    behoefte = p.energie * strength;
-                    //p.energie = p.energie - p.energie;
-                    this.energie = this.energie + behoefte;
-                }
-                p.wordtGegeten(schadePlant);
+            if (p.energie >= schadePlant) {
+                this.energie = this.energie + (behoefte);
+                //p.energie = p.energie - schadePlant;
             } else {
-                behoefte = this.stamina - this.energie;
-                schadePlant = (int) Math.round(behoefte / strength);
-                if (p.energie >= schadePlant) {
-                    this.energie = this.energie + (behoefte);
-                    //p.energie = p.energie - schadePlant;
-                } else {
-                    schadePlant = p.energie;
-                    behoefte = schadePlant * strength;
-                    //p.energie = p.energie - p.energie;
-                    this.energie = this.energie + behoefte;
-                }
-                p.wordtGegeten(schadePlant);
+                
+               float result = ((float)p.energie/(float)schadePlant) * ((float)strength * (float)10);
+                
+                behoefte = (int)result;
+                
+                schadePlant = p.energie;
+
+                this.energie = this.energie + behoefte;
             }
+            p.wordtGegeten(schadePlant);
+        }
+        else
+        {
+            behoefte = this.stamina - this.energie;
+            
+            //schadePlant = 0;
+            if (p.energie >= schadePlant) {
+                
+                float result = ((float)behoefte/((float)this.strength * 10)) * schadePlant ;
+                Math.round(result);
+                
+                schadePlant = (int)result;
+                
+                this.energie = this.energie + (behoefte);
+                
+                //p.energie = p.energie - schadePlant;
+            } else {
+               
+                
+               float result = ((float)p.energie/(float)schadePlant) * behoefte;
+                
+                behoefte = (int)result;
+                schadePlant = p.energie;
+
+                this.energie = this.energie + behoefte;
+            }
+            p.wordtGegeten(schadePlant);            
+        }
+
         }
 
     }
