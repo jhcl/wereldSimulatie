@@ -208,6 +208,21 @@ public class Eiland implements Serializable {
                     for (Object o : gezelschap) {
                         if (!gezelschap.isEmpty()) {
                             if (b instanceof Carnivoor && o instanceof Beest) {
+                                if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
+                                    System.out.print("paar: ");
+                                    if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
+                                        System.out.println("gepaard door: " + b.getClass());
+                                        Beest baby = b.paar((Beest) o);
+                                        hebbenGepaard.add(b);
+                                        hebbenGepaard.add((Beest) o);
+                                        this.iederZijnsWeegs(baby, b, (Beest) o);
+
+                                        toevoegLijst.add(baby);
+                                    } else {
+                                        System.out.println("overgeslagen");
+                                    }
+                                    break;
+                                }
                                 b.eet((Beest) o);
                                 b.kiesAndereRichting();
                                 break;
@@ -218,6 +233,21 @@ public class Eiland implements Serializable {
                                 break;
                             }
                             if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
+                                if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
+                                    System.out.print("paar: ");
+                                    if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
+                                        System.out.println("gepaard door: " + b.getClass());
+                                        Beest baby = b.paar((Beest) o);
+                                        hebbenGepaard.add(b);
+                                        hebbenGepaard.add((Beest) o);
+                                        this.iederZijnsWeegs(baby, b, (Beest) o);
+
+                                        toevoegLijst.add(baby);
+                                    } else {
+                                        System.out.println("overgeslagen");
+                                    }
+                                    break;
+                                }
                                 b.eet(o);
                                 b.kiesAndereRichting();
                                 break;
