@@ -32,10 +32,9 @@ public class Eiland implements Serializable {
         this.planten = new ArrayList<>();
         this.opruimLijst = new ArrayList<>();
         this.toevoegLijst = new ArrayList<>();
-     
+
         maakEiland();
     }
-    
 
     /**
      * Maak eiland met vaste positie/oppervlak en creeer objecten volgens
@@ -48,14 +47,14 @@ public class Eiland implements Serializable {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 500; i++) {
             int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
-                    willekeurigX--;
+                willekeurigX--;
             }
             ArrayList<Integer> pos = new ArrayList<>();
             pos.add(kopie.get(willekeurigX));
-            pos.add(kopie.get(willekeurigX + 1));            
+            pos.add(kopie.get(willekeurigX + 1));
             // Snelle manier om aantal objecten naar verhouding te maken
             int temp = rnd.nextInt(10);
             if (temp == 6) {
@@ -63,8 +62,7 @@ public class Eiland implements Serializable {
                 // op een obstakel mag niets meer staan
                 kopie.remove(willekeurigX);
                 kopie.remove(willekeurigX);
-            }
-            else if (temp == 0 || temp == 1 || temp == 2 || temp == 3) {
+            } else if (temp == 0 || temp == 1 || temp == 2 || temp == 3) {
                 this.beesten.add(new Carnivoor(pos));
             } else if (temp == 4) {
                 this.beesten.add(new Herbivoor(pos));
@@ -136,7 +134,7 @@ public class Eiland implements Serializable {
      * @see wereldsimulatie.Beest#paar
      */
     public void stapDoorSimulatie() {
-        Beest slaOver = null;
+        ArrayList<Beest> hebbenGepaard = new ArrayList<>();
         for (Plant p : this.planten) {
             p.groei();
         }
@@ -153,8 +151,8 @@ public class Eiland implements Serializable {
             int newY;// = this.ouder.nieuwePositie(b).get(1);
             int stappenTeller = 0;
             while (stappenTeller < b.getSnelheid() && doorlopen) {
-                    newX = this.ouder.nieuwePositie(b).get(0);
-                    newY = this.ouder.nieuwePositie(b).get(1);                
+                newX = this.ouder.nieuwePositie(b).get(0);
+                newY = this.ouder.nieuwePositie(b).get(1);
 
                 // is de volgende positie nog land
                 opLand = false;
@@ -165,8 +163,6 @@ public class Eiland implements Serializable {
                     }
                 }
                 if (opLand) {
-
-
 
                     // lopen we tegen een obstakel aan ?
                     boolean erStaatEenObstakel = false;
@@ -186,22 +182,18 @@ public class Eiland implements Serializable {
                             b.deleteObservers();
                         }
                     }
-                } 
-                else {
+                } else {
                     if (b.wilZwemmen()) {
                         b.beweeg(newX, newY);
                         if (b.getEnergie() <= 0) {
                             opruimLijst.add(b);
                             b.deleteObservers();
-                        } 
-                        else {
+                        } else {
                             ouder.voegZwemmersToe(b);
-//                            System.out.println(ouder.getZwemmers().size());
                             opruimLijst.add(b);
                             break;
                         }
-                    } 
-                    else {
+                    } else {
                         b.kiesAndereRichting();
                     }
 
@@ -214,44 +206,37 @@ public class Eiland implements Serializable {
                 if (!gezelschap.isEmpty()) {
                     for (Object o : gezelschap) {
                         if (!gezelschap.isEmpty()) {
-                            boolean eetbaar = false;
                             if (b instanceof Carnivoor && o instanceof Beest) {
                                 b.eet((Beest) o);
                                 b.kiesAndereRichting();
-                                eetbaar = true;
                                 break;
                             }
                             if (b instanceof Herbivoor && o instanceof Plant) {
                                 b.eet((Plant) o);
                                 b.kiesAndereRichting();
-                                eetbaar = true;
                                 break;
                             }
                             if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
                                 b.eet(o);
                                 b.kiesAndereRichting();
-                                eetbaar = true;
                                 break;
                             }
-                            if (!eetbaar) {
-                                if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                    if (o != slaOver) {
-                                        slaOver = (Beest) o;
-                                        Beest baby = b.paar((Beest) o);
-                                        this.iederZijnsWeegs(baby, b, (Beest) o);
-//                                        System.out.println(b.getRichting() + " + " + ((Beest) o).getRichting() + " = " + baby.getRichting());
-//                                        System.out.println(b.isHitsig() + " + " + ((Beest) o).isHitsig() + " = " + baby.isHitsig());
-//                                        System.out.println(b.getClass() + " + " + ((Beest) o).getClass() + " = " + baby.getClass());
-//                                        System.out.println(b.hashCode() + " + " + ((Beest) o).hashCode() + " = " + baby.hashCode());
-//                                        System.out.println(b.getRichting() + " + " + ((Beest) o).getRichting() + " = " + baby.getRichting());
-                                        toevoegLijst.add(baby);
-                                    } else {
-                                        slaOver = null;
-                                    }
-                                    break;
-                                }
+                            if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
+                                System.out.print("paar: ");
+                                if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
+                                    System.out.println("binnen: ");
+                                    Beest baby = b.paar((Beest) o);
+                                    hebbenGepaard.add(b);
+                                    hebbenGepaard.add((Beest) o);
+                                    this.iederZijnsWeegs(baby, b, (Beest) o);
 
+                                    toevoegLijst.add(baby);
+                                } else {
+                                    System.out.println("overgeslagen");
+                                }
+                                break;
                             }
+
                         }
                     }
                 }
@@ -261,7 +246,7 @@ public class Eiland implements Serializable {
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
         toevoegLijst.clear();
-        
+
     }
 
     private void iederZijnsWeegs(Beest a, Beest b, Beest c) {

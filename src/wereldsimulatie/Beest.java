@@ -349,7 +349,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * @return energie
      */
         public int kostenStaminaBeest() {
-        double voortplantingskosten = this.getStamina() - this.getStamina();
+        double voortplantingskosten = 0.1 * this.getStamina();
         this.energie = this.energie - (int) voortplantingskosten;
         return this.energie;
     }
