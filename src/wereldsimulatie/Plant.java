@@ -17,7 +17,7 @@ import java.util.Observable;
 public class Plant extends Observable implements Serializable {
 
     private ArrayList<Integer> positie;
-    private int grootte;
+    final private int GROOTTE = 150;
     protected int energie;
     private int tellerAantalKeerNul;
     private int onderGronds;
@@ -42,8 +42,14 @@ public class Plant extends Observable implements Serializable {
      *
      */
     public void groei() {
-        if (this.tellerAantalKeerNul < 10) {
-            this.energie += 1;
+        if (this.tellerAantalKeerNul < 5) {
+            
+            if(energie != GROOTTE)
+            {
+                this.energie += 1;
+                
+            }
+            
         } else {
             onderGronds++;
         }
