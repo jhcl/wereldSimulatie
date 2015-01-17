@@ -17,7 +17,7 @@ import java.util.Random;
  * @param <T> Generics, te specificeren in child class
  */
 abstract public class Beest<T> extends Observable implements Serializable {
-
+    
     protected ArrayList<Integer> positie;
     protected ArrayList<Integer> richting;
     protected int strength;
@@ -47,7 +47,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * #poten - Math.floor(energie-strength / 1000)<br>
      * Bij 0 (nul) energie is een beest dood en verdwijnt het object<br>
      *
-     * @param positie ArrayList Integer, positie van beest wordt opgeslagen om deze op eiland te plaatsen
+     * @param positie ArrayList Integer, positie van beest wordt opgeslagen om
+     * deze op eiland te plaatsen
      */
     public Beest(ArrayList<Integer> positie) {
         this.rnd = new Random();
@@ -58,7 +59,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         this.richting = new ArrayList<>();
         this.richting.add(xRichting);
         this.richting.add(yRichting);
-
+        
     }
 
     /**
@@ -102,20 +103,25 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * ligt de veranwoordelijkheid te controleren of de stap mogelijk is.<br>
      * Een beweeg() in een simulatiestap kost evenveel energie als het gewicht
      * van het beest.<br>
+     *
      * @param x int op x waarde mee te geven
      * @param y int om y waarde mee te geven
      */
     public void beweeg(int x, int y) {
-        this.positie.set(0, x);
-        this.positie.set(1, y);
-        this.energie -= this.getGewicht() / 10;
-
+        if (this.kanBewegen()) {
+            this.positie.set(0, x);
+            this.positie.set(1, y);
+            this.energie -= this.getGewicht() / 10;
+        } else {
+            this.setEnergie(this.getEnergie() - 5);
+        }
         setChanged();
         notifyObservers();
     }
 
     /**
-     *getter om energie op te vragen
+     * getter om energie op te vragen
+     *
      * @return
      */
     public int getEnergie() {
@@ -156,7 +162,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         this.kostenStaminaBeest();
         b.kostenStaminaBeest();
 
-                // Bepaal de values van een beest
+        // Bepaal de values van een beest
         // Gemiddelde bepalen en deze casten naar een int
         int gemiddelde_strength = (int) (this.getStrength() + b.getStrength()) / 2;
         int gemiddelde_stamina = (int) (this.getStamina() + b.getStamina()) / 2;
@@ -175,7 +181,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         double percentage_energie = (double) (Math.random() * 10) / 100;
         double percentage_legs = (double) (Math.random() * 10) / 100;
         double percentage_gewicht = (double) (Math.random() * 10) / 100;
-                // Zet percentage double om in Integer
+        // Zet percentage double om in Integer
         // Marge wat kind van de ouders nog overerft
         int marge_strength = verschil_strength * (int) percentage_strength;
         int marge_stamina = verschil_stamina * (int) percentage_stamina;
@@ -194,8 +200,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
             legs = gemiddelde_legs + marge_legs;
             gewicht = gemiddelde_gewicht + marge_gewicht;
             
-        }
-        // -
+        } // -
         else {
             strength = gemiddelde_strength - marge_strength;
             stamina = gemiddelde_stamina - marge_stamina;
@@ -206,33 +211,29 @@ abstract public class Beest<T> extends Observable implements Serializable {
 
         // Als beide beesten omnivoor zijn doe dan dit ook uitvoeren                                      
         if (this instanceof Omnivoor && b instanceof Omnivoor) {
-                // @TODO Positie bepalen
+            // @TODO Positie bepalen
             // Maak Omnivoor
             Omnivoor o = new Omnivoor(this.getPositie());
             o.setEnergie(voortplantingsKosten);
             return o;
-        }
-        // Als beide beesten carnivoor zijn doe dan dit ook uitvoeren                                      
+        } // Als beide beesten carnivoor zijn doe dan dit ook uitvoeren                                      
         else if (this instanceof Carnivoor && b instanceof Carnivoor) {
-                // @TODO Positie bepalen
+            // @TODO Positie bepalen
             // Maak Omnivoor
             Carnivoor c = new Carnivoor(this.getPositie());
             c.setEnergie(voortplantingsKosten);
             return c;
-        }
-        // Als beide beesten herbivoor zijn doe dan dit ook uitvoeren                                      
+        } // Als beide beesten herbivoor zijn doe dan dit ook uitvoeren                                      
         else if (this instanceof Herbivoor && b instanceof Herbivoor) {
-                // @TODO Positie bepalen
+            // @TODO Positie bepalen
             // Maak Omnivoor
             Herbivoor h = new Herbivoor(this.getPositie());
             h.setEnergie(voortplantingsKosten);
             return h;
-        }
-
-        // Omnivoor en carnivoor dan dit uitvoeren
+        } // Omnivoor en carnivoor dan dit uitvoeren
         else if ((this instanceof Omnivoor && b instanceof Carnivoor)
                 || (this instanceof Carnivoor && b instanceof Omnivoor)) {
-                // @TODO Positie bepalen
+            // @TODO Positie bepalen
             // 50 / 50
             // Random met een kans van 50 / 50
             int rbeest = random.nextInt(2);
@@ -248,11 +249,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
                 c.setEnergie(voortplantingsKosten);
                 return c;
             }
-        }
-        // Omnivoor en herbivoor dan dit uitvoeren
+        } // Omnivoor en herbivoor dan dit uitvoeren
         else if ((this instanceof Omnivoor && b instanceof Herbivoor)
                 || (this instanceof Herbivoor && b instanceof Omnivoor)) {
-                // @TODO Positie bepalen
+            // @TODO Positie bepalen
             // 50 / 50
             // Random met een kans van 50 / 50
             int rbeest = random.nextInt(2);
@@ -268,11 +268,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
                 h.setEnergie(voortplantingsKosten);
                 return h;
             }
-        }
-        // Carnivoor en herbivoor dan dit uitvoeren
+        } // Carnivoor en herbivoor dan dit uitvoeren
         else if ((this instanceof Carnivoor && b instanceof Herbivoor)
                 || (this instanceof Herbivoor && b instanceof Carnivoor)) {
-                // @TODO Positie bepalen
+            // @TODO Positie bepalen
             // 50 / 50
             // Random met een kans van 50 / 50
             int rbeest = random.nextInt(2);
@@ -295,18 +294,18 @@ abstract public class Beest<T> extends Observable implements Serializable {
 //    public int getHitsigheid() {
 //        return this.hitsigheid;
 //    }
-
     /**
      * Methode om hitsigheid te controleren
+     *
      * @return true als energie 95 procent is van stamina
      */
-    
     public boolean isHitsig() {
         return (int) Math.round(this.stamina * 0.950) < this.energie;
     }
 
     /**
-     *getter voor gewicht
+     * getter voor gewicht
+     *
      * @return het gewicht van beest
      */
     public int getGewicht() {
@@ -319,15 +318,17 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *getter voor strenght
-     * @return strenght 
+     * getter voor strenght
+     *
+     * @return strenght
      */
     public int getStrength() {
         return this.strength;
     }
 
     /**
-     *getter voor stamina
+     * getter voor stamina
+     *
      * @return stamina
      */
     public int getStamina() {
@@ -335,7 +336,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *getter voor aantal poten
+     * getter voor aantal poten
+     *
      * @return legs
      */
     public int getLegs() {
@@ -343,24 +345,25 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     // Voor paren, kosten 10% stamina van ouders aftrekken @author Lars
-
     /**
-     *Methode om voortplantingskosten te berekenen
+     * Methode om voortplantingskosten te berekenen
+     *
      * @return energie
      */
-        public int kostenStaminaBeest() {
+    public int kostenStaminaBeest() {
         double voortplantingskosten = 0.1 * this.getStamina();
         this.energie = this.energie - (int) voortplantingskosten;
         return this.energie;
     }
-
+    
     @Override
     public String toString() {
         return "Strength: " + strength + "Stamina " + stamina + "Legs: " + legs + "Energie: " + energie;
     }
 
     /**
-     *Getter voor positie om huidige positie op te vragen
+     * Getter voor positie om huidige positie op te vragen
+     *
      * @return positie
      */
     public ArrayList<Integer> getPositie() {
@@ -369,6 +372,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
 
     /**
      * Methode om te checken of beest will zwemmen
+     *
      * @return true als enegie onder 40 procent is
      */
     public boolean wilZwemmen() {
@@ -379,7 +383,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *getter voor richting
+     * getter voor richting
+     *
      * @return richting
      */
     public ArrayList<Integer> getRichting() {
@@ -387,7 +392,9 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *Setter voor Richint, hier wordt integers meegegeven voor nieuwe coordinaten
+     * Setter voor Richint, hier wordt integers meegegeven voor nieuwe
+     * coordinaten
+     *
      * @param x integer x
      * @param y integer y
      */
@@ -397,7 +404,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *getter voor snelheid
+     * getter voor snelheid
+     *
      * @return snelheid
      */
     public int getSnelheid() {
@@ -414,18 +422,19 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *Check of beest moet bewegen 
+     * Check of beest moet bewegen
+     *
      * @return true als energie grother is dan beweegdrempel
      */
     public boolean kanBewegen() {
-        if (this.energie > (this.beweegDrempel / 100) * this.stamina) {
+        if (this.energie > (0.05 * this.stamina)) {
             return true;
         }
         return false;
     }
 
     /**
-     *Methode om een richtign te bepalen na een actie
+     * Methode om een richtign te bepalen na een actie
      */
     public void kiesAndereRichting() {
         ArrayList<Integer> temp = new ArrayList<>();
@@ -446,11 +455,12 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *om energie van beest te zetten na genoorte
+     * om energie van beest te zetten na genoorte
+     *
      * @param verandering integer die wordt megegeven bij aanroep
      */
     public void setEnergie(int verandering) {
         this.energie = verandering;
     }
-
+    
 }

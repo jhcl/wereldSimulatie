@@ -139,7 +139,6 @@ public class Eiland implements Serializable {
         for (Plant p : this.planten) {
             p.groei();
         }
-        System.out.println(beesten.size());
         for (Beest b : this.beesten) {
 
             // niet te lang stilstaan ?
@@ -209,9 +208,7 @@ public class Eiland implements Serializable {
                         if (!gezelschap.isEmpty()) {
                             if (b instanceof Carnivoor && o instanceof Beest) {
                                 if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                    System.out.print("paar: ");
                                     if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
-                                        System.out.println("gepaard door: " + b.getClass());
                                         Beest baby = b.paar((Beest) o);
                                         hebbenGepaard.add(b);
                                         hebbenGepaard.add((Beest) o);
@@ -219,7 +216,6 @@ public class Eiland implements Serializable {
 
                                         toevoegLijst.add(baby);
                                     } else {
-                                        System.out.println("overgeslagen");
                                     }
                                     break;
                                 }
@@ -234,9 +230,7 @@ public class Eiland implements Serializable {
                             }
                             if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
                                 if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                    System.out.print("paar: ");
                                     if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
-                                        System.out.println("gepaard door: " + b.getClass());
                                         Beest baby = b.paar((Beest) o);
                                         hebbenGepaard.add(b);
                                         hebbenGepaard.add((Beest) o);
@@ -244,7 +238,6 @@ public class Eiland implements Serializable {
 
                                         toevoegLijst.add(baby);
                                     } else {
-                                        System.out.println("overgeslagen");
                                     }
                                     break;
                                 }
@@ -253,9 +246,7 @@ public class Eiland implements Serializable {
                                 break;
                             }
                             if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                System.out.print("paar: ");
                                 if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
-                                    System.out.println("gepaard door: " + b.getClass());
                                     Beest baby = b.paar((Beest) o);
                                     hebbenGepaard.add(b);
                                     hebbenGepaard.add((Beest) o);
@@ -263,7 +254,6 @@ public class Eiland implements Serializable {
 
                                     toevoegLijst.add(baby);
                                 } else {
-                                    System.out.println("overgeslagen");
                                 }
                                 break;
                             }
@@ -319,7 +309,6 @@ public class Eiland implements Serializable {
         opties.remove(temp);
         temp = rnd.nextInt(opties.size());
         c.setRichting(opties.get(temp).get(0), opties.get(temp).get(1));
-//       System.out.println(a.getRichting() + " " + b.getRichting() + " " + c.getRichting());
     }
 
 }
