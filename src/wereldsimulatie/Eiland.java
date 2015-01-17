@@ -22,47 +22,58 @@ public class Eiland implements Serializable {
     private ArrayList<Integer> oppervlak;
     private ArrayList<Beest> opruimLijst;
     private ArrayList<Beest> toevoegLijst;
-    private Random rnd;
     private Wereld ouder;
 
     public Eiland(ArrayList<Integer> opp, Wereld w) {
         this.ouder = w;
         this.oppervlak = opp;
-        this.rnd = new Random();
         this.beesten = new ArrayList<>();
         this.obstakels = new ArrayList<>();
         this.planten = new ArrayList<>();
         this.opruimLijst = new ArrayList<>();
         this.toevoegLijst = new ArrayList<>();
+     
+        maakEiland();
+    }
+    
 
-        for (int i = 0; i < 500; i++) {
-            int willekeurigX = this.rnd.nextInt(this.oppervlak.size());
+    /**
+     * Maak eiland met vaste positie/oppervlak en creeer objecten volgens
+     * verhouding:<br>
+     * 10 % obstakel, 40% carnivoor, 30% planten,10% herbivoor, 10% omnivoor
+     *
+     * @return Eiland object
+     */
+    public void maakEiland() {
+        ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
+        Random rnd = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
-                if (willekeurigX != 0) {
                     willekeurigX--;
-                } else {
-                    willekeurigX++;
-                }
             }
             ArrayList<Integer> pos = new ArrayList<>();
-            pos.add(this.oppervlak.get(willekeurigX));
-            pos.add(this.oppervlak.get(willekeurigX + 1));
-
+            pos.add(kopie.get(willekeurigX));
+            pos.add(kopie.get(willekeurigX + 1));            
             // Snelle manier om aantal objecten naar verhouding te maken
-            int temp = this.rnd.nextInt(10);
-            if (temp == 0 || temp == 1 || temp == 2 || temp == 3) {
+            int temp = rnd.nextInt(10);
+            if (temp == 6) {
+                this.obstakels.add(new Obstakel(pos));
+                // op een obstakel mag niets meer staan
+                kopie.remove(willekeurigX);
+                kopie.remove(willekeurigX);
+            }
+            else if (temp == 0 || temp == 1 || temp == 2 || temp == 3) {
                 this.beesten.add(new Carnivoor(pos));
             } else if (temp == 4) {
                 this.beesten.add(new Herbivoor(pos));
             } else if (temp == 5) {
                 this.beesten.add(new Omnivoor(pos));
-            } else if (temp == 6) {
-                this.obstakels.add(new Obstakel(pos));
             } else if (temp == 7 || temp == 8 || temp == 9) {
                 this.planten.add(new Plant(pos));
             }
         }
-
     }
 
     /**
@@ -125,7 +136,6 @@ public class Eiland implements Serializable {
      * @see wereldsimulatie.Beest#paar
      */
     public void stapDoorSimulatie() {
-        Random rnd = new Random();
         Beest slaOver = null;
         for (Plant p : this.planten) {
             p.groei();
@@ -139,12 +149,15 @@ public class Eiland implements Serializable {
 //            }
             boolean opLand = false;
             boolean doorlopen = true;
-            int newX = this.ouder.nieuwePositie(b).get(0);
-            int newY = this.ouder.nieuwePositie(b).get(1);
+            int newX;// = this.ouder.nieuwePositie(b).get(0);
+            int newY;// = this.ouder.nieuwePositie(b).get(1);
             int stappenTeller = 0;
             while (stappenTeller < b.getSnelheid() && doorlopen) {
+                    newX = this.ouder.nieuwePositie(b).get(0);
+                    newY = this.ouder.nieuwePositie(b).get(1);                
 
                 // is de volgende positie nog land
+                opLand = false;
                 for (int i = 0; i < this.oppervlak.size(); i += 2) {
                     if (this.oppervlak.get(i) == newX && this.oppervlak.get(i + 1) == newY) {
                         opLand = true;
@@ -153,8 +166,7 @@ public class Eiland implements Serializable {
                 }
                 if (opLand) {
 
-//                    newX = this.ouder.nieuwePositie(b).get(0);
-//                    newY = this.ouder.nieuwePositie(b).get(1);
+
 
                     // lopen we tegen een obstakel aan ?
                     boolean erStaatEenObstakel = false;
@@ -183,8 +195,10 @@ public class Eiland implements Serializable {
                             b.deleteObservers();
                         } 
                         else {
-                            this.ouder.voegZwemmersToe(b);
-                            this.opruimLijst.add(b);
+                            ouder.voegZwemmersToe(b);
+                            System.out.println(ouder.getZwemmers().size());
+                            opruimLijst.add(b);
+                            break;
                         }
                     } 
                     else {
@@ -195,7 +209,7 @@ public class Eiland implements Serializable {
                 stappenTeller++;
             }
             if (opLand) {
-                ArrayList<Object> gezelschap = this.ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
+                ArrayList<Object> gezelschap = ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
                 gezelschap.remove(b);
                 if (!gezelschap.isEmpty()) {
                     for (Object o : gezelschap) {
@@ -245,13 +259,16 @@ public class Eiland implements Serializable {
                 }
             }
         }
-        this.beesten.addAll(this.toevoegLijst);
-        this.beesten.removeAll(this.opruimLijst);
-        this.opruimLijst.clear();
+        beesten.addAll(toevoegLijst);
+        beesten.removeAll(opruimLijst);
+        opruimLijst.clear();
+        toevoegLijst.clear();
+        
     }
 
     private void iederZijnsWeegs(Beest a, Beest b, Beest c) {
         ArrayList<ArrayList<Integer>> opties = new ArrayList<>();
+        Random rnd = new Random();
         int temp;
         opties.add(new ArrayList<Integer>());
         opties.get(0).add(-1);

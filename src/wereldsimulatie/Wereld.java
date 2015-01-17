@@ -52,32 +52,6 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
     }
 
     /**
-     * Maak eiland met vaste positie/oppervlak en creeer objecten volgens
-     * verhouding:<br>
-     * 10 % obstakel, 40% carnivoor, 30% planten,10% herbivoor, 10% omnivoor
-     *
-     * @return Eiland object
-     */
-    /**
-     * Maak eiland met vaste positie/oppervlak en creeer objecten volgens
-     * verhouding:<br>
-     * 10 % obstakel, 40% carnivoor, 30% planten,10% herbivoor, 10% omnivoor
-     *
-     * @return Eiland object
-     */
-//    public Eiland maakEiland() {
-//        ArrayList<Integer> opp = new ArrayList<>();
-//        for (int i = 0; i < 50; i++) {
-//            for (int j = 0; j < 100; j++) {
-//                opp.add(j);
-//                opp.add(i);
-//            }
-//        }
-//        return new Eiland(opp);
-//        
-//        
-//    }
-    /**
      * getter voor lijst van eilanden
      *
      * @return ArrayList van Eiland objecten
@@ -99,30 +73,31 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
 
             // controleer of we aan de rand van een eiland met een obstakel terecht gekomen zijn 
             boolean erStaatEenObstakel = false;
-            for (Object o : this.staatOpPositie(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1))) {
+            int newX = this.nieuwePositie(b).get(0);
+            int newY = this.nieuwePositie(b).get(1);
+            for (Object o : this.staatOpPositie(newX, newY)) {
                 if (o instanceof Obstakel) {
                     erStaatEenObstakel = true;
                 }
             }
             if (!erStaatEenObstakel) {
-                b.beweeg(this.nieuwePositie(b).get(0), this.nieuwePositie(b).get(1));
+                b.beweeg(newX, newY);
                 if (b.getEnergie() <= 0) {
                     opruimLijst.add(b);
                 }
 
+                // zijn we geland ?
+                for (Eiland el : eilanden) {
+                    for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
+                        if (el.getEilandOppervlak().get(i) == newX && el.getEilandOppervlak().get(i + 1) == newY) {
+                            el.getBeesten().add(b);
+                            opruimLijst.add(b);
+                        }
+                    }
+                }
             } else {
                 b.bots();
                 b.kiesAndereRichting();
-            }
-            // zijn we geland ?
-            for (Eiland el : eilanden) {
-                for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
-                    if (el.getEilandOppervlak().get(i) == this.nieuwePositie(b).get(0) && el.getEilandOppervlak().get(i + 1) == this.nieuwePositie(b).get(1)) {
-                        el.getBeesten().add(b);
-                        opruimLijst.add(b);
-                    }
-                }
-
             }
         }
         zwemmers.removeAll(opruimLijst);
@@ -133,10 +108,11 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
             lijstObjecten.addAll(e.getBeesten());
             lijstObjecten.addAll(e.getPlanten());
             lijstObjecten.addAll(e.getObstakels());
+            System.out.println(e.getBeesten().size());
         }
-        for (Beest b : zwemmers) {
-            lijstObjecten.addAll(zwemmers);
-        }
+        System.out.println(zwemmers.size());
+        lijstObjecten.addAll(zwemmers);
+
         setChanged();
         notifyObservers(lijstObjecten);
     }
@@ -191,7 +167,6 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
             }
 
         }
-
         return staatOpElkaar;
     }
 

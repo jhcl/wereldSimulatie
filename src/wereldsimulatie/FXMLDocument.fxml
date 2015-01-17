@@ -9,7 +9,7 @@
 <GridPane  xmlns:fx="http://javafx.com/fxml/1" fx:id="grid_totaal"  
            xmlns="http://javafx.com/javafx/8" prefWidth="800" prefHeight="600"  
            fx:controller="wereldsimulatie.FXMLDocumentController">
-    <gridLinesVisible>true</gridLinesVisible>
+    <gridLinesVisible>false</gridLinesVisible>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="50.0" prefWidth="50.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="400.0" prefWidth="200.0" />
