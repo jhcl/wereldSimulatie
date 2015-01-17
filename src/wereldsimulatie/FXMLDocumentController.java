@@ -87,6 +87,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     private ListView listviewBeestenAantal;
     @FXML
     private ListView listviewBeestenEnergie;
+//    @FXML
+//    private Text aantalSimulatieStappen;
 
     private Pane pane = new Pane();
     private List<Polygon> p = new ArrayList<>();
@@ -94,6 +96,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     long tikken = 100000000;
     private ModelFacade model;
     private int schaalX, schaalY;
+    private long aantalStappen;
+    Text aantalSimulatieStappen = new Text();
 //    private Text aantalBeestenText = new Text();
 //    private Text aantalPlantenText = new Text();
 //    private Text aantalObstakelsText = new Text();
@@ -113,6 +117,7 @@ public class FXMLDocumentController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        aantalStappen = 0;
         pane.setPrefSize(((double) model.getWereldSize().get(0) / model.getWereldSize().get(1)) * scroll.getPrefHeight(), scroll.getPrefHeight());
         scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
@@ -131,6 +136,8 @@ public class FXMLDocumentController implements Initializable, Observer {
             }
         }
         pane.getStyleClass().add("grid");
+        grid_totaal.add(aantalSimulatieStappen, 0, 0);
+        aantalSimulatieStappen.setTranslateX(10);
         slider.setValue(0);
         slider.setMax(100);
         slider.setMin(-100);
@@ -269,7 +276,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     @FXML
     public void stapDoorSimulatie() {
         model.step();
-
+        aantalStappen++;
     }
 
     @Override
@@ -385,7 +392,7 @@ public class FXMLDocumentController implements Initializable, Observer {
                 listviewBeestenEnergie.getItems().add(String.valueOf(energieCarnivoren));
                 listviewBeestenEnergie.getItems().add(String.valueOf(energieOmnivoren));
                 listviewBeestenEnergie.getItems().add(String.valueOf(energieHerbivoren));                
-
+                aantalSimulatieStappen.setText(String.valueOf(aantalStappen));
             }
         }
     }
@@ -410,6 +417,7 @@ public class FXMLDocumentController implements Initializable, Observer {
             if (lag >= tikken) {
                 prevUpdate = now;
                 model.step();
+                aantalStappen++;
             }
         }
 

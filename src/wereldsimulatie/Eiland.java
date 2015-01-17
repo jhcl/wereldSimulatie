@@ -139,7 +139,7 @@ public class Eiland implements Serializable {
         for (Plant p : this.planten) {
             p.groei();
         }
-
+        System.out.println(beesten.size());
         for (Beest b : this.beesten) {
 
             // niet te lang stilstaan ?
