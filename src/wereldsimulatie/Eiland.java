@@ -135,6 +135,7 @@ public class Eiland implements Serializable {
      */
     public void stapDoorSimulatie() {
         ArrayList<Beest> hebbenGepaard = new ArrayList<>();
+        Random rnd = new Random();
         for (Plant p : this.planten) {
             p.groei();
         }
@@ -142,9 +143,9 @@ public class Eiland implements Serializable {
         for (Beest b : this.beesten) {
 
             // niet te lang stilstaan ?
-//            if ((int) b.getRichting().get(0) == 0 && (int) b.getRichting().get(1) == 0) {
-//                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
-//            }
+            if ((int) b.getRichting().get(0) == 0 && (int) b.getRichting().get(1) == 0) {
+                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
+            }
             boolean opLand = false;
             boolean doorlopen = true;
             int newX;// = this.ouder.nieuwePositie(b).get(0);
@@ -224,7 +225,7 @@ public class Eiland implements Serializable {
                             if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
                                 System.out.print("paar: ");
                                 if (!hebbenGepaard.contains(o) && !hebbenGepaard.contains(b)) {
-                                    System.out.println("binnen: ");
+                                    System.out.println("gepaard door: " + b.getClass());
                                     Beest baby = b.paar((Beest) o);
                                     hebbenGepaard.add(b);
                                     hebbenGepaard.add((Beest) o);

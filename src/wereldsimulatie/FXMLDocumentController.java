@@ -341,7 +341,7 @@ public class FXMLDocumentController implements Initializable, Observer {
                             Poppetje polpp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0, 0.0, 10.0});
                             ((Obstakel) pt).addObserver((Observer) polpp);
                             polpp.translateXProperty().set((Integer) ((Obstakel) pt).getPositie().get(0) * schaalX);
-                            polpp.translateYProperty().set((Integer) ((Obstakel) pt).getPositie().get(1) * schaalY);
+                            polpp.translateYProperty().set((Integer) ((Obstakel) pt).getPositie().get(1) * schaalY - 5);
                             polpp.setFill(Color.BLACK);
                             pane.getChildren().add(polpp);
                         }
