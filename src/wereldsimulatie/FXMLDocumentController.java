@@ -77,6 +77,16 @@ public class FXMLDocumentController implements Initializable, Observer {
     private FlowPane flow;
     @FXML
     private ListView listview;
+    @FXML
+    private ListView listviewAantal;
+    @FXML
+    private ListView listviewTotaal;
+    @FXML
+    private ListView listviewBeesten;
+    @FXML
+    private ListView listviewBeestenAantal;
+    @FXML
+    private ListView listviewBeestenEnergie;
 
     private Pane pane = new Pane();
     private List<Polygon> p = new ArrayList<>();
@@ -124,8 +134,17 @@ public class FXMLDocumentController implements Initializable, Observer {
         slider.setValue(0);
         slider.setMax(100);
         slider.setMin(-100);
+        listview.getItems().add("Beest: ");
+        listview.getItems().add("Plant: ");
+        listview.getItems().add("Obstakel: ");
+        listviewBeesten.getItems().add("Carnivoor: ");
+        listviewBeesten.getItems().add("Omnivoor: ");
+        listviewBeesten.getItems().add("Herbivoor: ");
         timer.start();
-
+        start.setDisable(true);
+        pauzeer.setDisable(false);
+        stap.setDisable(true);
+        //       listview.setFixedCellSize(20.0);
     }
 
     /**
@@ -213,6 +232,9 @@ public class FXMLDocumentController implements Initializable, Observer {
      */
     public void startSim() {
         timer.start();
+        pauzeer.setDisable(false);
+        start.setDisable(true);
+        stap.setDisable(true);
     }
 
     @FXML
@@ -234,6 +256,9 @@ public class FXMLDocumentController implements Initializable, Observer {
     @FXML
     public void pauzeerSim() {
         timer.stop();
+        start.setDisable(false);
+        pauzeer.setDisable(true);
+        stap.setDisable(false);
 
     }
 
@@ -253,14 +278,31 @@ public class FXMLDocumentController implements Initializable, Observer {
             pane.getChildren().removeAll(p);
             p.clear();
             if (arg instanceof ArrayList<?>) {
-                listview.getItems().clear();
+                
                 int aantalBeesten = 0;
                 int aantalPlanten = 0;
                 int aantalObstakels = 0;
+                int aantalCarnivoren = 0;
+                int aantalHerbivoren = 0;
+                int aantalOmnivoren = 0;
+                int energieCarnivoren = 0;
+                int energieHerbivoren = 0;
+                int energieOmnivoren = 0;
+                int energiePlanten = 0;
                 for (Object pt : (ArrayList<Object>) arg) {
 
                     if (pt instanceof Beest) {
                         aantalBeesten++;
+                        if (pt instanceof Carnivoor) {
+                            aantalCarnivoren++;
+                            energieCarnivoren += ((Beest)pt).getEnergie();
+                        } else if (pt instanceof Herbivoor) {
+                            aantalHerbivoren++;
+                            energieHerbivoren += ((Beest)pt).getEnergie();
+                        } else if (pt instanceof Omnivoor) {
+                            aantalOmnivoren++;
+                            energieOmnivoren += ((Beest)pt).getEnergie();
+                        }
                         if (((Beest) pt).countObservers() != 1) {
                             Poppetje polp = new Poppetje(new double[]{0.0, 0.0, 10.0, 0.0, 5.0, 5.0});
                             ((Beest) pt).addObserver((Observer) polp);
@@ -295,7 +337,7 @@ public class FXMLDocumentController implements Initializable, Observer {
 //                    }
 
                         if (((Obstakel) pt).countObservers() != 1) {
-                            
+
                             Poppetje polpp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0, 0.0, 10.0});
                             ((Obstakel) pt).addObserver((Observer) polpp);
                             polpp.translateXProperty().set((Integer) ((Obstakel) pt).getPositie().get(0) * schaalX);
@@ -307,6 +349,7 @@ public class FXMLDocumentController implements Initializable, Observer {
 
                     if (pt instanceof Plant) {
                         aantalPlanten++;
+                        energiePlanten += ((Plant)pt).getEnergie();
                         if (((Plant) pt).countObservers() != 1) {
                             Poppetje polpp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0, 0.0, 10.0});
                             ((Plant) pt).addObserver((Observer) polpp);
@@ -324,10 +367,25 @@ public class FXMLDocumentController implements Initializable, Observer {
                     }
                 }
                 pane.getChildren().addAll(p);
+                listviewAantal.getItems().clear();
+                listviewTotaal.getItems().clear();
+                listviewBeestenAantal.getItems().clear();
+                listviewBeestenEnergie.getItems().clear();
+                listviewAantal.getItems().add(String.valueOf(aantalBeesten));
+                listviewAantal.getItems().add(String.valueOf(aantalPlanten));
+                listviewAantal.getItems().add(String.valueOf(aantalObstakels));
+                listviewAantal.getItems().add(String.valueOf(aantalObstakels));
+                listviewTotaal.getItems().add(String.valueOf(energieCarnivoren + energieOmnivoren + energieHerbivoren));
+                listviewTotaal.getItems().add(String.valueOf(energiePlanten));
+                listviewTotaal.getItems().add("");
+                
+                listviewBeestenAantal.getItems().add(String.valueOf(aantalCarnivoren));
+                listviewBeestenAantal.getItems().add(String.valueOf(aantalOmnivoren));
+                listviewBeestenAantal.getItems().add(String.valueOf(aantalHerbivoren));
+                listviewBeestenEnergie.getItems().add(String.valueOf(energieCarnivoren));
+                listviewBeestenEnergie.getItems().add(String.valueOf(energieOmnivoren));
+                listviewBeestenEnergie.getItems().add(String.valueOf(energieHerbivoren));                
 
-                listview.getItems().add("Beest: " + String.valueOf(aantalBeesten));
-                listview.getItems().add("Plant: " + String.valueOf(aantalPlanten));
-                listview.getItems().add("Obstakel: " + String.valueOf(aantalObstakels));
             }
         }
     }

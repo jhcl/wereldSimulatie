@@ -48,7 +48,7 @@ public class Eiland implements Serializable {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 200; i++) {
             int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
                     willekeurigX--;
@@ -196,7 +196,7 @@ public class Eiland implements Serializable {
                         } 
                         else {
                             ouder.voegZwemmersToe(b);
-                            System.out.println(ouder.getZwemmers().size());
+//                            System.out.println(ouder.getZwemmers().size());
                             opruimLijst.add(b);
                             break;
                         }
@@ -238,15 +238,13 @@ public class Eiland implements Serializable {
                                     if (o != slaOver) {
                                         slaOver = (Beest) o;
                                         Beest baby = b.paar((Beest) o);
- //                                       System.out.println(baby);
-                                        //                                       if (baby != null) {
                                         this.iederZijnsWeegs(baby, b, (Beest) o);
+//                                        System.out.println(b.getRichting() + " + " + ((Beest) o).getRichting() + " = " + baby.getRichting());
 //                                        System.out.println(b.isHitsig() + " + " + ((Beest) o).isHitsig() + " = " + baby.isHitsig());
 //                                        System.out.println(b.getClass() + " + " + ((Beest) o).getClass() + " = " + baby.getClass());
 //                                        System.out.println(b.hashCode() + " + " + ((Beest) o).hashCode() + " = " + baby.hashCode());
 //                                        System.out.println(b.getRichting() + " + " + ((Beest) o).getRichting() + " = " + baby.getRichting());
                                         toevoegLijst.add(baby);
-                                        //                                       }
                                     } else {
                                         slaOver = null;
                                     }
@@ -305,6 +303,7 @@ public class Eiland implements Serializable {
         opties.remove(temp);
         temp = rnd.nextInt(opties.size());
         c.setRichting(opties.get(temp).get(0), opties.get(temp).get(1));
+//       System.out.println(a.getRichting() + " " + b.getRichting() + " " + c.getRichting());
     }
 
 }

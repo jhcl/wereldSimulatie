@@ -108,9 +108,9 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
             lijstObjecten.addAll(e.getBeesten());
             lijstObjecten.addAll(e.getPlanten());
             lijstObjecten.addAll(e.getObstakels());
-            System.out.println(e.getBeesten().size());
+//            System.out.println(e.getBeesten().size());
         }
-        System.out.println(zwemmers.size());
+//        System.out.println(zwemmers.size());
         lijstObjecten.addAll(zwemmers);
 
         setChanged();

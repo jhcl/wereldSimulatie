@@ -11,20 +11,19 @@
            fx:controller="wereldsimulatie.FXMLDocumentController">
     <gridLinesVisible>false</gridLinesVisible>
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="50.0" prefWidth="50.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="400.0" prefWidth="200.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" maxWidth="100.0" prefWidth="348.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" maxWidth="50.0" prefWidth="50.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="400.0" maxWidth="400.0"  />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER"  />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER"  />
         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
         <Label fx:id="labelSnelheid" text=" Snelheid:" GridPane.rowIndex="1" minWidth="100.0" /> 
         <Slider fx:id="slider" onMouseReleased="#veranderSnelheid"  GridPane.rowIndex="1" 
                 GridPane.columnIndex="1"  />
-        <FlowPane fx:id="flow" prefHeight="14.0"  hgap="5"  GridPane.columnIndex="1" >
+        <FlowPane fx:id="flow" prefHeight="14.0" prefWidth="1000"   hgap="5"  GridPane.columnIndex="1" >
             <children>
                 <Button fx:id="save" onMouseClicked="#saveSim" text="save" 
                         GridPane.columnIndex="2" prefWidth="75"/>
@@ -38,7 +37,18 @@
                         GridPane.columnIndex="4" GridPane.rowIndex="1" prefWidth="75" />              
             </children>
         </FlowPane>
-        <ListView fx:id="listview" GridPane.columnIndex="2" GridPane.rowSpan="2" prefHeight="70" maxHeight="70"   />
+        <FlowPane fx:id="flowList" prefHeight="14.0"  hgap="1"  GridPane.columnIndex="2" 
+                  GridPane.rowSpan="2" >
+            <children>
+                <ListView fx:id="listview" prefHeight="70" prefWidth="60"  />
+                <ListView fx:id="listviewAantal" prefHeight="70" prefWidth="40"   />
+                <ListView fx:id="listviewTotaal" prefHeight="70" prefWidth="50"   />  
+                <ListView fx:id="listviewBeesten" prefHeight="70" prefWidth="70"   />
+                <ListView fx:id="listviewBeestenAantal" prefHeight="70" prefWidth="40"   />
+                <ListView fx:id="listviewBeestenEnergie" prefHeight="70" prefWidth="50"   />                           
+            </children>
+        </FlowPane>
+
         <ScrollPane  fx:id="scroll" onScroll="#zoom"  prefHeight="400.0" prefWidth="800.0" 
                      GridPane.rowIndex="2" GridPane.columnSpan="20" />
     </children>
