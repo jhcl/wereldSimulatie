@@ -6,7 +6,6 @@
 package wereldsimulatie;
 
 import java.util.ArrayList;
-import javafx.beans.Observable;
 
 /**
  * Interactie van het model met de buitenwereld

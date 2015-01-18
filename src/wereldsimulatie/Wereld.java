@@ -19,14 +19,13 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
     private ArrayList<Integer> oppervlakEiland1;
     private ArrayList<Integer> oppervlakEiland2;
     private ArrayList<Beest> zwemmers;
-    static Integer WERELD_BREEDTE = 160;
-    static final Integer WERELD_HOOGTE = 120;
+    private static final Integer WERELD_BREEDTE = 160;
+    private static final Integer WERELD_HOOGTE = 120;
     private final Integer WERELD_MARGIN_BREEDTE = WERELD_BREEDTE / 20;
     private final Integer WERELD_MARGIN_HOOGTE = WERELD_HOOGTE / 20;
     private final Integer EILAND_BREEDTE = WERELD_BREEDTE / 2 - 2 * WERELD_MARGIN_BREEDTE;
     private final Integer EILAND_HOOGTE = WERELD_HOOGTE / 2 - 2 * WERELD_MARGIN_HOOGTE;
     private ArrayList<Beest> opruimLijst;
-    private Eiland e1, e2;
 
     public Wereld() {
         this.eilanden = new ArrayList<>();
@@ -42,11 +41,7 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
                 this.oppervlakEiland2.add(WERELD_MARGIN_HOOGTE + j);
             }
         }
-//        e1 = new Eiland(this.oppervlakEiland1, this);
-//        e2 = new Eiland(this.oppervlakEiland2, this);
 
-//        this.eilanden.add(e2);
-//        this.eilanden.add(e1);
         eilanden.add(new Eiland(oppervlakEiland1, this));
         eilanden.add(new Eiland(oppervlakEiland2, this));
     }

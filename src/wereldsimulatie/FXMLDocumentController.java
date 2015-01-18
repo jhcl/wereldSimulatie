@@ -5,19 +5,13 @@
  */
 package wereldsimulatie;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +47,7 @@ import javafx.stage.FileChooser;
  */
 public class FXMLDocumentController implements Initializable, Observer {
 
+    // link to fxml components
     @FXML
     private ScrollPane scroll;
     @FXML
@@ -87,8 +82,6 @@ public class FXMLDocumentController implements Initializable, Observer {
     private ListView listviewBeestenAantal;
     @FXML
     private ListView listviewBeestenEnergie;
-//    @FXML
-//    private Text aantalSimulatieStappen;
 
     private Pane pane = new Pane();
     private List<Polygon> p = new ArrayList<>();
@@ -98,9 +91,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     private int schaalX, schaalY;
     private long aantalStappen;
     Text aantalSimulatieStappen = new Text();
-//    private Text aantalBeestenText = new Text();
-//    private Text aantalPlantenText = new Text();
-//    private Text aantalObstakelsText = new Text();
+    //        AnimationTimer timer = new AnimationTimer() {
+    BeestTimer timer;
 
     /**
      *
@@ -117,6 +109,7 @@ public class FXMLDocumentController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        timer = new BeestTimer();
         aantalStappen = 0;
         pane.setPrefSize(((double) model.getWereldSize().get(0) / model.getWereldSize().get(1)) * scroll.getPrefHeight(), scroll.getPrefHeight());
         scroll.setFitToHeight(true);
@@ -397,8 +390,6 @@ public class FXMLDocumentController implements Initializable, Observer {
         }
     }
 
-//        AnimationTimer timer = new AnimationTimer() {
-    BeestTimer timer = new BeestTimer();
 
     private class BeestTimer extends AnimationTimer {
 

@@ -47,7 +47,7 @@ public class Eiland implements Serializable {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
         
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 200; i++) {
             int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
                 willekeurigX--;
