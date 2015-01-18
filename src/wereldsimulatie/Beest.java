@@ -17,7 +17,7 @@ import java.util.Random;
  * @param <T> Generics, te specificeren in child class
  */
 abstract public class Beest<T> extends Observable implements Serializable {
-    
+
     protected ArrayList<Integer> positie;
     protected ArrayList<Integer> richting;
     protected int strength;
@@ -59,7 +59,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         this.richting = new ArrayList<>();
         this.richting.add(xRichting);
         this.richting.add(yRichting);
-        
+
     }
 
     /**
@@ -108,9 +108,9 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * @param y int om y waarde mee te geven
      */
     public void beweeg(int x, int y) {
-            this.positie.set(0, x);
-            this.positie.set(1, y);
-            this.energie -= this.getGewicht() / 10;
+        this.positie.set(0, x);
+        this.positie.set(1, y);
+        this.energie -= this.getGewicht() / 10;
         setChanged();
         notifyObservers();
     }
@@ -195,7 +195,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
             energie = gemiddelde_energie + marge_energie;
             legs = gemiddelde_legs + marge_legs;
             gewicht = gemiddelde_gewicht + marge_gewicht;
-            
+
         } // -
         else {
             strength = gemiddelde_strength - marge_strength;
@@ -351,7 +351,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         this.energie = this.energie - (int) voortplantingskosten;
         return this.energie;
     }
-    
+
     @Override
     public String toString() {
         return "Strength: " + strength + "Stamina " + stamina + "Legs: " + legs + "Energie: " + energie;
@@ -445,9 +445,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
         temp.remove(this.richting.get(1));
         yRichting = temp.get(this.rnd.nextInt(2));
         this.setRichting(xRichting, yRichting);
-//        temp.add(-richting.get(0));
-//        temp.add(-richting.get(1));
-//        return temp; 
     }
 
     /**
@@ -458,7 +455,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     public void setEnergie(int nieuweEnergie) {
         this.energie = nieuweEnergie;
         setChanged();
-        notifyObservers();        
+        notifyObservers();
     }
-    
+
 }

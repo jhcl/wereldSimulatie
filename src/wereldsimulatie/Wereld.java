@@ -84,7 +84,7 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
                 // zijn we geland ?
                 for (Eiland el : eilanden) {
                     for (int i = 0; i < el.getEilandOppervlak().size(); i += 2) {
-                        if (el.getEilandOppervlak().get(i) == newX && el.getEilandOppervlak().get(i + 1) == newY) {
+                        if (el.getEilandOppervlak().get(i).equals(newX) && el.getEilandOppervlak().get(i + 1).equals(newY)) {
                             el.getBeesten().add(b);
                             opruimLijst.add(b);
                         }
@@ -144,7 +144,7 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
         ArrayList<Object> staatOpElkaar = new ArrayList<>();
         for (Eiland e : this.eilanden) {
             for (Beest b : e.getBeesten()) {
-                if ((int) b.getPositie().get(0) == x && (int) b.getPositie().get(1) == y) {
+                if ((int)b.getPositie().get(0) == x && (int) b.getPositie().get(1) == y) {
                     staatOpElkaar.add(b);
                 }
             }

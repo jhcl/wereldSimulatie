@@ -144,7 +144,6 @@ public class FXMLDocumentController implements Initializable, Observer {
         start.setDisable(true);
         pauzeer.setDisable(false);
         stap.setDisable(true);
-        //       listview.setFixedCellSize(20.0);
     }
 
     /**
@@ -175,7 +174,6 @@ public class FXMLDocumentController implements Initializable, Observer {
         File file = fc.showSaveDialog(null);
         if (file != null) {
             FileOutputStream outFile = new FileOutputStream(file, false);
-//            BufferedOutputStream buffer = new BufferedOutputStream(outFile);
             try {
                 ObjectOutputStream out = new ObjectOutputStream(outFile);
                 out.writeObject((ModelFacade) model);
@@ -201,7 +199,6 @@ public class FXMLDocumentController implements Initializable, Observer {
         File file = fc.showOpenDialog(null);
         if (file != null) {
             FileInputStream inFile = new FileInputStream(file);
-//            InputStream buffer = new BufferedInputStream(inFile);
             try {
                 model.getEilanden().clear();
                 ObjectInputStream in = new ObjectInputStream(inFile);
