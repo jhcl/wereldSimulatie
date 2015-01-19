@@ -85,8 +85,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     @FXML
     private ListView listviewBeestenEnergie;
 
-    private Pane pane = new Pane();
-    private List<Polygon> p = new ArrayList<>();
+    private final Pane pane = new Pane();
+    private final List<Polygon> p = new ArrayList<>();
     private Random rand = new Random();
     long tikken = 100000000;
     private ModelFacade model;
@@ -106,6 +106,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     }
 
     /**
+     * Initialiseer GUI, zet rand- en startwaarden van zijn componemten, start
+     * timer en teken eilanden
      *
      * @param url standaard javafx
      * @param rb standaard javafx
@@ -114,9 +116,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             buffSim = new BufferedWriter(new FileWriter("outSim.txt"));
-        }
-        catch (Exception e) {
-            
+        } catch (IOException e) {
+
         }
         timer = new BeestTimer();
         aantalStappen = 0;
@@ -157,18 +158,22 @@ public class FXMLDocumentController implements Initializable, Observer {
 
     /**
      * Dit is de eventhandler voor een GUI control. Veranderd de tijd tussen
-     * timerevents om simulatie sneller of langzamer te laten draaien.
-     *
+     * timerevents om simulatie sneller of langzamer te laten draaien.<br>
+     * Tijd voor stuurklok neemt bij slider naar rechts (positief) linear af tot 1 
+     * tik per seconde waardoor snelheid toeneemt als (1/kloksnelheid). <br>
+     * Bij negatieve slider (naar links) neemt de tikwaarde kwadratisch toe. Ook
+     * hier geldt de 1/kloksnelheid relatie tussen tijd en snelheid. 
      * @param event
-     * @param snelheid stel tijd tussen timertikken in in ns
      */
     @FXML
     public void veranderSnelheid(javafx.scene.input.MouseEvent event) {
         if (event.getSource() == slider) {
             timer.stop();
             if (slider.getValue() > 0) {
+
                 tikken = 100000000 - 1000000 * (int) slider.getValue();
             } else {
+
                 tikken = 100000 * (long) Math.pow(slider.getValue(), 2) + 100000000L;
             }
             timer = new BeestTimer();
@@ -176,7 +181,12 @@ public class FXMLDocumentController implements Initializable, Observer {
         }
 
     }
-
+    
+    /**
+     * Schrijft het model weg naar zelf te kiezen file
+     * @param event buttonklik die wegschrijf actie initieert.
+     * @throws FileNotFoundException 
+     */
     @FXML
     public void saveSim(javafx.scene.input.MouseEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
@@ -199,8 +209,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     }
 
     /**
-     *
-     * @param event
+     * Schrijft het model terug van file in de simulatie
+     * @param event buttonklik die restore actie initieert.
      */
     @FXML
     public void restoreSim(javafx.scene.input.MouseEvent event) throws FileNotFoundException {
@@ -243,6 +253,10 @@ public class FXMLDocumentController implements Initializable, Observer {
         stap.setDisable(true);
     }
 
+    /**
+     * Zoom (in en uit) met scrollwheel van de muis.
+     * @param event 
+     */
     @FXML
     private void zoom(ScrollEvent event) {
         pane.setScaleX(pane.getScaleX() + event.getDeltaY() / 2000);
@@ -269,8 +283,8 @@ public class FXMLDocumentController implements Initializable, Observer {
     }
 
     /**
-     * voer simulatiestappen buiten timer om uit. maw roep methode aan die timer
-     * ook aanroept.
+     * voer simulatiestappen buiten timer om uit. Maw roep methode aan die timer
+     * ook aanroept maar dan andmatig.
      */
     @FXML
     public void stapDoorSimulatie() {
@@ -278,13 +292,25 @@ public class FXMLDocumentController implements Initializable, Observer {
         aantalStappen++;
     }
 
+    /**
+     * Het wereldobject stuurt als het een update heeft gehad een lijst van 
+     * objecten (planten, obstakels en beesten). De objecten krijgen een visueel 
+     * object toegekend (polygon) dat verder de visualisatie van het wereldobject 
+     * voor zijn rekening neemt. Als er al een polygon aan een wereldobject toegekend
+     * is wordt het overgeslagen.
+     * <p>
+     * Simulatiestatistieken over aantal en energie van wereldobjecten worden 
+     * verzameld, getoond in de GUI en weggeschreven naar file outSim.txt
+     * @param o wereld object 
+     * @param arg ArrayList van objecten die gevisualiserd moeten worden
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (o == this.model) {
             pane.getChildren().removeAll(p);
             p.clear();
             if (arg instanceof ArrayList<?>) {
-                
+
                 int aantalBeesten = 0;
                 int aantalPlanten = 0;
                 int aantalObstakels = 0;
@@ -301,13 +327,13 @@ public class FXMLDocumentController implements Initializable, Observer {
                         aantalBeesten++;
                         if (pt instanceof Carnivoor) {
                             aantalCarnivoren++;
-                            energieCarnivoren += ((Beest)pt).getEnergie();
+                            energieCarnivoren += ((Beest) pt).getEnergie();
                         } else if (pt instanceof Herbivoor) {
                             aantalHerbivoren++;
-                            energieHerbivoren += ((Beest)pt).getEnergie();
+                            energieHerbivoren += ((Beest) pt).getEnergie();
                         } else if (pt instanceof Omnivoor) {
                             aantalOmnivoren++;
-                            energieOmnivoren += ((Beest)pt).getEnergie();
+                            energieOmnivoren += ((Beest) pt).getEnergie();
                         }
                         if (((Beest) pt).countObservers() != 1) {
                             Poppetje polp = new Poppetje(new double[]{0.0, 0.0, 10.0, 0.0, 5.0, 5.0});
@@ -355,7 +381,7 @@ public class FXMLDocumentController implements Initializable, Observer {
 
                     if (pt instanceof Plant) {
                         aantalPlanten++;
-                        energiePlanten += ((Plant)pt).getEnergie();
+                        energiePlanten += ((Plant) pt).getEnergie();
                         if (((Plant) pt).countObservers() != 1) {
                             Poppetje polpp = new Poppetje(new double[]{5.0, 0.0, 10.0, 10.0, 0.0, 10.0});
                             ((Plant) pt).addObserver((Observer) polpp);
@@ -385,34 +411,34 @@ public class FXMLDocumentController implements Initializable, Observer {
                 listviewTotaal.getItems().add(String.valueOf(totaalEnergieBeesten));
                 listviewTotaal.getItems().add(String.valueOf(energiePlanten));
                 listviewTotaal.getItems().add("");
-                
+
                 listviewBeestenAantal.getItems().add(String.valueOf(aantalCarnivoren));
                 listviewBeestenAantal.getItems().add(String.valueOf(aantalOmnivoren));
                 listviewBeestenAantal.getItems().add(String.valueOf(aantalHerbivoren));
                 listviewBeestenEnergie.getItems().add(String.valueOf(energieCarnivoren));
                 listviewBeestenEnergie.getItems().add(String.valueOf(energieOmnivoren));
-                listviewBeestenEnergie.getItems().add(String.valueOf(energieHerbivoren));                
+                listviewBeestenEnergie.getItems().add(String.valueOf(energieHerbivoren));
                 aantalSimulatieStappen.setText(String.valueOf(aantalStappen));
                 /**
-                 * Scrijf simulatiegegevens weg als csv file met de naam outSim.txt in de 
-                 * project root folder met de velden in de volgende volgorde:
-                 * #beesten, #carnivoren, #omnivoren, #herbivoren, #planten, #obstakels, 
-                 * cumulatieve energie beesten, cumulatieve energie carnivoren, cumulatieve
-                 * energie omnivoren, cumulatieve energie herbivoren, cumulatieve energie
-                 * planten
+                 * Scrijf simulatiegegevens weg als csv file met de naam
+                 * outSim.txt in de project root folder met de velden in de
+                 * volgende volgorde: #beesten, #carnivoren, #omnivoren,
+                 * #herbivoren, #planten, #obstakels, cumulatieve energie
+                 * beesten, cumulatieve energie carnivoren, cumulatieve energie
+                 * omnivoren, cumulatieve energie herbivoren, cumulatieve
+                 * energie planten
                  */
                 if (aantalBeesten != 0) {
                     try {
-                        String writeString = aantalBeesten + "," + aantalCarnivoren + "," + 
-                                aantalOmnivoren + "," + aantalHerbivoren + "," + aantalPlanten + 
-                                "," + aantalObstakels + "," + totaalEnergieBeesten + "," + 
-                                energieCarnivoren + "," + energieOmnivoren + "," + energieHerbivoren +
-                                "," + energiePlanten;
+                        String writeString = aantalBeesten + "," + aantalCarnivoren + ","
+                                + aantalOmnivoren + "," + aantalHerbivoren + "," + aantalPlanten
+                                + "," + aantalObstakels + "," + totaalEnergieBeesten + ","
+                                + energieCarnivoren + "," + energieOmnivoren + "," + energieHerbivoren
+                                + "," + energiePlanten;
                         buffSim.write(writeString);
                         buffSim.write("\r\n");
                         buffSim.flush();
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 }
@@ -420,18 +446,18 @@ public class FXMLDocumentController implements Initializable, Observer {
         }
     }
 
-
+    /**
+     * Timer die de simulatie aanstuurt. 
+     */
     private class BeestTimer extends AnimationTimer {
 
         private long prevUpdate;
         private long lag;
 
-        public void changeSpeed(long verandering) {
-            if (lag > verandering) {
-                lag *= verandering;
-            }
-        }
-
+        /**
+         * verplichte AnimationTimer methode
+         * @param now current time in nanoseconden
+         */
         @Override
         public void handle(long now) {
             lag = now - prevUpdate;
@@ -441,7 +467,10 @@ public class FXMLDocumentController implements Initializable, Observer {
                 aantalStappen++;
             }
         }
-
+        
+        /**
+         * Standaard AnimationTimer methode
+         */
         @Override
         public void start() {
             prevUpdate = System.nanoTime();
