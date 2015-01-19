@@ -5,10 +5,12 @@
  */
 package wereldsimulatie;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -93,6 +95,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     Text aantalSimulatieStappen = new Text();
     //        AnimationTimer timer = new AnimationTimer() {
     BeestTimer timer;
+    BufferedWriter buffSim;
 
     /**
      *
@@ -109,6 +112,12 @@ public class FXMLDocumentController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            buffSim = new BufferedWriter(new FileWriter("outSim.txt"));
+        }
+        catch (Exception e) {
+            
+        }
         timer = new BeestTimer();
         aantalStappen = 0;
         pane.setPrefSize(((double) model.getWereldSize().get(0) / model.getWereldSize().get(1)) * scroll.getPrefHeight(), scroll.getPrefHeight());
@@ -363,6 +372,7 @@ public class FXMLDocumentController implements Initializable, Observer {
 //                        p.add(pol);
                     }
                 }
+                int totaalEnergieBeesten = energieCarnivoren + energieOmnivoren + energieHerbivoren;
                 pane.getChildren().addAll(p);
                 listviewAantal.getItems().clear();
                 listviewTotaal.getItems().clear();
@@ -372,7 +382,7 @@ public class FXMLDocumentController implements Initializable, Observer {
                 listviewAantal.getItems().add(String.valueOf(aantalPlanten));
                 listviewAantal.getItems().add(String.valueOf(aantalObstakels));
                 listviewAantal.getItems().add(String.valueOf(aantalObstakels));
-                listviewTotaal.getItems().add(String.valueOf(energieCarnivoren + energieOmnivoren + energieHerbivoren));
+                listviewTotaal.getItems().add(String.valueOf(totaalEnergieBeesten));
                 listviewTotaal.getItems().add(String.valueOf(energiePlanten));
                 listviewTotaal.getItems().add("");
                 
@@ -383,6 +393,29 @@ public class FXMLDocumentController implements Initializable, Observer {
                 listviewBeestenEnergie.getItems().add(String.valueOf(energieOmnivoren));
                 listviewBeestenEnergie.getItems().add(String.valueOf(energieHerbivoren));                
                 aantalSimulatieStappen.setText(String.valueOf(aantalStappen));
+                /**
+                 * Scrijf simulatiegegevens weg als csv file met de naam outSim.txt in de 
+                 * project root folder met de velden in de volgende volgorde:
+                 * #beesten, #carnivoren, #omnivoren, #herbivoren, #planten, #obstakels, 
+                 * cumulatieve energie beesten, cumulatieve energie carnivoren, cumulatieve
+                 * energie omnivoren, cumulatieve energie herbivoren, cumulatieve energie
+                 * planten
+                 */
+                if (aantalBeesten != 0) {
+                    try {
+                        String writeString = aantalBeesten + "," + aantalCarnivoren + "," + 
+                                aantalOmnivoren + "," + aantalHerbivoren + "," + aantalPlanten + 
+                                "," + aantalObstakels + "," + totaalEnergieBeesten + "," + 
+                                energieCarnivoren + "," + energieOmnivoren + "," + energieHerbivoren +
+                                "," + energiePlanten;
+                        buffSim.write(writeString);
+                        buffSim.write("\r\n");
+                        buffSim.flush();
+                    }
+                    catch (Exception e){
+
+                    }
+                }
             }
         }
     }
