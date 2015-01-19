@@ -142,10 +142,10 @@ public class Eiland implements Serializable {
         }
         for (Beest b : this.beesten) {
 
-            // niet te lang stilstaan ?
-//            if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
-//                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
-//            }
+//             niet te lang stilstaan ?
+            if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
+                b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
+            }
             boolean opLand = false;
             boolean doorlopen = true;
             int newX;// = this.ouder.nieuwePositie(b).get(0);
