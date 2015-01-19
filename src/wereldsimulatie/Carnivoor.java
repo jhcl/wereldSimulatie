@@ -31,7 +31,11 @@ public class Carnivoor extends Beest<Beest> {
     }
 
     /**
-     * @see wereldsimulatie.Beest#eet
+     * eet methode voor Carnivoor
+     * MAximale eetbare portie is stength maal 10.
+     * Als de honger groter is dan deze portie, dan wordt dit er maximaal bij de enrgie opgetel, wanneer de gegeten beest ook deze energie beschikbaar heeft
+     * Anders krijgt beest aantal energie dat andere beest beschikbaar heeft.
+     * Als de Honger van de beest minder is dan de stength maal 10, dan gaat er ook evenveel energie bij andere beest af. afhankelijk van de honger
      * @param b Beest dat gegeten wordt
      */
     @Override
