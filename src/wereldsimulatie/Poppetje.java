@@ -12,10 +12,17 @@ import javafx.scene.shape.Polygon;
 
 /**
  *
- * @author nl08940
+ * @author @author Lars Ko Tarkan
  */
 public class Poppetje extends Polygon implements Observer{
     
+    /**
+     * Als het geobserveerde object een signaal geeft moet in geval van beest 
+     * de postie in de gui gezet worden en in geval van plant de kleur die aangeeft
+     * of de plant dormant is of niet.
+     * @param o Beest of Plant object  dat geobserveerd wordt
+     * @param arg blijft leeg
+     */
     @Override
     public void update(Observable o, Object arg) {
 
@@ -36,6 +43,10 @@ public class Poppetje extends Polygon implements Observer{
         
     }
     
+    /**
+     * Kopie van polygon klasse
+     * @param points reeks punten die de vorm van dit object definiëren
+     */
     public Poppetje (double... points) {
         super(points);
     }

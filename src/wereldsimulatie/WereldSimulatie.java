@@ -26,6 +26,12 @@ public class WereldSimulatie extends Application {
     final Wereld model = new Wereld();
     private FXMLDocumentController fdc;
     
+    /**
+     * Instantiëer zelfgemaakte controller zodat die als observer aan wereldobject
+     *  gehangen kan worden.
+     * @param stage standaard javafx gui element die de basis vormt van de scene
+     * @throws Exception 
+     */
     @Override
     public void start(Stage stage) throws Exception {
                 FXMLLoader loader = new FXMLLoader();

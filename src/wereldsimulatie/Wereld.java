@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * @author Lars Ko Tarkan Geheel van eilanden en zee. Dit is een op zichzelf
+ * @author Lars Ko Tarkan 
+ * Geheel van eilanden en zee. Dit is een op zichzelf
  * staand geheel. De randen van een wereld bestaan altijd uit water
  */
 public class Wereld extends Observable implements ModelFacade, Serializable {
@@ -27,6 +28,9 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
     private final Integer EILAND_HOOGTE = WERELD_HOOGTE / 2 - 2 * WERELD_MARGIN_HOOGTE;
     private ArrayList<Beest> opruimLijst;
 
+    /**
+     * Constructor van wereld, hierin wordt meteen de eilanden gedefiniëerd.
+     */
     public Wereld() {
         this.eilanden = new ArrayList<>();
         this.oppervlakEiland1 = new ArrayList<>();
@@ -56,8 +60,9 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
     }
 
     /**
-     * Roept de methode aan om model een simulatiestap te laten zetten als
-     * return van die stap true is dan setchaged en notifyobservers aanroepen
+     * Roept de methode aan om model een simulatiestap te laten zetten. De eilanden 
+     * opdracht geven omdat te doen voor zijn objecten en zelf doen voor de zwemmers.
+     * Daarna setchaged en notifyobservers aanroepen
      */
     @Override
     public void step() {
@@ -111,8 +116,8 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
     }
 
     /**
-     *
-     * @return ArrayList lengte 2, eerste element breedte(x), 2e element lengte
+     * getter voor breedte en lengte van de wereld
+     * @return ArrayList size 2, eerste element breedte(x), 2e element lengte
      * (y)
      */
     @Override
@@ -123,14 +128,28 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
         return grootte;
     }
 
+    /**
+     * Voeg beest toe aan lijst met beesten die niet een eiland staan
+     * @param b zwemmend beest dat gaat zwemmen
+     */
     public void voegZwemmersToe(Beest b) {
         zwemmers.add(b);
     }
 
+    /**
+     * getter van lijst met zwemmende beesten
+     * @return ArrayLlist&lt;Beest&gt; zwemmers
+     */
     public ArrayList<Beest> getZwemmers() {
         return zwemmers;
     }
 
+    /**
+     * Bereken positie van het beest nadat die een stap gezet heeft (huidige
+     *  positie + richting)
+     * @param b beest waar richting van bepaald wordt
+     * @return Nieuwe positie
+     */
     public ArrayList<Integer> nieuwePositie(Beest b) {
         ArrayList<Integer> nieuwePos = new ArrayList<>();
         int newX = (Wereld.WERELD_BREEDTE + ((Integer) b.getPositie().get(0) + (Integer) b.getRichting().get(0))) % Wereld.WERELD_BREEDTE;
@@ -140,6 +159,13 @@ public class Wereld extends Observable implements ModelFacade, Serializable {
         return nieuwePos;
     }
 
+    /**
+     * Zoek in alle objecten die op land staan welke er op een specifieke positie
+     *  staan
+     * @param x x-coordinaat van gevraagde positie
+     * @param y y-coordinaat van gevraagde positie
+     * @return Lijst van objecten die op gevraagde positie staan
+     */
     public ArrayList<Object> staatOpPositie(int x, int y) {
         ArrayList<Object> staatOpElkaar = new ArrayList<>();
         for (Eiland e : this.eilanden) {
