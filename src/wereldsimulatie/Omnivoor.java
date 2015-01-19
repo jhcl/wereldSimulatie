@@ -35,7 +35,9 @@ public class Omnivoor extends Beest {
     }
 
     /**
-     * @see wereldsimulatie.Beest#eet
+     * Eetmethode voor Omnivoor.
+     * Wanneer Omnivoor op plant staat @see methode eet Herbivoor
+     * Wanneer Omnivoor op beest staat @see methdoe eet Carnivoor
      * @param o plantobject als het een plant eet of een Beestobject als een
      * Beest gegeten wordt
      */

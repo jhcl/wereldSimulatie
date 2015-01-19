@@ -30,7 +30,12 @@ public class Herbivoor extends Beest<Plant> {
 
 
     /**
-     * @see wereldsimulatie.Beest#eet
+     * Eet methode voor Herbivoor
+     * Maximale optelbare energie bij Herbivoor is strength maal 10
+     * Maximale gegeten portie van plan is 50
+     * Wanneer Herbivooor minder energie nodig heeft dan stneght maal 10, dan wordt energie aangevuld to maximale stamina.
+     * Bij plant gaat er dan ook niet de maximale portie van 50 af, maar procentueel berekend aan de hand van de behoefte van Herbivoor
+     * Als de plant minder dan 50 energie heeft, dan gaat er overgebleven energie vanaf en Herbivoor krijgt energie procentueel berekend van de energie Plant
      * @param p plant object dat gegeten wordt
      */
     @Override
