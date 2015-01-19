@@ -27,6 +27,10 @@ public class Obstakel extends Observable implements Serializable {
         this.positie = positie;
     }
     
+    /**
+     * getter voor positie
+     * @return 
+     */
     public ArrayList<Integer> getPositie() {
         return positie;
     }

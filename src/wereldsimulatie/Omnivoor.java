@@ -77,12 +77,12 @@ public class Omnivoor extends Beest {
 
             if (this.energie <= this.stamina - (behoefte)) {
 
-                if (p.energie >= schadePlant) {
+                if (p.getEnergie() >= schadePlant) {
                     this.energie = this.energie + (behoefte);
                 } else {
-                    float result = ((float) p.energie / (float) schadePlant) * ((float) strength * (float) 10);
+                    float result = ((float) p.getEnergie() / (float) schadePlant) * ((float) strength * (float) 10);
                     behoefte = (int) result;
-                    schadePlant = p.energie;
+                    schadePlant = p.getEnergie();
                     this.energie = this.energie + behoefte;
                 }
                 p.wordtGegeten(schadePlant);
@@ -90,15 +90,15 @@ public class Omnivoor extends Beest {
                 behoefte = this.stamina - this.energie;
 
                 //schadePlant = 0;
-                if (p.energie >= schadePlant) {
+                if (p.getEnergie() >= schadePlant) {
                     float result = ((float) behoefte / ((float) this.strength * 10)) * schadePlant;
                     Math.round(result);
                     schadePlant = (int) result;
                     this.energie = this.energie + (behoefte);
                 } else {
-                    float result = ((float) p.energie / (float) schadePlant) * behoefte;
+                    float result = ((float) p.getEnergie() / (float) schadePlant) * behoefte;
                     behoefte = (int) result;
-                    schadePlant = p.energie;
+                    schadePlant = p.getEnergie();
                     this.energie = this.energie + behoefte;
                 }
                 p.wordtGegeten(schadePlant);

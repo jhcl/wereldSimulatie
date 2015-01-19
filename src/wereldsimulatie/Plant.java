@@ -18,7 +18,7 @@ public class Plant extends Observable implements Serializable {
 
     private ArrayList<Integer> positie;
     final private int GROOTTE = 150;
-    protected int energie;
+    private int energie;
     private int tellerAantalKeerNul;
     private int onderGronds;
 

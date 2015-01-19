@@ -24,6 +24,11 @@ public class Eiland implements Serializable {
     private final ArrayList<Beest> toevoegLijst;
     private final Wereld ouder;
     
+    /**
+     * 
+     * @param opp
+     * @param w 
+     */
     public Eiland(ArrayList<Integer> opp, Wereld w) {
         this.ouder = w;
         this.oppervlak = opp;

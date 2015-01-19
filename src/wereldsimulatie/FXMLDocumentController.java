@@ -211,6 +211,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     /**
      * Schrijft het model terug van file in de simulatie
      * @param event buttonklik die restore actie initieert.
+     * @throws java.io.FileNotFoundException
      */
     @FXML
     public void restoreSim(javafx.scene.input.MouseEvent event) throws FileNotFoundException {
