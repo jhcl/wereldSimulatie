@@ -16,13 +16,13 @@ import java.util.Random;
  */
 public class Eiland implements Serializable {
     
-    private ArrayList<Beest> beesten;
-    private ArrayList<Obstakel> obstakels;
-    private ArrayList<Plant> planten;
-    private ArrayList<Integer> oppervlak;
-    private ArrayList<Beest> opruimLijst;
-    private ArrayList<Beest> toevoegLijst;
-    private Wereld ouder;
+    private final ArrayList<Beest> beesten;
+    private final ArrayList<Obstakel> obstakels;
+    private final ArrayList<Plant> planten;
+    private final ArrayList<Integer> oppervlak;
+    private final ArrayList<Beest> opruimLijst;
+    private final ArrayList<Beest> toevoegLijst;
+    private final Wereld ouder;
     
     public Eiland(ArrayList<Integer> opp, Wereld w) {
         this.ouder = w;
@@ -36,13 +36,12 @@ public class Eiland implements Serializable {
     }
 
     /**
-     * Maak eiland met vaste positie/oppervlak en creeer objecten volgens
+     * Vul eiland met beesten, objecten, planten op een random positie volgens 
      * verhouding:<br>
-     * 10 % obstakel, 40% carnivoor, 30% planten,10% herbivoor, 10% omnivoor
-     *
-     * @return Eiland object
+     * 10 % obstakel, 40% carnivoor, 30% planten,10% herbivoor, 10% omnivoor<br>
+     * Op een obstakel mag geen plant of beest gezet worden.
      */
-    public void maakEiland() {
+    public final void maakEiland() {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
         
@@ -84,6 +83,11 @@ public class Eiland implements Serializable {
         return this.obstakels;
     }
     
+    /**
+     * getter voor coordinaten die het eiland definiëren
+     * 
+     * @return ArrayList &lt;Integer&gt; met punten die samen het eiland definiëren 
+     */
     public ArrayList<Integer> getEilandOppervlak() {
         return this.oppervlak;
     }
@@ -109,20 +113,21 @@ public class Eiland implements Serializable {
     /**
      * Eiland klasse coordineert objecten die zich op het eiland bevinden, deze
      * methode wordt 1x per simulatiestap uitgevoerd.<br>
-     * - methode roept beweeg() aan voor beesten en groei() voor planten<br>
-     * - als iets eetbaars op dezelfde positie als het beest staat gaan ze eten
-     * gelang de honger (maximaal tot energieniveau gelijk is aan stamina.<br>
-     * - als beesten op dezelfde positie staan gaan ze paren (afh van
-     * hitsigheid) of eten<br>
-     * - bij contentie tussen eten en paren (mogelijk in geval van carnivoren)
-     * wordt er gepaard indien beide besten hitsig zijn, anders eet het beest
-     * dat op dat moment verwerkt wordt het andere beest.<br>
+     * - methode roept beweeg() aan voor beesten en groei() voor planten mits ze
+     * volgens de opgestelde regels moeten bewegen.<br>
+     * - als beesten op dezelfde positie op land staan gaan ze paren (afh van
+     * hitsigheid) of eten wordt er gekeken of het beest dat berekend wordt de ander kan eten.<br>
+     * - bij contentie tussen eten en paren (mogelijk in geval van carnivoren en 
+     * omnivoren) wordt er gepaard indien beide besten hitsig (energie &gt; 60%)
+     *  zijn, anders eet het beest dat op dat moment verwerkt wordt het andere beest.<br>
      * - als paden van beesten elkaar kruisen zonder dat ze na een simulatiestap
      * op dezelfde positie staan gebeurd er niets<br>
      * - aan water wordt bij &lt;40% energie gezwommen, anders blijven ze op het
      * eiland<br>
-     * - het energieverlies en snelheid voor het zwemmen is hetzelfde als voor
-     * bewegen op land<br>
+     * - Op land bewegen beesten zich met een in de klasse gedefiniëerde snelheid.
+     * In het water altijd 1 stap per simulatiestap.<br>
+     * - het energieverlies per stap voor het zwemmen is hetzelfde als voor
+     * bewegen op land.<br>
      * - Tijdens zwemmen wordt niet gepaard of gegeten<br>
      * - Botsen op een obstakel halveert energie van het beest en het blijft er
      * vervolgens voor stilstaan, er wordt vervolgens een niuwe richting
@@ -132,7 +137,6 @@ public class Eiland implements Serializable {
      * @see wereldsimulatie.Beest#beweeg
      * @see wereldsimulatie.Beest#paar
      * @see wereldsimulatie.Beest#eet
-     * @see wereldsimulatie.Beest#paar
      */
     public void stapDoorSimulatie() {
         ArrayList<Beest> hebbenGepaard = new ArrayList<>();
@@ -142,7 +146,7 @@ public class Eiland implements Serializable {
         }
         for (Beest b : this.beesten) {
 
-//             niet te lang stilstaan ?
+            // niet te lang stilstaan 
             if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
                 b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
@@ -290,7 +294,22 @@ public class Eiland implements Serializable {
         
     }
     
+    /**
+     * Voor input van 3 beesten wordt er hier voor elk beest random een richting 
+     * gezet zo dat geen van de 3 beesten dezelfde richting heeft als een van de
+     * andere. <p>
+     * Input mag niet null zijn<br>
+     * Beesten mogen niet dezelfde objecten zijn.
+     * @param a Beest object dat
+     * @param b
+     * @param c 
+     */
     private void iederZijnsWeegs(Beest a, Beest b, Beest c) {
+        assert a != null;
+        assert a != null;
+        assert a != null;
+        assert a != b;
+        assert b!= c;
         ArrayList<ArrayList<Integer>> opties = new ArrayList<>();
         Random rnd = new Random();
         int temp;
