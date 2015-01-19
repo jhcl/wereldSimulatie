@@ -39,10 +39,9 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * wordt aan het kind doorgegeven<br>
      * Beweegdrempel: 5% van stamina, op dat moment blijft een beest stilstaan
      * maar kan nog wel eten of gegeten worden<br>
-     * Gewicht: #poten * 10 + (energie - strength) if energie - strength &gt; 0
-     * anders: #poten * 10<br>
+     * Gewicht: #poten * 10 <br>
      * snelheid (ofwel aantal stappen per simulatiestap): <br>
-     * #poten - Math.floor(energie-strength / 1000)<br>
+     * 3 voor carnivoor, 2 voor omnivoor, 1 voor herbivoor<br>
      * Bij 0 (nul) energie is een beest dood en verdwijnt het object<br>
      *
      * @param positie ArrayList Integer, positie van beest wordt opgeslagen om
@@ -67,8 +66,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * Als een beest gegeten wordt is het dood als zijn energie op 0 (nul) komt,
      * als een plant gegeten wordt groeit het weer aan. Na 10x gegeten te zijn
      * (energieniveau 0) blijft een plant 100 simulatiestappen ondergronds.<br>
-     * In geval van keuze tussen eetbare objecten wordt het eerste object dat
-     * het algoritme tegenkomt gegeten en is de beurt voorbij.<br>
      * Per simulatiestap kan er maximaal 10 energieunits door 1 beest van een
      * plant gegeten worden. Dit levert voor het beest echter een energietoename
      * van 10*strength op. <br>
@@ -84,24 +81,12 @@ abstract public class Beest<T> extends Observable implements Serializable {
     abstract void eet(T o);
 
     /**
-     * Initiëel maak een stap in een random richting (x en/of y pos +1). De
-     * afstand die per stap gezet wordt bepaald door de snelheid van het
-     * beest.<br>
-     * Na die eerste stap wordt voor volgende simulatiestappen dezelfde richting
-     * aangehouden totdat er een interactie plaatsvind met water of een ander
-     * object (obstakel, plant, beest, plant). Dan wordt er een nieuwe random
-     * richting gekozen. In geval van interactie met een obstakel blijft het
-     * beest voor het obstakel staan en wordt zijn energie gehalveerd. Dan wordt
-     * een nieuwe random richting gekozen uit alle richtingen behalve de vorige.
-     * Bij interactie met water wordt de beslissing genomen om door te gaan en
-     * te zwemmen (energieniveau &lt;=40%) van stamina) of niet. In het laatste
-     * geval wordt een nieuwe richting gekozen die als eerstvolgende stap niet
-     * in het water leidt.<br>
      * Deze methode wordt aangeroepen door de container dat het beest kent. Daar
      * ligt de veranwoordelijkheid te controleren of de stap mogelijk is.<br>
-     * Een beweeg() in een simulatiestap kost evenveel energie als het gewicht
-     * van het beest.<br>
-     *
+     * Een beweeg() in een simulatiestap kost evenveel energie als 10% van het gewicht
+     * van het beest .<br>
+     * Na positieverandering roep setChanged() en notifyObservers() aan om view
+     *  te signalere.
      * @param x int op x waarde mee te geven
      * @param y int om y waarde mee te geven
      */
@@ -123,17 +108,16 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
      /**
-     * Maak één (1) nieuw Beest. Het nieuwe beest erft
-     * eigenschappen van ouders:<br>
-     * Digestie, Stamina, Legs, Hitsigheid, Voortplantingskosten, Strength,
-     * Zwemdrempel, Beweegdrempel, Energie <br>
+     * Maak één (1) nieuw Beest. Het nieuwe beest erft eigenschappen van ouders:<br>
+     * Digestie, Stamina, Legs, Strength,Energie <br>
      * Eigenschappen van het kind zijn het gemiddelde van bovenstaande waarden
      * +/- random waarde tussen 0 en 10% van het verschil van de betreffende
      * waarde van de ouders.<br>
      * Een beest is bereid om te paren vanaf 60% van zijn stamina. Dit punt
      * wordt ook wel zijn hitsigheid genoemd. Dat paren vindt echter alleen
      * plaats als het andere beest (zie argument) dat punt van hitsigheid ook
-     * bereikt heeft. Dit wordt in klasse Eiland bepaald door methode isHitsig() <br>
+     * bereikt heeft. Dit wordt in klasse Eiland bepaald door methode isHitsig( van
+     * het beest aan te roepen.<br>
      * Als 2 verschillende soorten beesten paren 50% kans op één van de twee type beesten:<br>
      * Bij 2 dezelfde soort beesten 100% kans bij paren op dat type beest.
      * @return Beest (kind)
@@ -288,9 +272,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
         return null;
     }
 
-//    public int getHitsigheid() {
-//        return this.hitsigheid;
-//    }
+
     /**
      * Methode om hitsigheid te controleren
      *
@@ -315,9 +297,9 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     * getter voor strenght
+     * getter voor strength
      *
-     * @return strenght
+     * @return strength
      */
     public int getStrength() {
         return this.strength;
