@@ -118,7 +118,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     /**
      * getter om energie op te vragen
      *
-     * @return
+     * @return energie
      */
     public int getEnergie() {
         return this.energie;
@@ -152,60 +152,41 @@ abstract public class Beest<T> extends Observable implements Serializable {
         // Bepaal de values van een beest
         // Gemiddelde bepalen en deze casten naar een int
         int gemiddelde_strength = (int) (this.getStrength() + b.getStrength()) / 2;
-        //int gemiddelde_stamina = (int) (this.getStamina() + b.getStamina()) / 2;
-        //int gemiddelde_energie = (int) (this.getEnergie() + b.getEnergie()) / 2;
         int gemiddelde_legs = (int) (this.getLegs() + b.getLegs()) / 2;
- //       int gemiddelde_gewicht = (int) (this.getGewicht() + b.getGewicht()) / 2;
-        // Verschil ouders berekenen
+
         int verschil_strength = this.getStrength() - b.getStrength();
-        //int verschil_stamina = this.getStamina() - b.getStamina();
-        //int verschil_energie = this.getEnergie() - b.getEnergie();
         int verschil_legs = this.getLegs() - b.getLegs();
-  //      int verschil_gewicht = this.getGewicht() - b.getGewicht();
         // Percentage Bepalen
         double percentage_strength = (double) (Math.random() * 10) / 100;
-        //double percentage_stamina = (double) (Math.random() * 10) / 100;
-        //double percentage_energie = (double) (Math.random() * 10) / 100;
         double percentage_legs = (double) (Math.random() * 10) / 100;
-  //      double percentage_gewicht = (double) (Math.random() * 10) / 100;
+
         // Zet percentage double om in Integer
         // Marge wat kind van de ouders nog overerft
         double marge_strengthTemp = (double)verschil_strength * percentage_strength;
         int marge_strength = (int)marge_strengthTemp;
         
-        //int marge_stamina = verschil_stamina * (int) percentage_stamina;
-        //int marge_energie = verschil_energie * (int) percentage_energie;
         double marge_legsTemp = (double)verschil_legs * percentage_legs;
         int marge_legs = (int)marge_legsTemp;
-        
-        //int marge_gewicht = verschil_gewicht * (int) percentage_gewicht;
-
+       
         int strengthTemp = 0;
         int legsTemp = 0;
 
         // Random met een kans van 50 / 50
         Random random = new Random();
         int num = random.nextInt(2);
-        // +
+
         if (num == 0) {
             strengthTemp = gemiddelde_strength + marge_strength;
-            //stamina = gemiddelde_stamina + marge_stamina;
-            //energie = gemiddelde_energie + marge_energie;
             legsTemp = gemiddelde_legs + marge_legs;
-   //         gewichtTemp = gemiddelde_gewicht + marge_gewicht;
 
-        } // -
+        } 
         else {
             strengthTemp = gemiddelde_strength - marge_strength;
-            //stamina = gemiddelde_stamina - marge_stamina;
-            //energie = gemiddelde_energie - marge_energie;
             legsTemp = gemiddelde_legs - marge_legs;
-  //          gewichtTemp = gemiddelde_gewicht - marge_gewicht;
         }
 
         // Als beide beesten omnivoor zijn doe dan dit ook uitvoeren                                      
         if (this instanceof Omnivoor && b instanceof Omnivoor) {
-            // @TODO Positie bepalen
             // Maak Omnivoor
             Omnivoor o = new Omnivoor(this.getPositie());
             o.setStrength(strengthTemp);
@@ -216,7 +197,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
             return o;
         } // Als beide beesten carnivoor zijn doe dan dit ook uitvoeren                                      
         else if (this instanceof Carnivoor && b instanceof Carnivoor) {
-            // @TODO Positie bepalen
             // Maak Omnivoor
             Carnivoor c = new Carnivoor(this.getPositie());
             c.setStrength(strengthTemp);
@@ -226,7 +206,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
             return c;
         } // Als beide beesten herbivoor zijn doe dan dit ook uitvoeren                                      
         else if (this instanceof Herbivoor && b instanceof Herbivoor) {
-            // @TODO Positie bepalen
             // Maak Omnivoor
             Herbivoor h = new Herbivoor(this.getPositie());
             h.setStrength(strengthTemp);
@@ -237,7 +216,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
         } // Omnivoor en carnivoor dan dit uitvoeren
         else if ((this instanceof Omnivoor && b instanceof Carnivoor)
                 || (this instanceof Carnivoor && b instanceof Omnivoor)) {
-            // @TODO Positie bepalen
             // 50 / 50
             // Random met een kans van 50 / 50
             int rbeest = random.nextInt(2);
@@ -262,7 +240,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
         } // Omnivoor en herbivoor dan dit uitvoeren
         else if ((this instanceof Omnivoor && b instanceof Herbivoor)
                 || (this instanceof Herbivoor && b instanceof Omnivoor)) {
-            // @TODO Positie bepalen
             // 50 / 50
             // Random met een kans van 50 / 50
             int rbeest = random.nextInt(2);
@@ -435,7 +412,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     }
 
     /**
-     *
+     *Methode om energie van beest te halveren wanneer deze tegen een obstakel botst
      * @return
      */
     public int bots() {
@@ -476,7 +453,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
     /**
      * om energie van beest te zetten na genoorte
      *
-     * @param verandering integer die wordt megegeven bij aanroep
+     * @param nieuweEnergie integer
      */
     public void setEnergie(int nieuweEnergie) {
         this.energie = nieuweEnergie;
@@ -484,6 +461,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
         notifyObservers();
     }
 
+    /**
+     *Setter voor de strenght
+     * @param strength integer
+     */
     public void setStrength(int strength) {
         this.strength = strength;
     }
