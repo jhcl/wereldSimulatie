@@ -43,25 +43,26 @@ public class Carnivoor extends Beest<Beest> {
         int schade = this.strength * 10;
         if (this.energie <= this.stamina - (schade)) {
             if (b.energie >= schade) {
-                this.energie = this.energie + (schade);
-                b.energie = b.energie - schade;
+                this.setEnergie(this.energie + (schade));
+                b.setEnergie(b.energie - schade);
             } else {
                 schade = b.energie;
-                b.energie = b.energie - schade;
-                this.energie = this.energie + schade;
+                b.setEnergie(b.energie - schade);
+                this.setEnergie(this.energie + schade);
             }
         } else {
             schade = this.stamina - this.energie;
 
             if (b.energie >= schade) {
-                this.energie = this.energie + (schade);
-                b.energie = b.energie - schade;
+                this.setEnergie(this.energie + (schade));
+                b.setEnergie(b.energie - schade);
             } else {
                 schade = b.energie;
-                b.energie = b.energie - schade;
-                this.energie = this.energie + schade;
+                b.setEnergie(b.energie - schade);
+                this.setEnergie(this.energie + schade);
             }
         }
+       
     }
 
 }

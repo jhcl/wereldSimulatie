@@ -15,7 +15,7 @@ import java.util.Random;
  * @author Lars Ko Tarkan
  */
 public class Eiland implements Serializable {
-    
+
     private final ArrayList<Beest> beesten;
     private final ArrayList<Obstakel> obstakels;
     private final ArrayList<Plant> planten;
@@ -23,11 +23,11 @@ public class Eiland implements Serializable {
     private final ArrayList<Beest> opruimLijst;
     private final ArrayList<Beest> toevoegLijst;
     private final Wereld ouder;
-    
+
     /**
-     * 
+     *
      * @param opp
-     * @param w 
+     * @param w
      */
     public Eiland(ArrayList<Integer> opp, Wereld w) {
         this.ouder = w;
@@ -41,7 +41,7 @@ public class Eiland implements Serializable {
     }
 
     /**
-     * Vul eiland met beesten, objecten, planten op een random positie volgens 
+     * Vul eiland met beesten, objecten, planten op een random positie volgens
      * verhouding:<br>
      * 10 % obstakel, 40% carnivoor, 30% planten,10% herbivoor, 10% omnivoor<br>
      * Op een obstakel mag geen plant of beest gezet worden.
@@ -49,7 +49,7 @@ public class Eiland implements Serializable {
     public final void maakEiland() {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
-        
+
         for (int i = 0; i < 200; i++) {
             int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
@@ -58,12 +58,12 @@ public class Eiland implements Serializable {
             ArrayList<Integer> pos = new ArrayList<>();
             pos.add(kopie.get(willekeurigX));
             pos.add(kopie.get(willekeurigX + 1));
-            
+
             // Snelle manier om aantal objecten naar verhouding te maken
             int temp = rnd.nextInt(10);
             if (temp == 0) {
                 this.obstakels.add(new Obstakel(pos));
-                
+
                 // op een obstakel mag niets meer staan
                 kopie.remove(willekeurigX);
                 kopie.remove(willekeurigX);
@@ -87,11 +87,12 @@ public class Eiland implements Serializable {
     public ArrayList<Obstakel> getObstakels() {
         return this.obstakels;
     }
-    
+
     /**
      * getter voor coordinaten die het eiland definiëren
-     * 
-     * @return ArrayList &lt;Integer&gt; met punten die samen het eiland definiëren 
+     *
+     * @return ArrayList &lt;Integer&gt; met punten die samen het eiland
+     * definiëren
      */
     public ArrayList<Integer> getEilandOppervlak() {
         return this.oppervlak;
@@ -121,16 +122,18 @@ public class Eiland implements Serializable {
      * - methode roept beweeg() aan voor beesten en groei() voor planten mits ze
      * volgens de opgestelde regels moeten bewegen.<br>
      * - als beesten op dezelfde positie op land staan gaan ze paren (afh van
-     * hitsigheid) of eten wordt er gekeken of het beest dat berekend wordt de ander kan eten.<br>
-     * - bij contentie tussen eten en paren (mogelijk in geval van carnivoren en 
+     * hitsigheid) of eten wordt er gekeken of het beest dat berekend wordt de
+     * ander kan eten.<br>
+     * - bij contentie tussen eten en paren (mogelijk in geval van carnivoren en
      * omnivoren) wordt er gepaard indien beide besten hitsig (energie &gt; 60%)
-     *  zijn, anders eet het beest dat op dat moment verwerkt wordt het andere beest.<br>
+     * zijn, anders eet het beest dat op dat moment verwerkt wordt het andere
+     * beest.<br>
      * - als paden van beesten elkaar kruisen zonder dat ze na een simulatiestap
      * op dezelfde positie staan gebeurd er niets<br>
      * - aan water wordt bij &lt;40% energie gezwommen, anders blijven ze op het
      * eiland<br>
-     * - Op land bewegen beesten zich met een in de klasse gedefiniëerde snelheid.
-     * In het water altijd 1 stap per simulatiestap.<br>
+     * - Op land bewegen beesten zich met een in de klasse gedefiniëerde
+     * snelheid. In het water altijd 1 stap per simulatiestap.<br>
      * - het energieverlies per stap voor het zwemmen is hetzelfde als voor
      * bewegen op land.<br>
      * - Tijdens zwemmen wordt niet gepaard of gegeten<br>
@@ -152,7 +155,7 @@ public class Eiland implements Serializable {
         for (Beest b : this.beesten) {
 
             // niet te lang stilstaan 
-            if ((int)b.getRichting().get(0) == 0 && (int)b.getRichting().get(1) == 0) {
+            if ((int) b.getRichting().get(0) == 0 && (int) b.getRichting().get(1) == 0) {
                 b.setRichting(rnd.nextInt(3) - 1, rnd.nextInt(3) - 1);
             }
             boolean opLand = false;
@@ -214,7 +217,7 @@ public class Eiland implements Serializable {
                     } else {
                         b.kiesAndereRichting();
                     }
-                    
+
                 }
                 stappenTeller++;
 //                System.out.print(newX + "," + newY + " ");
@@ -229,8 +232,8 @@ public class Eiland implements Serializable {
             if (!nogOpLand && !opruimLijst.contains(b)) {
                 ouder.voegZwemmersToe(b);
                 opruimLijst.add(b);
- //               System.out.println("fout: " + b.getPositie());
-            }            
+                //               System.out.println("fout: " + b.getPositie());
+            }
             if (!opruimLijst.contains(b)) {
                 ArrayList<Object> gezelschap = ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
                 gezelschap.remove(b);
@@ -239,7 +242,7 @@ public class Eiland implements Serializable {
                         if (!gezelschap.isEmpty()) {
                             if (b instanceof Carnivoor && o instanceof Beest) {
                                 if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                    if (!hebbenGepaard.contains((Beest)o) && !hebbenGepaard.contains(b)) {
+                                    if (!hebbenGepaard.contains((Beest) o) && !hebbenGepaard.contains(b)) {
                                         Beest baby = b.paar((Beest) o);
                                         hebbenGepaard.add(b);
                                         hebbenGepaard.add((Beest) o);
@@ -250,6 +253,10 @@ public class Eiland implements Serializable {
                                     break;
                                 }
                                 b.eet((Beest) o);
+                                if (((Beest) o).getEnergie() <= 0) {
+                                    this.opruimLijst.add((Beest) o);
+//                                    ((Beest) o).deleteObservers();
+                                }
                                 b.kiesAndereRichting();
                                 break;
                             }
@@ -260,33 +267,39 @@ public class Eiland implements Serializable {
                             }
                             if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
                                 if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                    if (!hebbenGepaard.contains((Beest)o) && !hebbenGepaard.contains(b)) {
+                                    if (!hebbenGepaard.contains((Beest) o) && !hebbenGepaard.contains(b)) {
                                         Beest baby = b.paar((Beest) o);
                                         hebbenGepaard.add(b);
                                         hebbenGepaard.add((Beest) o);
                                         this.iederZijnsWeegs(baby, b, (Beest) o);
-                                        
+
                                         toevoegLijst.add(baby);
-                                    } 
+                                    }
                                     break;
                                 }
                                 b.eet(o);
+                                if (o instanceof Beest) {
+                                    if (((Beest) o).getEnergie() <= 0) {
+                                        this.opruimLijst.add((Beest) o);
+ //                                       ((Beest) o).deleteObservers();
+                                    }
+                                }
                                 b.kiesAndereRichting();
                                 break;
                             }
                             if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                if (!hebbenGepaard.contains((Beest)o) && !hebbenGepaard.contains(b)) {
+                                if (!hebbenGepaard.contains((Beest) o) && !hebbenGepaard.contains(b)) {
                                     Beest baby = b.paar((Beest) o);
                                     hebbenGepaard.add(b);
                                     hebbenGepaard.add((Beest) o);
                                     this.iederZijnsWeegs(baby, b, (Beest) o);
-                                    
+
                                     toevoegLijst.add(baby);
                                 } else {
                                 }
                                 break;
                             }
-                            
+
                         }
                     }
                 }
@@ -296,25 +309,27 @@ public class Eiland implements Serializable {
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
         toevoegLijst.clear();
-        
+
     }
-    
+
     /**
-     * Voor input van 3 beesten wordt er hier voor elk beest random een richting 
+     * Voor input van 3 beesten wordt er hier voor elk beest random een richting
      * gezet zo dat geen van de 3 beesten dezelfde richting heeft als een van de
-     * andere. <p>
+     * andere.
+     * <p>
      * Input mag niet null zijn<br>
      * Beesten mogen niet dezelfde objecten zijn.
+     *
      * @param a Beest object dat
      * @param b
-     * @param c 
+     * @param c
      */
     private void iederZijnsWeegs(Beest a, Beest b, Beest c) {
         assert a != null;
         assert a != null;
         assert a != null;
         assert a != b;
-        assert b!= c;
+        assert b != c;
         ArrayList<ArrayList<Integer>> opties = new ArrayList<>();
         Random rnd = new Random();
         int temp;
@@ -354,5 +369,5 @@ public class Eiland implements Serializable {
         temp = rnd.nextInt(opties.size());
         c.setRichting(opties.get(temp).get(0), opties.get(temp).get(1));
     }
-    
+
 }
