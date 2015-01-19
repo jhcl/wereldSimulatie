@@ -85,14 +85,16 @@ public class BeestTest {
     public void testBeweeg() {
         System.out.println("beweeg");
         int x = 2;
-        int y = 2;
-        Carnivoor c = new Carnivoor(this.getPositie());
+        int y = 3;
+        pos.add(x);
+        pos.add(y);
+        Carnivoor c = new Carnivoor(pos);
         Beest instance = c;
         instance.beweeg(x, y);
-        assertTrue(0 == 0);
+        assertTrue(c.getPositie().get(0) == 2 && c.getPositie().get(1) == 3);
 
         //TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
