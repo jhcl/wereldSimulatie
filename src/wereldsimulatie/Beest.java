@@ -18,7 +18,7 @@ import java.util.Random;
  */
 abstract public class Beest<T> extends Observable implements Serializable {
 
-    protected ArrayList<Integer> positie;
+    private ArrayList<Integer> positie;
     protected ArrayList<Integer> richting;
     protected int strength;
     protected int energie;
@@ -26,12 +26,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
     protected int gewicht;
     protected int legs;
     protected int hitsigheid;
-    protected int zwemDrempel;
     protected int voortplantingsKosten;
     protected int beweegDrempel;
-    protected int honger;
     protected int snelheid;
-    protected Random rnd;
+    private Random rnd;
 
     /**
      * Strength: Carnivoor: 50, Herbivoor: 30, Omnivoor: 40<br>
