@@ -191,7 +191,6 @@ abstract public class Beest<T> extends Observable implements Serializable {
 
         int strengthTemp = 0;
         int legsTemp = 0;
-        int gewichtTemp = 0;
 
         // Random met een kans van 50 / 50
         Random random = new Random();
@@ -218,11 +217,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             // @TODO Positie bepalen
             // Maak Omnivoor
             Omnivoor o = new Omnivoor(this.getPositie());
-            this.setEnergie(energie - voortplantingsKosten);
-            b.setEnergie(energie - voortplantingsKosten);
             o.setStrength(strengthTemp);
             o.legs = legsTemp;
-            o.gewicht = gewichtTemp;
             int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
             o.setEnergie(overgevenVoortplantingsEnergie);
 
@@ -232,11 +228,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             // @TODO Positie bepalen
             // Maak Omnivoor
             Carnivoor c = new Carnivoor(this.getPositie());
-            this.setEnergie(energie - voortplantingsKosten);
-            b.setEnergie(energie - voortplantingsKosten);
             c.setStrength(strengthTemp);
             c.legs = legsTemp;
-            c.gewicht = gewichtTemp;
             int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
             c.setEnergie(overgevenVoortplantingsEnergie);
             return c;
@@ -245,11 +238,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             // @TODO Positie bepalen
             // Maak Omnivoor
             Herbivoor h = new Herbivoor(this.getPositie());
-            this.setEnergie(energie - voortplantingsKosten);
-            b.setEnergie(energie - voortplantingsKosten);
             h.setStrength(strengthTemp);
             h.legs = legsTemp;
-            h.gewicht = gewichtTemp;
             int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
             h.setEnergie(overgevenVoortplantingsEnergie);
             return h;
@@ -263,11 +253,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if (rbeest == 0) {
                 // Maak Omnivoor
                 Omnivoor o = new Omnivoor(this.getPositie());
-                this.setEnergie(energie - voortplantingsKosten);
-                b.setEnergie(energie - voortplantingsKosten);
                 o.setStrength(strengthTemp);
                 o.legs = legsTemp;
-                o.gewicht = gewichtTemp;
                 int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
                 o.setEnergie(overgevenVoortplantingsEnergie);
                 return o;
@@ -275,11 +262,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if (rbeest == 1) {
                 // Maak Carnivoor
                 Carnivoor c = new Carnivoor(this.getPositie());
-                this.setEnergie(energie - voortplantingsKosten);
-                b.setEnergie(energie - voortplantingsKosten);
                 c.setStrength(strengthTemp);
                 c.legs = legsTemp;
-                c.gewicht = gewichtTemp;
                 int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
                 c.setEnergie(overgevenVoortplantingsEnergie);
                 return c;
@@ -294,11 +278,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if (rbeest == 0) {
                 // Maak Omnivoor
                 Omnivoor o = new Omnivoor(this.getPositie());
-                this.setEnergie(energie - voortplantingsKosten);
-                b.setEnergie(energie - voortplantingsKosten);
                 o.setStrength(strengthTemp);
                 o.legs = legsTemp;
-                o.gewicht = gewichtTemp;
                 int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
                 o.setEnergie(overgevenVoortplantingsEnergie);
                 return o;
@@ -306,11 +287,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if (rbeest == 1) {
                 // Maak Herbivoor
                 Herbivoor h = new Herbivoor(this.getPositie());
-                this.setEnergie(energie - voortplantingsKosten);
-                b.setEnergie(energie - voortplantingsKosten);
                 h.setStrength(strengthTemp);
                 h.legs = legsTemp;
-                h.gewicht = gewichtTemp;
                 int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
                 h.setEnergie(overgevenVoortplantingsEnergie);
                 return h;
@@ -325,11 +303,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if (rbeest == 0) {
                 // Maak Omnivoor
                 Omnivoor o = new Omnivoor(this.getPositie());
-                this.setEnergie(energie - voortplantingsKosten);
-                b.setEnergie(energie - voortplantingsKosten);
                 o.setStrength(strengthTemp);
                 o.legs = legsTemp;
-                o.gewicht = gewichtTemp;
                 int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
                 o.setEnergie(overgevenVoortplantingsEnergie);
                 return o;
@@ -337,11 +312,8 @@ abstract public class Beest<T> extends Observable implements Serializable {
             if (rbeest == 1) {
                 // Maak Herbivoor
                 Herbivoor h = new Herbivoor(this.getPositie());
-                this.setEnergie(energie - voortplantingsKosten);
-                b.setEnergie(energie - voortplantingsKosten);
                 h.setStrength(strengthTemp);
                 h.legs = legsTemp;
-                h.gewicht = gewichtTemp;
                 int overgevenVoortplantingsEnergie = this.voortplantingsKosten + b.voortplantingsKosten;
                 h.setEnergie(overgevenVoortplantingsEnergie);
                 return h;
