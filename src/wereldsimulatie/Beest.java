@@ -176,19 +176,19 @@ abstract public class Beest<T> extends Observable implements Serializable {
         int gemiddelde_strength = (int) (this.getStrength() + b.getStrength()) / 2;
         int gemiddelde_legs = (int) (this.getLegs() + b.getLegs()) / 2;
 
-        int verschil_strength = this.getStrength() - b.getStrength();
-        int verschil_legs = this.getLegs() - b.getLegs();
+        int verschil_strength = Math.abs(this.getStrength() - b.getStrength());
+        int verschil_legs = Math.abs(this.getLegs() - b.getLegs());
         // Percentage Bepalen
-        double percentage_strength = (double) (Math.random() * 10) / 100;
-        double percentage_legs = (double) (Math.random() * 10) / 100;
+ //       double percentage_strength = (double) (Math.random() * 10) / 100;
+        double percentage = (double) (Math.random() * 10) / 100;
 
         // Zet percentage double om in Integer
         // Marge wat kind van de ouders nog overerft
-        double marge_strengthTemp = (double)verschil_strength * percentage_strength;
+        double marge_strengthTemp = (double)verschil_strength * percentage;
         int marge_strength = (int)marge_strengthTemp;
         
-        double marge_legsTemp = (double)verschil_legs * percentage_legs;
-        int marge_legs = (int)marge_legsTemp;
+        double marge_legsTemp = (double)verschil_legs * percentage;
+        int marge_legs = (int)Math.ceil(marge_legsTemp);
        
         int strengthTemp = 0;
         int legsTemp = 0;
