@@ -89,12 +89,8 @@ public class Plant extends Observable implements Serializable {
         return energie;
     }
 
-    /**
-     *Hierbij wordt enerie aangepast, gebruikt voor unit test
-     * @param x Int dat meegegeven wordt om energie te zetten.
-     */
-    public void setEnergie(int x) {
-        this.energie += x;
+    public void setEnergie(int energie) {
+        this.energie = energie;
     }
 
     /**

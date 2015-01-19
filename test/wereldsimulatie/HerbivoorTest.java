@@ -95,7 +95,7 @@ public class HerbivoorTest {
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
         instance.setEnergie(2800);
-        p.setEnergie(-25);
+        p.setEnergie(5);
         
         int x = p.getEnergie();
         int y = instance.getEnergie();
@@ -106,7 +106,7 @@ public class HerbivoorTest {
     
       /**
      * Test of eet method, of class Herbivoor.
-     * Beest behoefte is 1000, kan max 300 eten.  plant heeft energie 5. Dus Dier kan maximaal  5*strenght eten. 150
+     * Beest behoefte is 1000, kan max 300 eten.  plant heeft energie 5. Dus Dier kan maximaal 5/50 * 300 = 30 eten
      */
         @Test
     public void testEet4() {
@@ -114,7 +114,7 @@ public class HerbivoorTest {
         Plant p = new Plant(pos);
         Herbivoor instance = new Herbivoor(pos);
         instance.setEnergie(2000);
-        p.setEnergie(-25);
+        p.setEnergie(5);
         
         int x = p.getEnergie();
         int y = instance.getEnergie();
