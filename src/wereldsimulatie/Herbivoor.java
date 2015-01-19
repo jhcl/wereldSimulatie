@@ -46,16 +46,16 @@ public class Herbivoor extends Beest<Plant> {
 
         if (this.energie <= this.stamina - (behoefte)) {
 
-            if (p.energie >= schadePlant) {
+            if (p.getEnergie() >= schadePlant) {
                 this.energie = this.energie + (behoefte);
                 //p.energie = p.energie - schadePlant;
             } else {
                 
-               float result = ((float)p.energie/(float)schadePlant) * ((float)strength * (float)10);
+               float result = ((float)p.getEnergie()/(float)schadePlant) * ((float)strength * (float)10);
                 
                 behoefte = (int)result;
                 
-                schadePlant = p.energie;
+                schadePlant = p.getEnergie();
 
                 this.energie = this.energie + behoefte;
             }
@@ -66,7 +66,7 @@ public class Herbivoor extends Beest<Plant> {
             behoefte = this.stamina - this.energie;
             
             //schadePlant = 0;
-            if (p.energie >= schadePlant) {
+            if (p.getEnergie() >= schadePlant) {
                 
                 float result = ((float)behoefte/((float)this.strength * 10)) * schadePlant ;
                 Math.round(result);
@@ -79,10 +79,10 @@ public class Herbivoor extends Beest<Plant> {
             } else {
                
                 
-               float result = ((float)p.energie/(float)schadePlant) * behoefte;
+               float result = ((float)p.getEnergie()/(float)schadePlant) * behoefte;
                 
                 behoefte = (int)result;
-                schadePlant = p.energie;
+                schadePlant = p.getEnergie();
 
                 this.energie = this.energie + behoefte;
             }
