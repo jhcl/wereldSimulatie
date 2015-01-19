@@ -19,15 +19,55 @@ import java.util.Random;
 abstract public class Beest<T> extends Observable implements Serializable {
 
     private ArrayList<Integer> positie;
+
+    /**
+     *
+     */
     protected ArrayList<Integer> richting;
+
+    /**
+     *
+     */
     protected int strength;
+
+    /**
+     *
+     */
     protected int energie;
+
+    /**
+     *
+     */
     protected int stamina;
+
+    /**
+     *
+     */
     protected int gewicht;
+
+    /**
+     *
+     */
     protected int legs;
+
+    /**
+     *
+     */
     protected int hitsigheid;
+
+    /**
+     *
+     */
     protected int voortplantingsKosten;
+
+    /**
+     *
+     */
     protected int beweegDrempel;
+
+    /**
+     *
+     */
     protected int snelheid;
     private Random rnd;
 

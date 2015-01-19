@@ -89,6 +89,10 @@ public class Plant extends Observable implements Serializable {
         return energie;
     }
 
+    /**
+     *
+     * @param energie
+     */
     public void setEnergie(int energie) {
         this.energie = energie;
     }
