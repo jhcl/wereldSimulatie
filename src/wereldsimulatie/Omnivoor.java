@@ -62,12 +62,12 @@ public class Omnivoor extends Beest {
                 schade = stamina - energie;
 
                 if (b.energie >= schade) {
-                    energie = energie + (schade);
-                    b.energie = b.energie - schade;
+                    this.setEnergie(this.energie + (schade));
+                    b.setEnergie(b.energie - schade);
                 } else {
                     schade = b.energie;
-                    b.energie = b.energie - schade;
-                    energie = energie + schade;
+                    b.setEnergie(b.energie - schade);
+                    this.setEnergie(this.energie + (schade));
                 }
             }
         } else {

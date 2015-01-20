@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- *
+ * Poppetje extends Polygon implements Observer
  * @author @author Lars Ko Tarkan
  */
 public class Poppetje extends Polygon implements Observer{

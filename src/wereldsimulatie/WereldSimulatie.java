@@ -14,13 +14,12 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- * @author Lars Ko Tarkan
- * 
  * Simulatie waarin beesten in een wereld op eilanden rondlopen die planten 
  * en soms elkaar kunnen eten of met elkaar kunnen paren. Eilanden zijn  
  * gescheiden door water en beesten kunnen de oversteek maken door te zwemmen.<br>  
  * Bij elke simulatiestap beweegt een beest naar gelang zijn snelheid en kan 
  * als de gelegenheid zich voordoet eten of paren.
+ * @author Lars Ko Tarkan
  */
 public class WereldSimulatie extends Application {
     final Wereld model = new Wereld();
