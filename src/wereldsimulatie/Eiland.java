@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Leefgebied
+ * Leefgebied Eiland
  *
  * @author Lars Ko Tarkan
  */
@@ -26,8 +26,8 @@ public class Eiland implements Serializable {
 
     /**
      *
-     * @param opp
-     * @param w
+     * @param opp Integer ArrayList
+     * @param w Object van Klasse Wereld
      */
     public Eiland(ArrayList<Integer> opp, Wereld w) {
         this.ouder = w;
@@ -320,9 +320,9 @@ public class Eiland implements Serializable {
      * Input mag niet null zijn<br>
      * Beesten mogen niet dezelfde objecten zijn.
      *
-     * @param a Beest object dat
-     * @param b
-     * @param c
+     * @param a Beest object 
+     * @param b Beest object
+     * @param c Beest object
      */
     private void iederZijnsWeegs(Beest a, Beest b, Beest c) {
         assert a != null;
