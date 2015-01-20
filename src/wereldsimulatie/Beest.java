@@ -407,7 +407,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * @return richting
      */
     public ArrayList<Integer> getRichting() {
-        return this.richting;
+        ArrayList<Integer> terug = new ArrayList<>();
+        terug.add((int)this.richting.get(0));
+        terug.add((int)this.richting.get(1));
+        return terug;
     }
 
     /**
