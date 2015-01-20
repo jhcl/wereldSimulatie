@@ -386,7 +386,10 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * @return positie
      */
     public ArrayList<Integer> getPositie() {
-        return this.positie;
+        ArrayList<Integer> terug = new ArrayList<>();
+        terug.add((int)this.positie.get(0));
+        terug.add((int)this.positie.get(1));
+        return terug;
     }
 
     /**
