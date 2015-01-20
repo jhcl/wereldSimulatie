@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * @author Lars Ko Tarkan 
+ * Wereld extends Observable implements ModelFacade
  * Geheel van eilanden en zee. Dit is een op zichzelf
  * staand geheel. De randen van een wereld bestaan altijd uit water
+ * @author Lars Ko Tarkan 
  */
 public class Wereld extends Observable implements ModelFacade, Serializable {
 

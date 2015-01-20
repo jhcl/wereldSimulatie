@@ -90,7 +90,7 @@ public class Plant extends Observable implements Serializable {
     }
 
     /**
-     *
+     * Setter energie van plan
      * @param energie
      */
     public void setEnergie(int energie) {
@@ -115,7 +115,7 @@ public class Plant extends Observable implements Serializable {
 
     /**
      *Hier wordt de teller gezet. 
-     * @param tellerAantalKeerNul
+     * @param tellerAantalKeerNul integer dat wordt megegeven
      */
     public void setTellerAantalKeerNul(int tellerAantalKeerNul) {
         this.tellerAantalKeerNul = tellerAantalKeerNul;
