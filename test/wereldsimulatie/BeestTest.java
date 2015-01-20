@@ -76,6 +76,25 @@ public class BeestTest {
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
+    
+    /**
+     * Test of paar method, of class Beest.
+     * Test of het kind de overgegeven energie van de ouders krijgt
+     */
+    @Test
+    public void testPaar2() {
+        System.out.println("paar");
+        Beest b = new Herbivoor(pos);
+        Beest instance = new Carnivoor(pos) ;
+        
+        double resultTemp = (instance.energie * 0.1) + (b.energie * 0.1);
+        int expResult = (int)resultTemp;
+        
+        Beest a = instance.paar(b);
+        int result = a.getEnergie();
+        
+        assertEquals(expResult, result);
+    }
 
     /**
      * Test of beweeg method, of class Beest.
