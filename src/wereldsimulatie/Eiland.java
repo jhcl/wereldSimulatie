@@ -50,7 +50,7 @@ public class Eiland implements Serializable {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 200; i = i +1) {
             int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
                 willekeurigX--;
@@ -203,29 +203,29 @@ public class Eiland implements Serializable {
                     if (b.wilZwemmen()) {
                         if (b.kanBewegen()) {
                             b.beweeg(newX, newY);
+                            ouder.voegZwemmersToe(b);
+                            opruimLijst.add(b);
+                            break;
                         } else {
                             b.setEnergie(b.getEnergie() - 5);
                         }
                         if (b.getEnergie() <= 0) {
                             opruimLijst.add(b);
                             b.deleteObservers();
-                        } else {
-                            ouder.voegZwemmersToe(b);
-                            opruimLijst.add(b);
-                            break;
-                        }
+                        } 
                     } else {
                         b.kiesAndereRichting();
                     }
 
                 }
-                stappenTeller++;
+                stappenTeller = stappenTeller + 1;
 //                System.out.print(newX + "," + newY + " ");
             }
             boolean nogOpLand = false;
             for (int i = 0; i < this.oppervlak.size(); i += 2) {
                 if (this.oppervlak.get(i).equals(b.getPositie().get(0)) && this.oppervlak.get(i + 1).equals(b.getPositie().get(1))) {
                     nogOpLand = true;
+                    System.out.println("fixed");
                     break;
                 }
             }
