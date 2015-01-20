@@ -135,14 +135,25 @@ public class EilandTest {
     @Test
     public void testStapDoorSimulatie() {
         System.out.println("stapDoorSimulatie");
+        // Test of de stap van een Herbivoor oude positie + richting is
+        // meer stappen vooruit kijken kan niet omdat de methode tijdens de 
+        // run de situatie veranderd en we alleen een deepcopy als startwaarde
+        // kunnen gebruiken.
+        
         Wereld ouder = new Wereld();
         Eiland instance = ouder.getEilanden().get(0);
         instance.maakEiland();
-        ArrayList<Integer> oudPos = new ArrayList<>(); oudPos.add(0); oudPos.add(0);
-        ArrayList<Integer> oudRicht = new ArrayList<>(); oudRicht.add(0);oudRicht.add(0);
-        ArrayList<Integer> nieuw = new ArrayList<>(); nieuw.add(0); nieuw.add(0);
+        ArrayList<Integer> oudPos = new ArrayList<>();
+        oudPos.add(0);
+        oudPos.add(0);
+        ArrayList<Integer> oudRicht = new ArrayList<>();
+        oudRicht.add(0);
+        oudRicht.add(0);
+        ArrayList<Integer> nieuw = new ArrayList<>();
+        nieuw.add(0);
+        nieuw.add(0);
 
-        ArrayList<Beest> kopie  = new ArrayList<>(instance.getBeesten());
+        ArrayList<Beest> kopie = new ArrayList<>(instance.getBeesten());
         for (Beest t : kopie) {
             int newX = ouder.nieuwePositie(t).get(0);
             int newY = ouder.nieuwePositie(t).get(1);
@@ -163,18 +174,21 @@ public class EilandTest {
             }
             if (t instanceof Herbivoor) {
                 if (opLand && !erStaatEenObstakel) {
-                    oudPos.set(0,(int)t.getPositie().get(0));
-                    oudPos.set(1,(int)t.getPositie().get(1));
-                    oudRicht.set(0, (int)t.getRichting().get(0));
-                    oudRicht.set(1, (int)t.getRichting().get(1));
-                    System.out.println(oudPos + " " + oudRicht);
-                    instance.stapDoorSimulatie();
-                    nieuw.set(0, (int)t.getPositie().get(0));
-                    System.out.println(nieuw);
-                    nieuw.set(1, (int)t.getPositie().get(1));
-                    assertTrue((int)oudPos.get(0) + (int)oudRicht.get(0) == (int)nieuw.get(0));
-                    assertTrue((int)oudPos.get(1) + (int)oudRicht.get(1) == (int)nieuw.get(1));
-                    break;
+                    oudPos.set(0, (int) t.getPositie().get(0));
+                    oudPos.set(1, (int) t.getPositie().get(1));
+                    oudRicht.set(0, (int) t.getRichting().get(0));
+                    oudRicht.set(1, (int) t.getRichting().get(1));
+                    if (!(oudRicht.get(0).equals(0) && oudRicht.get(1).equals(0))) {
+                        System.out.println(oudPos + " " + oudRicht);
+                        instance.stapDoorSimulatie();
+                        nieuw.set(0, (int) t.getPositie().get(0));
+                        nieuw.set(1, (int) t.getPositie().get(1));
+                        System.out.println(nieuw);
+                        assertTrue((int) oudPos.get(0) + (int) oudRicht.get(0) == (int) nieuw.get(0));
+                        assertTrue((int) oudPos.get(1) + (int) oudRicht.get(1) == (int) nieuw.get(1));
+                        break;
+                    }
+                                       
                 }
             }
         }
