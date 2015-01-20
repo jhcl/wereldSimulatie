@@ -47,6 +47,8 @@ public class Eiland implements Serializable {
      * Op een obstakel mag geen plant of beest gezet worden.
      */
     public final void maakEiland() {
+        // Werken met een kopie omdat er later coordinate moeten worden weggehaald
+        // en dat moet niet voor het echte eiland
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
 
@@ -95,7 +97,7 @@ public class Eiland implements Serializable {
      * definiëren
      */
     public ArrayList<Integer> getEilandOppervlak() {
-        return this.oppervlak;
+        return oppervlak;
     }
 
     /**
@@ -220,19 +222,6 @@ public class Eiland implements Serializable {
                 }
                 stappenTeller = stappenTeller + 1;
 //                System.out.print(newX + "," + newY + " ");
-            }
-            boolean nogOpLand = false;
-            for (int i = 0; i < this.oppervlak.size(); i = i + 2) {
-                if (this.oppervlak.get(i).equals(b.getPositie().get(0)) && this.oppervlak.get(i + 1).equals(b.getPositie().get(1))) {
-                    nogOpLand = true;
-//                    System.out.println("fixed");
-                    break;
-                }
-            }
-            if (!nogOpLand && !opruimLijst.contains(b)) {
-                ouder.voegZwemmersToe(b);
-                opruimLijst.add(b);
-                //               System.out.println("fout: " + b.getPositie());
             }
             if (!opruimLijst.contains(b)) {
                 ArrayList<Object> gezelschap = ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));

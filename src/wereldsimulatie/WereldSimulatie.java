@@ -29,7 +29,7 @@ public class WereldSimulatie extends Application {
      * Instantiëer zelfgemaakte controller zodat die als observer aan wereldobject
      *  gehangen kan worden.
      * @param stage standaard javafx gui element die de basis vormt van de scene
-     * @throws Exception 
+     * @throws Exception standaard javafx
      */
     @Override
     public void start(Stage stage) throws Exception {

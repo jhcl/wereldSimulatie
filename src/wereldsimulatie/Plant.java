@@ -91,7 +91,7 @@ public class Plant extends Observable implements Serializable {
 
     /**
      * Setter energie van plan
-     * @param energie
+     * @param energie zet energie naar nieuwe (integer) waarde
      */
     public void setEnergie(int energie) {
         this.energie = energie;
@@ -99,7 +99,7 @@ public class Plant extends Observable implements Serializable {
 
     /**
      *Opvragen positie
-     * @return
+     * @return geef referentie van positie terug
      */
     public ArrayList<Integer> getPositie() {
         return positie;
@@ -107,7 +107,7 @@ public class Plant extends Observable implements Serializable {
 
     /**
      *Opvragen hoeveel keer de plant op Nul is geweest
-     * @return
+     * @return getter voor interne teller
      */
     public int getTellerAantalKeerNul() {
         return tellerAantalKeerNul;

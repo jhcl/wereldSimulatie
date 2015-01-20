@@ -99,7 +99,7 @@ public class FXMLDocumentController implements Initializable, Observer {
 
     /**
      *
-     * @param model
+     * @param model iets dat voldoet aan de ModelFacade interface
      */
     public FXMLDocumentController(ModelFacade model) {
         this.model = model;
@@ -163,7 +163,7 @@ public class FXMLDocumentController implements Initializable, Observer {
      * tik per seconde waardoor snelheid toeneemt als (1/kloksnelheid). <br>
      * Bij negatieve slider (naar links) neemt de tikwaarde kwadratisch toe. Ook
      * hier geldt de 1/kloksnelheid relatie tussen tijd en snelheid. 
-     * @param event
+     * @param event Slider actie
      */
     @FXML
     public void veranderSnelheid(javafx.scene.input.MouseEvent event) {
@@ -185,7 +185,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     /**
      * Schrijft het model weg naar zelf te kiezen file
      * @param event buttonklik die wegschrijf actie initieert.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException wordt nergens afgevangen
      */
     @FXML
     public void saveSim(javafx.scene.input.MouseEvent event) throws FileNotFoundException {
@@ -211,7 +211,7 @@ public class FXMLDocumentController implements Initializable, Observer {
     /**
      * Schrijft het model terug van file in de simulatie
      * @param event buttonklik die restore actie initieert.
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException wordt nergens afgevangen
      */
     @FXML
     public void restoreSim(javafx.scene.input.MouseEvent event) throws FileNotFoundException {

@@ -12,7 +12,7 @@ import javafx.scene.shape.Polygon;
 
 /**
  * Poppetje extends Polygon implements Observer
- * @author @author Lars Ko Tarkan
+ * @author Lars Ko Tarkan
  */
 public class Poppetje extends Polygon implements Observer{
     

@@ -436,7 +436,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
 
     /**
      *Methode om energie van beest te halveren wanneer deze tegen een obstakel botst
-     * @return
+     * @return resterende energie na botsing
      */
     public int bots() {
         this.energie = this.energie / 2;
