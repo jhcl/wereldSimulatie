@@ -395,10 +395,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * @return true als enegie onder 40 procent is
      */
     public boolean wilZwemmen() {
-        if (this.energie < 0.4 * this.stamina) {
-            return true;
-        }
-        return false;
+        return this.getEnergie() < 0.4 * this.getStamina();
     }
 
     /**
@@ -446,10 +443,7 @@ abstract public class Beest<T> extends Observable implements Serializable {
      * @return true als energie grother is dan beweegdrempel
      */
     public boolean kanBewegen() {
-        if (this.energie > (0.05 * this.stamina)) {
-            return true;
-        }
-        return false;
+        return this.getEnergie() > (0.05 * this.getStamina());
     }
 
     /**

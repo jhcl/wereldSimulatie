@@ -50,7 +50,7 @@ public class Eiland implements Serializable {
         ArrayList<Integer> kopie = new ArrayList<>(this.oppervlak);
         Random rnd = new Random();
 
-        for (int i = 0; i < 200; i = i +1) {
+        for (int i = 0; i < 200; i = i + 1) {
             int willekeurigX = rnd.nextInt(kopie.size());
             if (willekeurigX % 2 != 0) {
                 willekeurigX--;
@@ -169,7 +169,7 @@ public class Eiland implements Serializable {
 
                 // is de volgende positie nog land
                 opLand = false;
-                for (int i = 0; i < this.oppervlak.size(); i += 2) {
+                for (int i = 0; i < this.oppervlak.size(); i = i + 2) {
                     if (this.oppervlak.get(i).equals(newX) && this.oppervlak.get(i + 1).equals(newY)) {
                         opLand = true;
                         break;
@@ -212,7 +212,7 @@ public class Eiland implements Serializable {
                         if (b.getEnergie() <= 0) {
                             opruimLijst.add(b);
                             b.deleteObservers();
-                        } 
+                        }
                     } else {
                         b.kiesAndereRichting();
                     }
@@ -222,10 +222,10 @@ public class Eiland implements Serializable {
 //                System.out.print(newX + "," + newY + " ");
             }
             boolean nogOpLand = false;
-            for (int i = 0; i < this.oppervlak.size(); i += 2) {
+            for (int i = 0; i < this.oppervlak.size(); i = i + 2) {
                 if (this.oppervlak.get(i).equals(b.getPositie().get(0)) && this.oppervlak.get(i + 1).equals(b.getPositie().get(1))) {
                     nogOpLand = true;
-                    System.out.println("fixed");
+//                    System.out.println("fixed");
                     break;
                 }
             }
@@ -237,74 +237,47 @@ public class Eiland implements Serializable {
             if (!opruimLijst.contains(b)) {
                 ArrayList<Object> gezelschap = ouder.staatOpPositie((int) b.getPositie().get(0), (int) b.getPositie().get(1));
                 gezelschap.remove(b);
-                if (!gezelschap.isEmpty()) {
-                    for (Object o : gezelschap) {
-                        if (!gezelschap.isEmpty()) {
-                            if (b instanceof Carnivoor && o instanceof Beest) {
-                                if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                    if (!hebbenGepaard.contains((Beest) o) && !hebbenGepaard.contains(b)) {
-                                        Beest baby = b.paar((Beest) o);
-                                        hebbenGepaard.add(b);
-                                        hebbenGepaard.add((Beest) o);
-                                        this.iederZijnsWeegs(baby, b, (Beest) o);
-                                        toevoegLijst.add(baby);
-                                    } else {
-                                    }
-                                    break;
-                                }
-                                b.eet((Beest) o);
-                                if (((Beest) o).getEnergie() <= 0) {
-                                    this.opruimLijst.add((Beest) o);
-//                                    ((Beest) o).deleteObservers();
-                                }
-                                b.kiesAndereRichting();
-                                break;
+                for (Object o : gezelschap) {
+                    if (o instanceof Beest) {
+                        if (b.isHitsig() && ((Beest) o).isHitsig()) {
+                            if (!hebbenGepaard.contains((Beest) o)) {
+                                Beest baby = b.paar((Beest) o);
+                                hebbenGepaard.add((Beest) o);
+                                this.iederZijnsWeegs(baby, b, (Beest) o);
+                                toevoegLijst.add(baby);
                             }
-                            if (b instanceof Herbivoor && o instanceof Plant) {
-                                b.eet((Plant) o);
-                                b.kiesAndereRichting();
-                                break;
-                            }
-                            if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
-                                if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                    if (!hebbenGepaard.contains((Beest) o) && !hebbenGepaard.contains(b)) {
-                                        Beest baby = b.paar((Beest) o);
-                                        hebbenGepaard.add(b);
-                                        hebbenGepaard.add((Beest) o);
-                                        this.iederZijnsWeegs(baby, b, (Beest) o);
-
-                                        toevoegLijst.add(baby);
-                                    }
-                                    break;
-                                }
-                                b.eet(o);
-                                if (o instanceof Beest) {
-                                    if (((Beest) o).getEnergie() <= 0) {
-                                        this.opruimLijst.add((Beest) o);
- //                                       ((Beest) o).deleteObservers();
-                                    }
-                                }
-                                b.kiesAndereRichting();
-                                break;
-                            }
-                            if (b instanceof Beest && o instanceof Beest && b.isHitsig() && ((Beest) o).isHitsig()) {
-                                if (!hebbenGepaard.contains((Beest) o) && !hebbenGepaard.contains(b)) {
-                                    Beest baby = b.paar((Beest) o);
-                                    hebbenGepaard.add(b);
-                                    hebbenGepaard.add((Beest) o);
-                                    this.iederZijnsWeegs(baby, b, (Beest) o);
-
-                                    toevoegLijst.add(baby);
-                                } else {
-                                }
-                                break;
-                            }
-
+                            break;
                         }
+                        if (b instanceof Carnivoor || b instanceof Omnivoor) {
+                            b.eet((Beest) o);
+                            if (((Beest) o).getEnergie() <= 0) {
+                                this.opruimLijst.add((Beest) o);
+                                ((Beest) o).deleteObservers();
+                            }
+                            b.kiesAndereRichting();
+                            break;
+                        }
+                    }
+                    if (b instanceof Herbivoor && o instanceof Plant) {
+                        b.eet((Plant) o);
+                        b.kiesAndereRichting();
+                        break;
+                    }
+                    if (b instanceof Omnivoor && (o instanceof Beest || o instanceof Plant)) {
+                        b.eet(o);
+                        if (o instanceof Beest) {
+                            if (((Beest) o).getEnergie() <= 0) {
+                                this.opruimLijst.add((Beest) o);
+                                ((Beest) o).deleteObservers();
+                            }
+                        }
+                        b.kiesAndereRichting();
+                        break;
                     }
                 }
             }
         }
+        hebbenGepaard.clear();
         beesten.addAll(toevoegLijst);
         beesten.removeAll(opruimLijst);
         opruimLijst.clear();
